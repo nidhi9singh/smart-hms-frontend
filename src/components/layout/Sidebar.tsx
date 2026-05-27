@@ -1,0 +1,186 @@
+// src/components/layout/Sidebar.tsx
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import {
+  LayoutDashboard, Users, Calendar, Stethoscope, Bed, Pill,
+  FlaskConical, RadioTower, Droplets, Ambulance, Building2,
+  Baby, GitBranch, UserCog, QrCode, ClipboardList, CalendarDays,
+  Receipt, Banknote, Share2, Shield, MessageSquare,
+  Video, Download, Award, Globe, BarChart3, Settings,
+  LogOut, ChevronDown, ChevronRight, Hospital, Boxes
+} from 'lucide-react'
+import { useState } from 'react'
+import { useAuthStore } from '@/store/authStore'
+import { cn } from '@/lib/utils'
+
+type LeafItem  = { path: string;  label: string; icon: any }
+type GroupItem = { label: string; icon: any; children: LeafItem[] }
+type NavItem   = LeafItem | GroupItem
+
+const isGroup = (i: NavItem): i is GroupItem => 'children' in i
+
+const NAV: NavItem[] = [
+  { path:'/dashboard',    label:'Dashboard',           icon:LayoutDashboard },
+  { path:'/patients',     label:'Patient',             icon:Users },
+  { path:'/billing',      label:'Billing',             icon:Receipt },
+  { path:'/appointments', label:'Appointment',         icon:Calendar },
+  { path:'/opd',          label:'OPD – Out Patient',   icon:Stethoscope },
+  { path:'/ipd',          label:'IPD – In Patient',    icon:Bed },
+  { path:'/pharmacy',     label:'Pharmacy',            icon:Pill },
+  { path:'/pathology',    label:'Pathology',           icon:FlaskConical },
+  { path:'/radiology',    label:'Radiology',           icon:RadioTower },
+  { path:'/blood-bank',   label:'Blood Bank',          icon:Droplets },
+  { path:'/ambulance',    label:'Ambulance',           icon:Ambulance },
+  { path:'/front-office', label:'Front Office',        icon:Building2 },
+  { path:'/birth-death',  label:'Birth & Death Record',icon:Baby },
+  { path:'/multi-branch', label:'Multi Branch',        icon:GitBranch },
+  { path:'/hr',           label:'Human Resource',      icon:UserCog },
+  { path:'/attendance',   label:'QR Code Attendance',  icon:QrCode },
+  { path:'/duty-roster',  label:'Duty Roster',         icon:ClipboardList },
+  { path:'/calendar',     label:'Annual Calendar',     icon:CalendarDays },
+  { path:'/referral',     label:'Referral',            icon:Share2 },
+  { path:'/tpa',          label:'TPA Management',      icon:Shield },
+  { path:'/finance',      label:'Finance',             icon:Banknote },
+  { path:'/messaging',    label:'Messaging',           icon:MessageSquare },
+  { path:'/inventory',    label:'Inventory',           icon:Boxes },
+  { path:'/live-consultation',label:'Live Consultation',icon:Video },
+  { path:'/downloads',    label:'Download Centre',     icon:Download },
+  {
+    label: 'Certificate', icon: Award,
+    children: [
+      { path:'/certificates',            label:'Certificate',     icon:Award },
+      { path:'/certificates/patient-id', label:'Patient ID Card', icon:Award },
+      { path:'/certificates/staff-id',   label:'Staff ID Card',   icon:Award },
+    ],
+  },
+  { path:'/cms',      label:'Front CMS', icon:Globe },
+  { path:'/reports',  label:'Reports',   icon:BarChart3 },
+  { path:'/settings', label:'Settings',  icon:Settings },
+]
+
+
+export default function Sidebar() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const clearAuth = useAuthStore(s => s.clearAuth)
+  const user = useAuthStore(s => s.user)
+  const [collapsed, setCollapsed] = useState(false)
+
+  const handleLogout = () => { clearAuth(); navigate('/login') }
+
+  // Track which groups are expanded. Auto-expand a group when one of its children matches the current route.
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
+  const isGroupActive = (g: GroupItem) =>
+    g.children.some(c => location.pathname === c.path || location.pathname.startsWith(c.path + '/'))
+  const toggleGroup = (label: string) =>
+    setOpenGroups(s => ({ ...s, [label]: !s[label] }))
+
+  return (
+    <aside className={cn(
+      'flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-200 flex-shrink-0',
+      collapsed ? 'w-14' : 'w-56'
+    )}>
+      {/* Logo */}
+      <div className="flex items-center gap-2.5 px-3 py-4 border-b border-gray-100">
+        <div className="w-8 h-8 rounded-lg bg-teal-600 flex items-center justify-center flex-shrink-0">
+          <Hospital size={16} className="text-white" />
+        </div>
+        {!collapsed && (
+          <div className="min-w-0">
+            <div className="text-xs font-bold text-gray-900 leading-tight truncate">Smart Hospital</div>
+            <div className="text-[10px] text-gray-400 truncate">& Research Center</div>
+          </div>
+        )}
+        <button onClick={() => setCollapsed(c => !c)} className="ml-auto p-1 rounded hover:bg-gray-100 flex-shrink-0">
+          {collapsed ? <ChevronRight size={12}/> : <ChevronDown size={12}/>}
+        </button>
+      </div>
+
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
+        {NAV.map(item => {
+          if (!isGroup(item)) {
+            return (
+              <NavLink key={item.path} to={item.path}
+                className={({ isActive }) => cn(
+                  'sidebar-link',
+                  isActive && 'active',
+                  collapsed && 'justify-center px-0'
+                )}
+                title={collapsed ? item.label : undefined}
+              >
+                <item.icon size={15} className="flex-shrink-0" />
+                {!collapsed && <span className="truncate text-xs">{item.label}</span>}
+              </NavLink>
+            )
+          }
+
+          const active = isGroupActive(item)
+          const open   = openGroups[item.label] ?? active
+
+          // Collapsed mode: don't show the group header — just render children as flat icons with tooltips
+          if (collapsed) {
+            return item.children.map(c => (
+              <NavLink key={c.path} to={c.path}
+                className={({ isActive }) => cn('sidebar-link justify-center px-0', isActive && 'active')}
+                title={c.label}
+              >
+                <c.icon size={15} className="flex-shrink-0"/>
+              </NavLink>
+            ))
+          }
+
+          return (
+            <div key={item.label}>
+              <button
+                type="button"
+                onClick={() => toggleGroup(item.label)}
+                className={cn(
+                  'sidebar-link w-full',
+                  active && 'active'
+                )}
+              >
+                <item.icon size={15} className="flex-shrink-0"/>
+                <span className="truncate text-xs flex-1 text-left">{item.label}</span>
+                {open
+                  ? <ChevronDown  size={12} className="text-gray-400 flex-shrink-0"/>
+                  : <ChevronRight size={12} className="text-gray-400 flex-shrink-0"/>}
+              </button>
+              {open && (
+                <div className="ml-3 mt-0.5 space-y-0.5 border-l border-gray-100 pl-2">
+                  {item.children.map(c => (
+                    <NavLink key={c.path} to={c.path} end
+                      className={({ isActive }) => cn('sidebar-link text-xs', isActive && 'active')}
+                    >
+                      <ChevronRight size={11} className="flex-shrink-0 text-gray-400"/>
+                      <span className="truncate">{c.label}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </nav>
+
+      {/* User */}
+      <div className="border-t border-gray-100 p-3">
+        {!collapsed && (
+          <div className="flex items-center gap-2 mb-2 px-1">
+            <div className="w-7 h-7 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
+              {user?.name?.charAt(0)?.toUpperCase() ?? 'U'}
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-medium text-gray-900 truncate">{user?.name ?? 'User'}</div>
+              <div className="text-[10px] text-gray-400 capitalize truncate">{user?.role}</div>
+            </div>
+          </div>
+        )}
+        <button onClick={handleLogout}
+          className={cn('sidebar-link w-full text-red-500 hover:bg-red-50 hover:text-red-600', collapsed && 'justify-center')}>
+          <LogOut size={14} className="flex-shrink-0"/>
+          {!collapsed && <span className="text-xs">Logout</span>}
+        </button>
+      </div>
+    </aside>
+  )
+}

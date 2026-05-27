@@ -1,0 +1,58 @@
+# ── Dependencies ───────────────────────────────────────────────────
+node_modules/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.npm/
+
+# ── Build output ───────────────────────────────────────────────────
+dist/
+dist-ssr/
+build/
+.vite/
+.next/
+out/
+*.tsbuildinfo
+
+# ── Environment / secrets ──────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Logs ────────────────────────────────────────────────────────────
+*.log
+_vite.log
+_vite.err.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ── Test / coverage ────────────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+
+# ── ESLint / Prettier / cache ──────────────────────────────────────
+.eslintcache
+.stylelintcache
+
+# ── IDE / editors ──────────────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ── Local overrides ────────────────────────────────────────────────
+*.local
