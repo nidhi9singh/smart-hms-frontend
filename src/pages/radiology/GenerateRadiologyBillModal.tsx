@@ -206,7 +206,7 @@ export default function GenerateRadiologyBillModal({ open, onClose, onSuccess }:
                 <FormField label={idx === 0 ? 'Tax %' : ''}>
                   <input type="number" step="0.01" className="input bg-gray-50" readOnly {...register(`items.${idx}.tax_percent` as const, { valueAsNumber: true })} />
                 </FormField>
-                <FormField label={idx === 0 ? 'Amount ($)' : ''}>
+                <FormField label={idx === 0 ? 'Amount (₹)' : ''}>
                   <input type="number" step="0.01" className="input bg-gray-50" readOnly {...register(`items.${idx}.amount` as const, { valueAsNumber: true })} />
                 </FormField>
                 <button type="button" onClick={() => remove(idx)} className="icon-btn text-red-400 mb-1.5">
@@ -241,14 +241,14 @@ export default function GenerateRadiologyBillModal({ open, onClose, onSuccess }:
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-sm"><span>Total ($)</span><span className="font-medium">${summary.total.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Total (₹)</span><span className="font-medium">${summary.total.toFixed(2)}</span></div>
             <div className="flex items-center justify-between text-sm">
-              <span>Discount ($)</span>
+              <span>Discount (₹)</span>
               <input type="number" step="0.01" className="input h-8 w-32 text-right" {...register('discount', { valueAsNumber: true })} />
             </div>
-            <div className="flex justify-between text-sm"><span>Tax ($)</span><span>${summary.tax.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Tax (₹)</span><span>${summary.tax.toFixed(2)}</span></div>
             <div className="flex justify-between text-sm border-t border-gray-100 pt-1.5 font-semibold">
-              <span>Net Amount ($)</span><span>${summary.net.toFixed(2)}</span>
+              <span>Net Amount (₹)</span><span>${summary.net.toFixed(2)}</span>
             </div>
             <div className="pt-2 grid grid-cols-2 gap-3">
               <FormField label="Payment Mode">
@@ -256,7 +256,7 @@ export default function GenerateRadiologyBillModal({ open, onClose, onSuccess }:
                   {PAYMENT_MODES.map(p => <option key={p}>{p}</option>)}
                 </select>
               </FormField>
-              <FormField label="Amount ($)" required>
+              <FormField label="Amount (₹)" required>
                 <input type="number" step="0.01" className="input" {...register('paid', { valueAsNumber: true })} />
               </FormField>
             </div>

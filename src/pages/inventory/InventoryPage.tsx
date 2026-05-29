@@ -100,8 +100,8 @@ export default function InventoryPage() {
 
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: 'Total Items',     value: items.length,  color: 'bg-blue-50 text-blue-700' },
-          { label: 'Stock Entries',   value: stocks.length, color: 'bg-teal-50 text-teal-700' },
+          { label: 'Total Items',     value: items.length,  color: 'bg-emerald-50 text-emerald-700' },
+          { label: 'Stock Entries',   value: stocks.length, color: 'bg-emerald-50 text-emerald-700' },
           { label: 'Available Units', value: totalStockQty, color: 'bg-emerald-50 text-emerald-700' },
           { label: 'Issued (open)',   value: issuedCount,   color: 'bg-amber-50 text-amber-700' },
         ].map(s => (
@@ -121,7 +121,7 @@ export default function InventoryPage() {
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-teal-600 text-teal-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -215,7 +215,7 @@ export default function InventoryPage() {
                     <td className="px-3 py-2 text-gray-600">{i.return_date || '—'}</td>
                     <td className="px-3 py-2">
                       {returned ? (
-                        <span className="inline-block px-2 py-0.5 text-xs rounded bg-green-100 text-green-700">Returned</span>
+                        <span className="inline-block px-2 py-0.5 text-xs rounded bg-emerald-100 text-emerald-700">Returned</span>
                       ) : (
                         <button
                           onClick={() => returnMut.mutate(i.id)}
@@ -270,7 +270,7 @@ export default function InventoryPage() {
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => setItemModal({ open: true, item: i })}
-                        className="p-1 hover:bg-blue-50 rounded text-blue-600" title="Edit"
+                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600" title="Edit"
                       ><Edit2 size={14}/></button>
                       <button
                         onClick={() => { if (confirm('Delete this item?')) delItem.mutate(i.id) }}

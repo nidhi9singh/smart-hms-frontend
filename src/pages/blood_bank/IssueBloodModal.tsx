@@ -204,7 +204,7 @@ export default function IssueBloodModal({ open, onClose, onSuccess }: Props) {
         </div>
 
         <div className="grid grid-cols-4 gap-3">
-          <FormField label="Standard Charge ($)">
+          <FormField label="Standard Charge (₹)">
             <input type="number" step="0.01" className="input" {...register('standard_charge', { valueAsNumber: true })} />
           </FormField>
         </div>
@@ -220,23 +220,23 @@ export default function IssueBloodModal({ open, onClose, onSuccess }: Props) {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-sm"><span>Total ($)</span><span className="font-medium">${totals.total.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Total (₹)</span><span className="font-medium">${totals.total.toFixed(2)}</span></div>
             <div className="flex items-center justify-between text-sm">
-              <span>Discount ($)</span>
+              <span>Discount (₹)</span>
               <div className="flex items-center gap-1">
                 <input type="number" step="0.01" className="input h-8 w-20 text-right" {...register('discount', { valueAsNumber: true })} />
                 <input type="number" step="0.01" placeholder="%" className="input h-8 w-14 text-right" {...register('discount_percent', { valueAsNumber: true })} />
               </div>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span>Tax ($)</span>
+              <span>Tax (₹)</span>
               <div className="flex items-center gap-1">
                 <span>${totals.tax.toFixed(2)}</span>
                 <input type="number" step="0.01" placeholder="%" className="input h-8 w-14 text-right" {...register('tax_percent', { valueAsNumber: true })} />
               </div>
             </div>
             <div className="flex justify-between text-sm border-t border-gray-100 pt-1.5 font-semibold">
-              <span>Net Amount ($)</span><span>${totals.net.toFixed(2)}</span>
+              <span>Net Amount (₹)</span><span>${totals.net.toFixed(2)}</span>
             </div>
             <div className="pt-2 grid grid-cols-2 gap-3">
               <FormField label="Payment Mode">
@@ -244,7 +244,7 @@ export default function IssueBloodModal({ open, onClose, onSuccess }: Props) {
                   {PAYMENT_MODES.map(p => <option key={p}>{p}</option>)}
                 </select>
               </FormField>
-              <FormField label="Payment Amount ($)" required>
+              <FormField label="Payment Amount (₹)" required>
                 <input type="number" step="0.01" className="input" {...register('paid', { valueAsNumber: true })} />
               </FormField>
             </div>

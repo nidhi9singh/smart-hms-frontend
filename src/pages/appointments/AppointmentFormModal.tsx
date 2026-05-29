@@ -179,7 +179,7 @@ export default function AppointmentFormModal({ open, onClose, onSuccess }: Props
             {doctors.map((d: any) => <option key={d.id} value={d.id}>{d.name} ({d.staff_code})</option>)}
           </select>
         </FormField>
-        <FormField label="Doctor Fees ($)" required>
+        <FormField label="Doctor Fees (₹)" required>
           <input type="number" className="w-full h-10 px-3 border border-gray-300 rounded text-sm bg-gray-50"
             value={form.doctor_fees} onChange={e => setField('doctor_fees', e.target.value)} />
         </FormField>

@@ -91,8 +91,8 @@ export default function AddHolidayModal({ open, event, onClose, onSuccess }: Pro
                 className={cn(
                   'px-4 py-3 text-sm rounded border text-center transition',
                   eventType === t
-                    ? 'border-teal-500 bg-teal-50 text-teal-700 font-medium ring-1 ring-teal-300'
-                    : 'border-gray-200 text-gray-700 hover:border-teal-300'
+                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium ring-1 ring-emerald-300'
+                    : 'border-gray-200 text-gray-700 hover:border-emerald-300'
                 )}
               >{t}</button>
             ))}
@@ -122,7 +122,7 @@ export default function AddHolidayModal({ open, event, onClose, onSuccess }: Pro
             onClick={() => setValue('front_site', !frontSite)}
             className={cn(
               'relative inline-flex h-5 w-10 items-center rounded-full transition',
-              frontSite ? 'bg-teal-500' : 'bg-gray-300'
+              frontSite ? 'bg-emerald-500' : 'bg-gray-300'
             )}
             aria-pressed={frontSite}
           >

@@ -82,7 +82,7 @@ export default function QRAttendanceSettingsPage() {
               {mut.isPending ? 'Saving…' : 'Save'}
             </button>
           </div>
-          {mut.isSuccess && <p className="text-center text-xs text-green-600">Settings saved.</p>}
+          {mut.isSuccess && <p className="text-center text-xs text-emerald-600">Settings saved.</p>}
         </form>
       </div>
     </div>

@@ -12,16 +12,16 @@ import FormField from '@/components/ui/FormField'
 // Inline input components (avoids missing export issues)
 function InputField(props: React.InputHTMLAttributes<HTMLInputElement> & { error?: boolean }) {
   const { error, className = '', ...rest } = props
-  return <input className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest} />
+  return <input className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest} />
 }
 
 function SelectField({ children, error, className = '', ...rest }: React.SelectHTMLAttributes<HTMLSelectElement> & { error?: boolean; children: React.ReactNode }) {
-  return <select className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 bg-white ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest}>{children}</select>
+  return <select className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 bg-white ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest}>{children}</select>
 }
 
 function TextareaField(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const { className = '', ...rest } = props
-  return <textarea className={`w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 ${className}`} {...rest} />
+  return <textarea className={`w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 ${className}`} {...rest} />
 }
 
 interface Props {
@@ -301,7 +301,7 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
           {/* Apply TPA checkbox */}
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={form.apply_tpa} onChange={e => setField('apply_tpa', e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-blue-500" />
+              className="w-4 h-4 rounded border-gray-300 text-emerald-500" />
             <span className="text-sm text-gray-700 font-medium">Apply TPA</span>
           </label>
 
@@ -327,10 +327,10 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
 
           {/* Row: Standard Charge + Applied Charge */}
           <div className="grid grid-cols-2 gap-3">
-            <FormField label="Standard Charge ($)">
+            <FormField label="Standard Charge (₹)">
               <InputField type="number" value={standardCharge ? String(standardCharge) : ''} onChange={e => setField('standard_charge_manual', e.target.value)} placeholder="0" />
             </FormField>
-            <FormField label="Applied Charge ($)">
+            <FormField label="Applied Charge (₹)">
               <InputField type="number" value={form.applied_charge} onChange={e => setField('applied_charge', e.target.value)} />
             </FormField>
           </div>
@@ -353,10 +353,10 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
 
           {/* Row: Amount + Paid Amount */}
           <div className="grid grid-cols-2 gap-3">
-            <FormField label="Amount ($)">
+            <FormField label="Amount (₹)">
               <InputField value={amount ? amount.toFixed(2) : ''} readOnly className="bg-gray-50 font-semibold" />
             </FormField>
-            <FormField label="Paid Amount ($)">
+            <FormField label="Paid Amount (₹)">
               <InputField type="number" value={form.paid_amount} onChange={e => setField('paid_amount', e.target.value)} />
             </FormField>
           </div>

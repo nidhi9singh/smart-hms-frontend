@@ -316,7 +316,7 @@ export default function GenerateBillModal({ open, onClose, onSuccess }: Props) {
                       </span>
                     </div>
                   </FormField>
-                  <FormField label={idx === 0 ? 'Sale Price ($)' : ''} required={idx === 0}>
+                  <FormField label={idx === 0 ? 'Sale Price (₹)' : ''} required={idx === 0}>
                     <input type="number" step="0.01" className="input text-xs h-8"
                            {...register(`items.${idx}.sale_price` as const, { valueAsNumber: true })} />
                   </FormField>
@@ -328,7 +328,7 @@ export default function GenerateBillModal({ open, onClose, onSuccess }: Props) {
                     <input type="number" step="0.01" className="input text-xs h-8"
                            {...register(`items.${idx}.discount_percent` as const, { valueAsNumber: true })} />
                   </FormField>
-                  <FormField label={idx === 0 ? 'Amount ($)' : ''}>
+                  <FormField label={idx === 0 ? 'Amount (₹)' : ''}>
                     <input type="number" step="0.01" className="input text-xs h-8 bg-gray-50" readOnly
                            {...register(`items.${idx}.amount` as const, { valueAsNumber: true })} />
                   </FormField>
@@ -361,17 +361,17 @@ export default function GenerateBillModal({ open, onClose, onSuccess }: Props) {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-sm"><span>Total ($)</span><span className="font-medium">${totals.total.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Total (₹)</span><span className="font-medium">${totals.total.toFixed(2)}</span></div>
             <div className="flex items-center justify-between text-sm">
-              <span>Discount ($)</span>
+              <span>Discount (₹)</span>
               <div className="flex items-center gap-1">
                 <span className="text-xs text-gray-400">${totals.disc.toFixed(2)} + extra</span>
                 <input type="number" step="0.01" className="input h-8 w-24 text-right" {...register('discount', { valueAsNumber: true })} />
               </div>
             </div>
-            <div className="flex justify-between text-sm"><span>Tax ($)</span><span>${totals.tax.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Tax (₹)</span><span>${totals.tax.toFixed(2)}</span></div>
             <div className="flex justify-between text-sm border-t border-gray-100 pt-1.5 font-semibold">
-              <span>Net Amount ($)</span><span>${totals.net.toFixed(2)}</span>
+              <span>Net Amount (₹)</span><span>${totals.net.toFixed(2)}</span>
             </div>
             <div className="pt-2 grid grid-cols-2 gap-3">
               <FormField label="Payment Mode">
@@ -379,7 +379,7 @@ export default function GenerateBillModal({ open, onClose, onSuccess }: Props) {
                   {PAYMENT_MODES.map(p => <option key={p}>{p}</option>)}
                 </select>
               </FormField>
-              <FormField label="Payment Amount ($)" required>
+              <FormField label="Payment Amount (₹)" required>
                 <input type="number" step="0.01" className="input" {...register('paid_amount', { valueAsNumber: true })} />
               </FormField>
             </div>

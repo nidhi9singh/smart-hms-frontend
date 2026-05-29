@@ -58,7 +58,7 @@ export default function ReferralPage() {
           ].map(t => (
             <button key={t.id} onClick={() => { setTab(t.id as Tab); setSearch('') }}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-teal-600 text-teal-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -88,7 +88,7 @@ export default function ReferralPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/50">
-                  {['Payee','Patient Name','Bill No','Bill Amount ($)','Commission Percentage (%)','Commission Amount ($)','Action'].map(h => (
+                  {['Payee','Patient Name','Bill No','Bill Amount (₹)','Commission Percentage (%)','Commission Amount (₹)','Action'].map(h => (
                     <th key={h} className="px-4 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -98,9 +98,9 @@ export default function ReferralPage() {
                 : payments.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No referral payments</td></tr>
                 : payments.map(p => (
                   <tr key={p.id} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 text-teal-600 font-medium">{p.payee || `#${p.referral_person_id}`}</td>
+                    <td className="px-4 py-3 text-emerald-600 font-medium">{p.payee || `#${p.referral_person_id}`}</td>
                     <td className="px-4 py-3">{p.patient_name || (p.patient_id ? `#${p.patient_id}` : '—')}</td>
-                    <td className="px-4 py-3 text-teal-600">{p.bill_no || '—'}</td>
+                    <td className="px-4 py-3 text-emerald-600">{p.bill_no || '—'}</td>
                     <td className="px-4 py-3 text-right">{Number(p.bill_amount || 0).toFixed(2)}</td>
                     <td className="px-4 py-3 text-right">{Number(p.commission_percent || 0).toFixed(2)}</td>
                     <td className="px-4 py-3 text-right font-medium">{Number(p.commission_amount || 0).toFixed(2)}</td>
@@ -134,7 +134,7 @@ export default function ReferralPage() {
                   <tr key={p.id} className="hover:bg-gray-50/50 align-top">
                     <td className="px-4 py-3 font-medium">{p.name}</td>
                     <td className="px-4 py-3 text-gray-600">{p.category || '—'}</td>
-                    <td className="px-4 py-3 text-teal-600 text-xs whitespace-pre-line">
+                    <td className="px-4 py-3 text-emerald-600 text-xs whitespace-pre-line">
                       {p.commissions
                         ? Object.entries(p.commissions)
                             .filter(([, v]) => Number(v) > 0)

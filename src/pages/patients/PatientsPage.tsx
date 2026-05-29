@@ -64,10 +64,10 @@ export default function PatientsPage() {
   }
 
   const stats = [
-    { label: 'Total Patients', value: total,                                                      color: 'bg-teal-50 text-teal-700'   },
-    { label: 'Male',           value: patients.filter((p:any) => p.gender === 'Male').length,     color: 'bg-blue-50 text-blue-700'   },
+    { label: 'Total Patients', value: total,                                                      color: 'bg-emerald-50 text-emerald-700'   },
+    { label: 'Male',           value: patients.filter((p:any) => p.gender === 'Male').length,     color: 'bg-emerald-50 text-emerald-700'   },
     { label: 'Female',         value: patients.filter((p:any) => p.gender === 'Female').length,   color: 'bg-pink-50 text-pink-700'   },
-    { label: 'Active',         value: patients.filter((p:any) => p.is_active).length,             color: 'bg-green-50 text-green-700' },
+    { label: 'Active',         value: patients.filter((p:any) => p.is_active).length,             color: 'bg-emerald-50 text-emerald-700' },
   ]
 
   return (
@@ -164,7 +164,7 @@ export default function PatientsPage() {
                   {showDisabled ? 'No disabled patients' : 'No patients found'}
                 </td></tr>
               ) : patients.map((p: any, i: number) => (
-                <tr key={p.id} className={cn('hover:bg-gray-50/50 transition-colors', selected.includes(p.id) && 'bg-teal-50/30')}>
+                <tr key={p.id} className={cn('hover:bg-gray-50/50 transition-colors', selected.includes(p.id) && 'bg-emerald-50/30')}>
                   <td className="px-3 py-3">
                     <input type="checkbox" checked={selected.includes(p.id)} onChange={() => toggleSelect(p.id)}/>
                   </td>
@@ -173,7 +173,7 @@ export default function PatientsPage() {
                     <div className="flex items-center gap-2">
                       {p.photo_path
                         ? <img src={p.photo_path} alt="" className="w-7 h-7 rounded-full object-cover flex-shrink-0"/>
-                        : <div className="w-7 h-7 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
+                        : <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
                             {p.name?.split(' ').map((w:string) => w[0]).join('').toUpperCase().slice(0,2)}
                           </div>
                       }

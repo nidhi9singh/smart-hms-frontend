@@ -6,10 +6,12 @@ import {
   Baby, GitBranch, UserCog, QrCode, ClipboardList, CalendarDays,
   Receipt, Banknote, Share2, Shield, MessageSquare,
   Video, Download, Award, Globe, BarChart3, Settings,
-  LogOut, ChevronDown, ChevronRight, Hospital, Boxes
+  LogOut, ChevronDown, ChevronRight, Boxes, Wrench,
+  Activity, ScanLine, HeartPulse
 } from 'lucide-react'
 import { useState } from 'react'
 import { useAuthStore } from '@/store/authStore'
+import { canAccess } from '@/lib/access'
 import { cn } from '@/lib/utils'
 
 type LeafItem  = { path: string;  label: string; icon: any }
@@ -42,7 +44,13 @@ const NAV: NavItem[] = [
   { path:'/finance',      label:'Finance',             icon:Banknote },
   { path:'/messaging',    label:'Messaging',           icon:MessageSquare },
   { path:'/inventory',    label:'Inventory',           icon:Boxes },
-  { path:'/live-consultation',label:'Live Consultation',icon:Video },
+  {
+    label: 'Live Consultation', icon: Video,
+    children: [
+      { path:'/live-consultation',          label:'Live Consultation', icon:Video },
+      { path:'/live-consultation/meetings', label:'Live Meeting',      icon:Video },
+    ],
+  },
   { path:'/downloads',    label:'Download Centre',     icon:Download },
   {
     label: 'Certificate', icon: Award,
@@ -54,7 +62,30 @@ const NAV: NavItem[] = [
   },
   { path:'/cms',      label:'Front CMS', icon:Globe },
   { path:'/reports',  label:'Reports',   icon:BarChart3 },
-  { path:'/settings', label:'Settings',  icon:Settings },
+  {
+    label: 'Setup', icon: Wrench,
+    children: [
+      { path:'/setup/settings',         label:'Settings',         icon:Settings },
+      { path:'/setup/hospital-charges', label:'Hospital Charges', icon:Receipt },
+      { path:'/setup/bed',              label:'Bed',              icon:Bed },
+      { path:'/setup/front-office',     label:'Front Office',     icon:Building2 },
+      { path:'/setup/operations',       label:'Operations',       icon:Stethoscope },
+      { path:'/setup/pharmacy',         label:'Pharmacy',         icon:Pill },
+      { path:'/setup/pathology',        label:'Pathology',        icon:FlaskConical },
+      { path:'/setup/radiology',        label:'Radiology',        icon:RadioTower },
+      { path:'/setup/blood-bank',       label:'Blood Bank',       icon:Droplets },
+      { path:'/setup/symptoms',         label:'Symptoms',         icon:Activity },
+      { path:'/setup/findings',         label:'Findings',         icon:ScanLine },
+      { path:'/setup/vitals',           label:'Vitals',           icon:HeartPulse },
+      { path:'/setup/zoom',             label:'Zoom Setting',     icon:Video },
+      { path:'/setup/finance',          label:'Finance',          icon:Banknote },
+      { path:'/setup/human-resource',   label:'Human Resource',   icon:UserCog },
+      { path:'/setup/referral',         label:'Referral',         icon:Share2 },
+      { path:'/setup/appointment',      label:'Appointment',      icon:Calendar },
+      { path:'/setup/inventory',        label:'Inventory',        icon:Boxes },
+      { path:'/setup/custom-fields',    label:'Custom Field',     icon:ClipboardList },
+    ],
+  },
 ]
 
 
@@ -81,23 +112,24 @@ export default function Sidebar() {
     )}>
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-3 py-4 border-b border-gray-100">
-        <div className="w-8 h-8 rounded-lg bg-teal-600 flex items-center justify-center flex-shrink-0">
-          <Hospital size={16} className="text-white" />
-        </div>
-        {!collapsed && (
-          <div className="min-w-0">
-            <div className="text-xs font-bold text-gray-900 leading-tight truncate">Smart Hospital</div>
-            <div className="text-[10px] text-gray-400 truncate">& Research Center</div>
-          </div>
-        )}
+        <img src="/cognate.jpg" alt="Cognate"
+          className={cn('object-contain flex-shrink-0', collapsed ? 'h-8 w-8' : 'h-10 w-auto max-w-[140px]')}/>
         <button onClick={() => setCollapsed(c => !c)} className="ml-auto p-1 rounded hover:bg-gray-100 flex-shrink-0">
           {collapsed ? <ChevronRight size={12}/> : <ChevronDown size={12}/>}
         </button>
       </div>
 
-      {/* Nav */}
+      {/* Nav — filtered by role */}
       <nav className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
-        {NAV.map(item => {
+        {NAV
+          // Filter: leaves hidden when role lacks access; groups hidden when ALL children blocked.
+          .map(item => {
+            if (!isGroup(item)) return canAccess(user?.role, item.path) ? item : null
+            const visible = item.children.filter(c => canAccess(user?.role, c.path))
+            return visible.length ? { ...item, children: visible } : null
+          })
+          .filter((x): x is NavItem => x !== null)
+          .map(item => {
           if (!isGroup(item)) {
             return (
               <NavLink key={item.path} to={item.path}
@@ -166,7 +198,7 @@ export default function Sidebar() {
       <div className="border-t border-gray-100 p-3">
         {!collapsed && (
           <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="w-7 h-7 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
+            <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
               {user?.name?.charAt(0)?.toUpperCase() ?? 'U'}
             </div>
             <div className="min-w-0">

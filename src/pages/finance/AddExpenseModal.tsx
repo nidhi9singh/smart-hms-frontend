@@ -87,11 +87,11 @@ export default function AddExpenseModal({ open, expense, onClose, onSuccess }: P
           </FormField>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <FormField label="Amount ($)" required>
+          <FormField label="Amount (₹)" required>
             <input type="number" step="0.01" className="input" {...register('amount', { required: true, valueAsNumber: true })} />
           </FormField>
           <FormField label="Attach Document">
-            <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer text-sm text-gray-500 hover:border-teal-400">
+            <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer text-sm text-gray-500 hover:border-emerald-400">
               <Upload size={14}/>
               <span>Drop a file here or click</span>
               <input type="file" hidden />

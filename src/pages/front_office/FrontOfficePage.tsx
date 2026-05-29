@@ -96,7 +96,7 @@ export default function FrontOfficePage() {
             return (
               <button key={t.id} onClick={() => { setTab(t.id as Tab); setSearch('') }}
                 className={cn('flex items-center gap-1.5 px-4 py-2.5 text-sm border-b-2 -mb-px',
-                  tab === t.id ? 'border-teal-600 text-teal-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                  tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
                 )}><Icon size={13}/>{t.label}</button>
             )
           })}
@@ -134,7 +134,7 @@ export default function FrontOfficePage() {
                 <tr key={v.id} className="hover:bg-gray-50/50">
                   <td className="px-4 py-3"><span className="badge badge-blue">{v.purpose}</span></td>
                   <td className="px-4 py-3 font-medium">{v.name}</td>
-                  <td className="px-4 py-3 text-teal-600">{v.visit_to || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{v.visit_to || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{v.visit_type || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{v.phone || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{v.visit_date ? new Date(v.visit_date).toLocaleDateString() : '—'}</td>
@@ -171,7 +171,7 @@ export default function FrontOfficePage() {
                   <td className="px-4 py-3 text-gray-500">{c.phone || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{c.call_date ? new Date(c.call_date).toLocaleDateString() : '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{c.next_follow_up_date ? new Date(c.next_follow_up_date).toLocaleDateString() : '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{c.call_type || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{c.call_type || '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
                       <button className="icon-btn" onClick={() => setCallModal({ open: true, item: c })}><Edit2 size={12}/></button>
@@ -199,10 +199,10 @@ export default function FrontOfficePage() {
               : receives.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No receives</td></tr>
               : receives.map(r => (
                 <tr key={r.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-teal-600 font-medium">{r.from_title}</td>
-                  <td className="px-4 py-3 text-teal-600">{r.reference_no || '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{r.to_title || '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{r.address || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600 font-medium">{r.from_title}</td>
+                  <td className="px-4 py-3 text-emerald-600">{r.reference_no || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{r.to_title || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{r.address || '—'}</td>
                   <td className="px-4 py-3 text-gray-500 truncate max-w-xs">{r.note || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{r.date ? new Date(r.date).toLocaleDateString() : '—'}</td>
                   <td className="px-4 py-3">
@@ -232,9 +232,9 @@ export default function FrontOfficePage() {
               : dispatches.length === 0 ? <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400">No dispatches</td></tr>
               : dispatches.map(d => (
                 <tr key={d.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-teal-600 font-medium">{d.to_title}</td>
-                  <td className="px-4 py-3 text-teal-600">{d.reference_no || '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{d.from_title || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600 font-medium">{d.to_title}</td>
+                  <td className="px-4 py-3 text-emerald-600">{d.reference_no || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{d.from_title || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{d.date ? new Date(d.date).toLocaleDateString() : '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
@@ -263,10 +263,10 @@ export default function FrontOfficePage() {
               : complaints.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No complaints</td></tr>
               : complaints.map(c => (
                 <tr key={c.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-teal-600">#{c.id}</td>
-                  <td className="px-4 py-3 text-teal-600">{c.complain_type || '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{c.source || '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{c.complainant}</td>
+                  <td className="px-4 py-3 text-emerald-600">#{c.id}</td>
+                  <td className="px-4 py-3 text-emerald-600">{c.complain_type || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{c.source || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{c.complainant}</td>
                   <td className="px-4 py-3 text-gray-500">{c.phone || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{c.created_at ? new Date(c.created_at).toLocaleDateString() : '—'}</td>
                   <td className="px-4 py-3">

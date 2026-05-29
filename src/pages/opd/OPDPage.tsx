@@ -118,7 +118,7 @@ export default function OPDPage() {
             placeholder="Search..."
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
-            className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+            className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"
           />
           <div className="flex items-center gap-2">
             <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1) }}
@@ -187,7 +187,7 @@ export default function OPDPage() {
                     <td className="px-4 py-3 text-gray-500">{v.reference ?? ''}</td>
                     <td className="px-4 py-3 text-gray-500 max-w-[120px] truncate">{v.symptoms ?? ''}</td>
                     <td className="px-4 py-3">
-                      <span className={cn('text-xs', v.is_antenatal ? 'text-teal-600 font-medium' : 'text-gray-400')}>
+                      <span className={cn('text-xs', v.is_antenatal ? 'text-emerald-600 font-medium' : 'text-gray-400')}>
                         {v.is_antenatal ? 'Yes' : 'No'}
                       </span>
                     </td>

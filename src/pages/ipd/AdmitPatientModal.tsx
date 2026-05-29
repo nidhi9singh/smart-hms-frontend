@@ -147,7 +147,7 @@ export default function AdmitPatientModal({ open, onClose, onSuccess }: any) {
 
             {/* Credit Limit + Reference */}
             <div className="grid grid-cols-2 gap-3">
-              <FormField label="Credit Limit ($) *">
+              <FormField label="Credit Limit (₹) *">
                 <input type="number" className="w-full h-10 px-3 border border-gray-300 rounded text-sm" {...register('credit_limit', { required: true, valueAsNumber: true })} />
               </FormField>
               <FormField label="Reference">

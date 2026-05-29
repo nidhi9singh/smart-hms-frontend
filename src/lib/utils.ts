@@ -8,14 +8,14 @@ export const fmtDateTime = (d?: string | null) =>
   d ? new Date(d).toLocaleString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—'
 
 export const fmtCurrency = (n: number | string | null | undefined) =>
-  n != null ? `$${Number(n).toFixed(2)}` : '$0.00'
+  n != null ? `₹${Number(n).toFixed(2)}` : '₹0.00'
 
 export const initials = (name?: string) =>
   (name ?? '').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?'
 
 export const avatarBg = (i: number) => {
   const colors = [
-    'bg-teal-100 text-teal-700', 'bg-blue-100 text-blue-700',
+    'bg-emerald-100 text-emerald-700', 'bg-emerald-100 text-emerald-700',
     'bg-amber-100 text-amber-700', 'bg-pink-100 text-pink-700', 'bg-purple-100 text-purple-700',
   ]
   return colors[i % colors.length]

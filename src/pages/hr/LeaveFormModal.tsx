@@ -116,7 +116,7 @@ export default function LeaveFormModal({ open, onClose, onSuccess }: any) {
           <label className="block text-xs font-medium text-gray-600 mb-1.5">Attach Document</label>
           <div
             onClick={() => fileRef.current?.click()}
-            className="flex items-center justify-center gap-2 w-full h-10 border border-gray-200 rounded-lg bg-white cursor-pointer hover:border-teal-400 hover:bg-teal-50 transition text-sm text-gray-400"
+            className="flex items-center justify-center gap-2 w-full h-10 border border-gray-200 rounded-lg bg-white cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 transition text-sm text-gray-400"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             {docFile ? docFile.name : 'Drop a file here or click'}

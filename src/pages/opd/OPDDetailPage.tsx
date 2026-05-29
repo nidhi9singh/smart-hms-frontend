@@ -41,7 +41,7 @@ function BillingSummaryCard({ label, percent, paid, total }: { label: string; pe
         <p className="text-xs font-semibold text-gray-700 uppercase">{label}</p>
         <p className="text-xs text-gray-400">{percent}%</p>
       </div>
-      <p className="text-xs text-gray-600">${paid.toFixed(2)}/${total > 0 ? `$${total.toFixed(2)}` : '$0'}</p>
+      <p className="text-xs text-gray-600">₹{paid.toFixed(2)}/{total > 0 ? `₹${total.toFixed(2)}` : '₹0'}</p>
     </div>
   )
 }
@@ -201,7 +201,7 @@ function OverviewTab({ opd, charges, payments, meds, labs, ops, consults }: {
             <div className="mt-4 pt-3 border-t border-gray-100">
               <p className="text-xs font-bold text-gray-700 uppercase mb-2">Consultant Doctor</p>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">
                   {opd.consultant_name.charAt(0)}
                 </div>
                 <span className="text-sm text-gray-800">{opd.consultant_name} ({opd.consultant_code ?? opd.consultant_id})</span>
@@ -333,10 +333,10 @@ function OperationsTab({ ops }: { ops: any[] }) {
 
 function ChargesTab({ charges }: { charges: OPDCharge[] }) {
   return charges.length === 0
-    ? <EmptyTable headers={['Name', 'Charge Type', 'Standard Charge ($)', 'Discount', 'Tax', 'Applied Charge ($)', 'Amount ($)']} />
+    ? <EmptyTable headers={['Name', 'Charge Type', 'Standard Charge (₹)', 'Discount', 'Tax', 'Applied Charge (₹)', 'Amount (₹)']} />
     : (
       <table className="w-full text-sm">
-        <thead><tr className="border-b border-gray-200">{['Name', 'Charge Type', 'Standard Charge ($)', 'Discount', 'Tax', 'Applied Charge ($)', 'Amount ($)'].map(h => <th key={h} className="px-4 py-2.5 text-left font-medium text-gray-600">{h}</th>)}</tr></thead>
+        <thead><tr className="border-b border-gray-200">{['Name', 'Charge Type', 'Standard Charge (₹)', 'Discount', 'Tax', 'Applied Charge (₹)', 'Amount (₹)'].map(h => <th key={h} className="px-4 py-2.5 text-left font-medium text-gray-600">{h}</th>)}</tr></thead>
         <tbody className="divide-y divide-gray-100">
           {charges.map((c, i) => (
             <tr key={i}>
@@ -356,10 +356,10 @@ function ChargesTab({ charges }: { charges: OPDCharge[] }) {
 
 function PaymentsTab({ payments }: { payments: OPDPayment[] }) {
   return payments.length === 0
-    ? <EmptyTable headers={['Transaction ID', 'Date', 'Note', 'Payment Mode', 'Paid Amount ($)']} />
+    ? <EmptyTable headers={['Transaction ID', 'Date', 'Note', 'Payment Mode', 'Paid Amount (₹)']} />
     : (
       <table className="w-full text-sm">
-        <thead><tr className="border-b border-gray-200">{['Transaction ID', 'Date', 'Note', 'Payment Mode', 'Paid Amount ($)'].map(h => <th key={h} className="px-4 py-2.5 text-left font-medium text-gray-600">{h}</th>)}</tr></thead>
+        <thead><tr className="border-b border-gray-200">{['Transaction ID', 'Date', 'Note', 'Payment Mode', 'Paid Amount (₹)'].map(h => <th key={h} className="px-4 py-2.5 text-left font-medium text-gray-600">{h}</th>)}</tr></thead>
         <tbody className="divide-y divide-gray-100">
           {payments.map((p, i) => (
             <tr key={i}>

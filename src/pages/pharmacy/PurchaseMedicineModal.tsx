@@ -225,13 +225,13 @@ export default function PurchaseMedicineModal({ open, onClose, onSuccess }: Prop
                     <FormField label={idx === 0 ? 'Expiry Month' : ''} required={idx === 0}>
                       <input className="input text-xs h-8" placeholder="YYYY-MM" {...register(`items.${idx}.expiry_month` as const)} />
                     </FormField>
-                    <FormField label={idx === 0 ? 'MRP ($)' : ''} required={idx === 0}>
+                    <FormField label={idx === 0 ? 'MRP (₹)' : ''} required={idx === 0}>
                       <input type="number" step="0.01" className="input text-xs h-8" {...register(`items.${idx}.mrp` as const, { valueAsNumber: true })} />
                     </FormField>
-                    <FormField label={idx === 0 ? 'Batch Amt ($)' : ''}>
+                    <FormField label={idx === 0 ? 'Batch Amt (₹)' : ''}>
                       <input type="number" step="0.01" className="input text-xs h-8" {...register(`items.${idx}.batch_amount` as const, { valueAsNumber: true })} />
                     </FormField>
-                    <FormField label={idx === 0 ? 'Sale Price ($)' : ''} required={idx === 0}>
+                    <FormField label={idx === 0 ? 'Sale Price (₹)' : ''} required={idx === 0}>
                       <input type="number" step="0.01" className="input text-xs h-8" {...register(`items.${idx}.sale_price` as const, { valueAsNumber: true })} />
                     </FormField>
                     <FormField label={idx === 0 ? 'Pack Qty' : ''}>
@@ -240,13 +240,13 @@ export default function PurchaseMedicineModal({ open, onClose, onSuccess }: Prop
                     <FormField label={idx === 0 ? 'Qty' : ''} required={idx === 0}>
                       <input type="number" min={1} className="input text-xs h-8" {...register(`items.${idx}.quantity` as const, { valueAsNumber: true })} />
                     </FormField>
-                    <FormField label={idx === 0 ? 'Purchase Price ($)' : ''} required={idx === 0}>
+                    <FormField label={idx === 0 ? 'Purchase Price (₹)' : ''} required={idx === 0}>
                       <input type="number" step="0.01" className="input text-xs h-8" {...register(`items.${idx}.purchase_price` as const, { valueAsNumber: true })} />
                     </FormField>
                     <FormField label={idx === 0 ? 'Tax %' : ''}>
                       <input type="number" step="0.01" className="input text-xs h-8" {...register(`items.${idx}.tax_percent` as const, { valueAsNumber: true })} />
                     </FormField>
-                    <FormField label={idx === 0 ? 'Amount ($)' : ''}>
+                    <FormField label={idx === 0 ? 'Amount (₹)' : ''}>
                       <input type="number" step="0.01" className="input text-xs h-8 bg-gray-50" readOnly {...register(`items.${idx}.amount` as const, { valueAsNumber: true })} />
                     </FormField>
                     <button type="button" onClick={() => fields.length > 1 && remove(idx)}
@@ -264,7 +264,7 @@ export default function PurchaseMedicineModal({ open, onClose, onSuccess }: Prop
               <textarea className="input min-h-[60px]" {...register('note')} />
             </FormField>
             <FormField label="Attach Document">
-              <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer text-sm text-gray-500 hover:border-teal-400">
+              <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer text-sm text-gray-500 hover:border-emerald-400">
                 <Upload size={14}/>
                 <span>{docFile?.name || 'Drop a file here or click'}</span>
                 <input type="file" hidden onChange={e => setDocFile(e.target.files?.[0] ?? null)} />
@@ -273,18 +273,18 @@ export default function PurchaseMedicineModal({ open, onClose, onSuccess }: Prop
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-sm"><span>Total ($)</span><span className="font-medium">${totals.gross.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Total (₹)</span><span className="font-medium">${totals.gross.toFixed(2)}</span></div>
             <div className="flex items-center justify-between text-sm">
-              <span>Discount ($)</span>
+              <span>Discount (₹)</span>
               <div className="flex items-center gap-1">
                 <input type="number" step="0.01" className="input h-8 w-24 text-right" {...register('discount', { valueAsNumber: true })} />
                 <span className="text-xs text-gray-500">/</span>
                 <input type="number" step="0.01" placeholder="%" className="input h-8 w-16 text-right" {...register('discount_percent', { valueAsNumber: true })} />
               </div>
             </div>
-            <div className="flex justify-between text-sm"><span>Tax ($)</span><span>${totals.tax.toFixed(2)}</span></div>
+            <div className="flex justify-between text-sm"><span>Tax (₹)</span><span>${totals.tax.toFixed(2)}</span></div>
             <div className="flex justify-between text-sm border-t border-gray-100 pt-1.5 font-semibold">
-              <span>Net Amount ($)</span><span>${totals.net.toFixed(2)}</span>
+              <span>Net Amount (₹)</span><span>${totals.net.toFixed(2)}</span>
             </div>
             <div className="pt-2 grid grid-cols-2 gap-3">
               <FormField label="Payment Mode">
@@ -292,7 +292,7 @@ export default function PurchaseMedicineModal({ open, onClose, onSuccess }: Prop
                   {PAYMENT_MODES.map(p => <option key={p}>{p}</option>)}
                 </select>
               </FormField>
-              <FormField label="Payment Amount ($)">
+              <FormField label="Payment Amount (₹)">
                 <input type="number" step="0.01" className="input" {...register('payment_amount', { valueAsNumber: true })} />
               </FormField>
             </div>

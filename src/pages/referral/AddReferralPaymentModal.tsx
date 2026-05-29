@@ -187,7 +187,7 @@ export default function AddReferralPaymentModal({ open, payment, onClose, onSucc
               ))}
             </select>
           </FormField>
-          <FormField label="Patient Bill Amount ($)" required>
+          <FormField label="Patient Bill Amount (₹)" required>
             <input type="number" step="0.01" className="input bg-gray-50"
                    {...register('patient_bill_amount', { required: true, valueAsNumber: true })} readOnly />
           </FormField>
@@ -201,7 +201,7 @@ export default function AddReferralPaymentModal({ open, payment, onClose, onSucc
             <input type="number" step="0.01" className="input" placeholder="Percentage"
                    {...register('commission_percent', { required: true, valueAsNumber: true })} />
           </FormField>
-          <FormField label="Commission Amount ($)" required>
+          <FormField label="Commission Amount (₹)" required>
             <input type="number" step="0.01" className="input bg-gray-50"
                    {...register('commission_amount', { valueAsNumber: true })} readOnly />
           </FormField>

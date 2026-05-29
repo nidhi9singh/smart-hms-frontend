@@ -50,11 +50,11 @@ export default function TPAPage() {
               : tpas.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No TPAs</td></tr>
               : tpas.map(t => (
                 <tr key={t.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-teal-600 font-medium">{t.name}</td>
-                  <td className="px-4 py-3 text-teal-600">{t.code || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600 font-medium">{t.name}</td>
+                  <td className="px-4 py-3 text-emerald-600">{t.code || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{t.phone || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{t.address || '—'}</td>
-                  <td className="px-4 py-3 text-teal-600">{t.contact_person_name || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600">{t.contact_person_name || '—'}</td>
                   <td className="px-4 py-3 text-right text-gray-500">{t.contact_person_phone || '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">

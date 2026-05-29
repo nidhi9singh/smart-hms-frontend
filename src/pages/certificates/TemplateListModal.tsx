@@ -73,18 +73,18 @@ export default function TemplateListModal({ open, onClose, variant }: Props) {
                 <tr><td colSpan={3} className="px-3 py-6 text-center text-gray-400">No templates yet</td></tr>
               ) : templates.map(t => (
                 <tr key={t.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 font-medium text-teal-700">{t.name}</td>
+                  <td className="px-3 py-2 font-medium text-emerald-700">{t.name}</td>
                   <td className="px-3 py-2 text-gray-600">
                     {variant === 'certificate' ? '—' : (
                       t.background_image ? (
-                        <FileImage size={20} className="text-blue-500"/>
+                        <FileImage size={20} className="text-emerald-500"/>
                       ) : '—'
                     )}
                   </td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
                       <button title="View" className="p-1 hover:bg-gray-100 rounded text-gray-600"><ListIcon size={14}/></button>
-                      <button onClick={() => setEdit({ open: true, template: t })} className="p-1 hover:bg-blue-50 rounded text-blue-600"><Edit2 size={14}/></button>
+                      <button onClick={() => setEdit({ open: true, template: t })} className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete this template?')) del.mutate(t.id) }} className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
                   </td>

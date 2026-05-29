@@ -28,9 +28,9 @@ const TABS: { id: Tab; label: string }[] = [
 
 function statusBadge(status: string) {
   switch (status?.toLowerCase()) {
-    case 'approved':  return 'bg-green-500 text-white'
-    case 'confirmed': return 'bg-green-500 text-white'
-    case 'completed': return 'bg-blue-500 text-white'
+    case 'approved':  return 'bg-emerald-500 text-white'
+    case 'confirmed': return 'bg-emerald-500 text-white'
+    case 'completed': return 'bg-emerald-500 text-white'
     case 'cancelled': return 'bg-red-500 text-white'
     default:          return 'bg-orange-400 text-white'
   }
@@ -192,7 +192,7 @@ export default function AppointmentsPage() {
           <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
             <input type="text" placeholder="Search..." value={search}
               onChange={e => { setSearch(e.target.value); setPage(1) }}
-              className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400" />
+              className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400" />
             <div className="flex items-center gap-2">
               <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1) }}
                 className="border border-gray-300 rounded px-2 py-1 text-xs text-gray-600">
@@ -223,7 +223,7 @@ export default function AppointmentsPage() {
                   <tr className="border-b border-gray-200 bg-gray-50/50">
                     {['Patient Name', 'Appointment No', 'Created By', 'Appointment Date', 'Phone',
                       'Gender', 'Doctor', 'Source', 'Priority', 'Live Consultant',
-                      'Alternate Address', 'Fees ($)', 'Discount (%)', 'Paid ($)', 'Status'
+                      'Alternate Address', 'Fees (₹)', 'Discount (%)', 'Paid (₹)', 'Status'
                     ].map(h => (
                       <th key={h} className="px-3 py-3 text-left font-semibold text-gray-700 whitespace-nowrap text-xs">
                         {h} <span className="text-gray-400 text-[10px]">▼</span>

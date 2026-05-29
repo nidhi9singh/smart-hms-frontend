@@ -129,10 +129,10 @@ export default function AddPathologyTestModal({ open, test, onClose, onSuccess }
           <FormField label="Tax (%)">
             <input type="number" step="0.01" className="input" {...register('tax_percent', { valueAsNumber: true })} />
           </FormField>
-          <FormField label="Standard Charge ($)" required>
+          <FormField label="Standard Charge (₹)" required>
             <input type="number" step="0.01" className="input" {...register('standard_charge', { required: true, valueAsNumber: true })} />
           </FormField>
-          <FormField label="Amount ($)" required>
+          <FormField label="Amount (₹)" required>
             <input type="number" step="0.01" className="input bg-gray-50" {...register('amount', { valueAsNumber: true })} readOnly />
           </FormField>
         </div>

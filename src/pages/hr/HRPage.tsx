@@ -137,7 +137,7 @@ function PayrollTab({ staffList, markPaid }: { staffList: any[]; markPaid: any }
             <span>Records: 1 to {filtered.length} of {filtered.length}</span>
             <div className="flex items-center gap-1">
               <button className="icon-btn">‹</button>
-              <span className="px-2 py-1 bg-teal-600 text-white rounded text-xs">1</span>
+              <span className="px-2 py-1 bg-emerald-600 text-white rounded text-xs">1</span>
               <button className="icon-btn">›</button>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function HRPage() {
     { id: 'payroll',    label: 'Payroll'          },
   ]
 
-  const avatarColors = ['bg-teal-100 text-teal-700','bg-blue-100 text-blue-700','bg-amber-100 text-amber-700','bg-pink-100 text-pink-700']
+  const avatarColors = ['bg-emerald-100 text-emerald-700','bg-emerald-100 text-emerald-700','bg-amber-100 text-amber-700','bg-pink-100 text-pink-700']
 
   // Attendance search
   const handleAttSearch = async () => {
@@ -291,10 +291,10 @@ export default function HRPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label:'Total Staff',     value: staffList.length,                                     color:'bg-teal-50 text-teal-700'   },
-          { label:'Doctors',         value: staffList.filter((s:any) => s.role==='doctor').length, color:'bg-blue-50 text-blue-700'   },
+          { label:'Total Staff',     value: staffList.length,                                     color:'bg-emerald-50 text-emerald-700'   },
+          { label:'Doctors',         value: staffList.filter((s:any) => s.role==='doctor').length, color:'bg-emerald-50 text-emerald-700'   },
           { label:'Pending Leaves',  value: leaves.filter((l:any) => l.status==='Pending').length, color:'bg-amber-50 text-amber-700' },
-          { label:'Approved Leaves', value: leaves.filter((l:any) => l.status==='Approved').length,color:'bg-green-50 text-green-700' },
+          { label:'Approved Leaves', value: leaves.filter((l:any) => l.status==='Approved').length,color:'bg-emerald-50 text-emerald-700' },
         ].map(s => (
           <div key={s.label} className="card p-4 flex items-center gap-3">
             <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center font-bold text-sm', s.color)}>{s.value}</div>
@@ -309,7 +309,7 @@ export default function HRPage() {
           {tabs.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px transition-colors',
-                tab === t.id ? 'border-teal-600 text-teal-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>
               {t.label}
             </button>
@@ -329,7 +329,7 @@ export default function HRPage() {
             <div className="flex-1"/>
             <div className="flex border border-gray-200 rounded-lg overflow-hidden">
               {(['list','card'] as const).map(m => (
-                <button key={m} onClick={() => setViewMode(m)} className={cn('px-3 py-1.5 text-xs capitalize', viewMode===m ? 'bg-teal-600 text-white' : 'text-gray-600 hover:bg-gray-50')}>{m}</button>
+                <button key={m} onClick={() => setViewMode(m)} className={cn('px-3 py-1.5 text-xs capitalize', viewMode===m ? 'bg-emerald-600 text-white' : 'text-gray-600 hover:bg-gray-50')}>{m}</button>
               ))}
             </div>
           </div>
@@ -382,7 +382,7 @@ export default function HRPage() {
           ) : (
             <div className="grid grid-cols-3 gap-4 p-4">
               {staffList.map((s: any, i: number) => (
-                <div key={s.id} className="border border-gray-100 rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-teal-200 transition-colors">
+                <div key={s.id} className="border border-gray-100 rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-emerald-200 transition-colors">
                   {s.photo_path
                     ? <img src={s.photo_path} alt="" className="w-12 h-12 rounded-full object-cover"/>
                     : <div className={cn('w-12 h-12 rounded-full flex items-center justify-center text-base font-semibold', avatarColors[i % 4])}>
@@ -441,7 +441,7 @@ export default function HRPage() {
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
                         {l.status === 'Pending' && <>
-                          <button className="icon-btn text-green-600" title="Approve" onClick={() => updateLeaveStatus.mutate({ id: l.id, status: 'Approved' })}><Check size={13}/></button>
+                          <button className="icon-btn text-emerald-600" title="Approve" onClick={() => updateLeaveStatus.mutate({ id: l.id, status: 'Approved' })}><Check size={13}/></button>
                           <button className="icon-btn text-red-400" title="Reject" onClick={() => updateLeaveStatus.mutate({ id: l.id, status: 'Disapprove' })}><X size={13}/></button>
                         </>}
                         <button className="icon-btn"><Eye size={13}/></button>
@@ -494,7 +494,7 @@ export default function HRPage() {
                   <span className="font-medium whitespace-nowrap">Set Attendance For All Staff As</span>
                   {ATT_STATUSES.map(s => (
                     <label key={s.value} className="flex items-center gap-1 cursor-pointer whitespace-nowrap">
-                      <input type="radio" name="bulk-att" className="accent-teal-600"
+                      <input type="radio" name="bulk-att" className="accent-emerald-600"
                         onChange={() => setAllStatus(s.value)} />
                       {s.label} <span className="text-gray-400">({s.short})</span>
                     </label>
@@ -539,7 +539,7 @@ export default function HRPage() {
                                     name={`att-${s.id}`}
                                     checked={val.status === st.value}
                                     onChange={() => setVal('status', st.value)}
-                                    className="accent-teal-600"
+                                    className="accent-emerald-600"
                                   />
                                   {st.label}
                                 </label>

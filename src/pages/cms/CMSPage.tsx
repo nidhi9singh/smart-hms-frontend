@@ -171,13 +171,13 @@ export default function CMSPage() {
                 ) : pages.map(p => (
                   <tr key={p.id} className="border-t hover:bg-gray-50">
                     <td className="px-3 py-2 font-medium text-gray-800">{p.title}</td>
-                    <td className="px-3 py-2 text-blue-600 truncate max-w-md" title={p.url}>{p.url}</td>
+                    <td className="px-3 py-2 text-emerald-600 truncate max-w-md" title={p.url}>{p.url}</td>
                     <td className="px-3 py-2">
                       <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 rounded">{p.page_type}</span>
                     </td>
                     <td className="px-3 py-2 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => setAddOpen({ open: true, page: p })} className="p-1 hover:bg-blue-50 rounded text-blue-600"><Edit2 size={14}/></button>
+                        <button onClick={() => setAddOpen({ open: true, page: p })} className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
                         <button onClick={() => { if (confirm('Delete this page?')) delPage.mutate(p.id) }} className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                       </div>
                     </td>
@@ -217,7 +217,7 @@ export default function CMSPage() {
                       <td className="px-3 py-2">
                         <button
                           onClick={() => setExpandedGroups(s => ({ ...s, [g.id]: !s[g.id] }))}
-                          className="text-teal-700 hover:underline flex items-center gap-1"
+                          className="text-emerald-700 hover:underline flex items-center gap-1"
                         >
                           {expanded ? <ChevronDown size={12}/> : <Plus size={12}/>}
                           {g.name}
@@ -226,7 +226,7 @@ export default function CMSPage() {
                       </td>
                       <td className="px-3 py-2 text-right">
                         <div className="flex items-center justify-end gap-1">
-                          <button onClick={() => setMenuModal({ open: true, group: g })} className="p-1 hover:bg-blue-50 rounded text-blue-600"><Edit2 size={14}/></button>
+                          <button onClick={() => setMenuModal({ open: true, group: g })} className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
                           <button onClick={() => { if (confirm('Delete this menu group?')) delMenu.mutate(g.id) }} className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                         </div>
                       </td>
@@ -280,7 +280,7 @@ export default function CMSPage() {
                       )}
                     </div>
                     <div className="p-2 flex items-center justify-between gap-1">
-                      <span className="text-xs text-blue-600 truncate" title={b.title}>{b.title}</span>
+                      <span className="text-xs text-emerald-600 truncate" title={b.title}>{b.title}</span>
                       <button
                         onClick={() => { if (confirm('Delete this banner?')) delBanner.mutate(b.id) }}
                         className="p-0.5 hover:bg-red-50 rounded text-red-500"

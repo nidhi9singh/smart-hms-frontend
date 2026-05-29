@@ -13,22 +13,22 @@ type Tab = 'overview' | 'report' | 'setting'
 const SECTIONS: { id: string; title: string; cols: { key: string; label: string }[] }[] = [
   { id: 'appointment', title: 'Appointment', cols: [
     { key: 'online_appointment',  label: 'Online Appointment' },
-    { key: 'online_amount',       label: 'Online Amount ($)' },
+    { key: 'online_amount',       label: 'Online Amount (₹)' },
     { key: 'offline_appointment', label: 'Offline Appointment' },
-    { key: 'offline_amount',      label: 'Offline Amount ($)' },
+    { key: 'offline_amount',      label: 'Offline Amount (₹)' },
     { key: 'total_appointments',  label: 'Total Appointments' },
-    { key: 'total_amount',        label: 'Total Amount ($)' },
+    { key: 'total_amount',        label: 'Total Amount (₹)' },
   ]},
   { id: 'opd', title: 'OPD - Out Patient', cols: [
     { key: 'total_opd',     label: 'Total OPD' },
     { key: 'total_visit',   label: 'Total Visit' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
     { key: 'total_paid',    label: 'Total Paid' },
   ]},
   { id: 'ipd', title: 'IPD - In Patient', cols: [
     { key: 'patient_count', label: 'Patient Count' },
     { key: 'total_ipd',     label: 'Total IPD' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
     { key: 'total_paid',    label: 'Total Paid' },
   ]},
   { id: 'operation_theatre', title: 'Operation Theatre', cols: [
@@ -37,39 +37,39 @@ const SECTIONS: { id: string; title: string; cols: { key: string; label: string 
   ]},
   { id: 'pharmacy', title: 'Pharmacy', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
-    { key: 'total_refund',  label: 'Total Refund ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
+    { key: 'total_refund',  label: 'Total Refund (₹)' },
   ]},
   { id: 'pathology', title: 'Pathology', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
   ]},
   { id: 'radiology', title: 'Radiology', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
   ]},
   { id: 'blood_donor', title: 'Blood Donor Transactions', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
   ]},
   { id: 'blood_issue', title: 'Blood Issue Transactions', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
   ]},
   { id: 'component_issue', title: 'Component Issue Transactions', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
   ]},
   { id: 'ambulance', title: 'Ambulance', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'total_amount',  label: 'Total Amount ($)' },
-    { key: 'total_paid',    label: 'Total Paid ($)' },
+    { key: 'total_amount',  label: 'Total Amount (₹)' },
+    { key: 'total_paid',    label: 'Total Paid (₹)' },
   ]},
   { id: 'birth', title: 'Birth Record', cols: [
     { key: 'total_birth', label: 'Total Birth' },
@@ -86,15 +86,15 @@ const SECTIONS: { id: string; title: string; cols: { key: string; label: string 
     { key: 'total_staff',         label: 'Total Staff' },
     { key: 'payroll_generated',   label: 'Payroll Generated' },
     { key: 'payroll_paid',        label: 'Payroll Paid' },
-    { key: 'net_payroll_amount',  label: 'Net Payroll Amount ($)' },
-    { key: 'payroll_paid_amount', label: 'Payroll Paid ($)' },
+    { key: 'net_payroll_amount',  label: 'Net Payroll Amount (₹)' },
+    { key: 'payroll_paid_amount', label: 'Payroll Paid (₹)' },
   ]},
   { id: 'transactions', title: 'Transactions', cols: [
     { key: 'patient_count', label: 'Patient Count' },
-    { key: 'online_paid',   label: 'Online Paid ($)' },
-    { key: 'offline_paid',  label: 'Offline Paid ($)' },
-    { key: 'total_refund',  label: 'Total Refund ($)' },
-    { key: 'total',         label: 'Total ($)' },
+    { key: 'online_paid',   label: 'Online Paid (₹)' },
+    { key: 'offline_paid',  label: 'Offline Paid (₹)' },
+    { key: 'total_refund',  label: 'Total Refund (₹)' },
+    { key: 'total',         label: 'Total (₹)' },
   ]},
 ]
 
@@ -179,7 +179,7 @@ export default function MultiBranchPage() {
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-teal-600 text-teal-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -251,7 +251,7 @@ export default function MultiBranchPage() {
                     )}
                   >
                     <FileText size={13} className="text-gray-500 flex-shrink-0"/>
-                    <span className="text-sm text-teal-700">{r.label}</span>
+                    <span className="text-sm text-emerald-700">{r.label}</span>
                   </button>
                 )
               })}
@@ -311,7 +311,7 @@ export default function MultiBranchPage() {
                 ) : !report?.rows?.length ? (
                   <tr><td colSpan={report?.extra_label ? 4 : 3} className="px-4 py-12 text-center">
                     <div className="text-rose-400 text-xs mb-2">No data available in table</div>
-                    <div className="text-teal-600 text-xs">← Add new record or search with different criteria.</div>
+                    <div className="text-emerald-600 text-xs">← Add new record or search with different criteria.</div>
                   </td></tr>
                 ) : report.rows.map((row: any, i: number) => (
                   <tr key={i} className="hover:bg-gray-50/50">
@@ -320,7 +320,7 @@ export default function MultiBranchPage() {
                     <td className="px-4 py-3 text-xs text-gray-500">{row.date}</td>
                     <td className="px-4 py-3 text-right text-xs">
                       {report.value_type === 'currency'
-                        ? `$${Number(row.value).toFixed(2)}`
+                        ? `₹${Number(row.value).toFixed(2)}`
                         : Number(row.value)}
                     </td>
                   </tr>
@@ -359,8 +359,8 @@ export default function MultiBranchPage() {
               : filtered.length === 0 ? <tr><td colSpan={3} className="px-4 py-8 text-center text-gray-400">No branches</td></tr>
               : filtered.map(b => (
                 <tr key={b.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-teal-600 font-medium">{b.name}</td>
-                  <td className="px-4 py-3 text-teal-600">{b.url || '—'}</td>
+                  <td className="px-4 py-3 text-emerald-600 font-medium">{b.name}</td>
+                  <td className="px-4 py-3 text-emerald-600">{b.url || '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
                       <button className="icon-btn" onClick={() => setBranchModal({ open: true, branch: b })}><Edit2 size={12}/></button>

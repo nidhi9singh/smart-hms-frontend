@@ -9,14 +9,14 @@ const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 const PIE_COLORS = ['#0d9488','#f59e0b','#3b82f6','#8b5cf6','#06b6d4','#ec4899','#10b981','#6366f1']
 
 const KPI_CARDS = [
-  { key:'opd_income',      label:'OPD Income',       icon:Activity,  color:'text-teal-600',   bg:'bg-teal-50' },
+  { key:'opd_income',      label:'OPD Income',       icon:Activity,  color:'text-emerald-600',   bg:'bg-emerald-50' },
   { key:'ipd_income',      label:'IPD Income',       icon:Bed,       color:'text-blue-600',   bg:'bg-blue-50' },
   { key:'pharmacy_income', label:'Pharmacy Income',  icon:Pill,      color:'text-amber-600',  bg:'bg-amber-50' },
   { key:'pathology_income',label:'Pathology Income', icon:FlaskConical,color:'text-purple-600',bg:'bg-purple-50' },
   { key:'radiology_income',label:'Radiology Income', icon:RadioTower,color:'text-indigo-600', bg:'bg-indigo-50' },
   { key:'blood_bank_income',label:'Blood Bank Income',icon:Droplets, color:'text-red-600',    bg:'bg-red-50' },
   { key:'ambulance_income',label:'Ambulance Income', icon:Ambulance, color:'text-orange-600', bg:'bg-orange-50' },
-  { key:'general_income',  label:'General Income',   icon:TrendingUp,color:'text-green-600',  bg:'bg-green-50' },
+  { key:'general_income',  label:'General Income',   icon:TrendingUp,color:'text-emerald-600',  bg:'bg-emerald-50' },
   { key:'expenses',        label:'Expenses',         icon:DollarSign,color:'text-rose-600',   bg:'bg-rose-50' },
 ]
 
@@ -55,7 +55,7 @@ export default function DashboardPage() {
     <div className="p-6 space-y-6">
       <div>
         <h1 className="page-title">Dashboard</h1>
-        <p className="page-sub">Smart Hospital & Research Center — Overview</p>
+        <p className="page-sub">Cognate — Overview</p>
       </div>
 
       {/* KPI Cards */}
@@ -96,7 +96,7 @@ export default function DashboardPage() {
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0"/>
               <XAxis dataKey="month" tick={{ fontSize: 11 }} axisLine={false} tickLine={false}/>
-              <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000).toFixed(0)}k`}/>
+              <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`}/>
               <Tooltip formatter={(v: any) => fmtCurrency(v)}/>
               <Area type="monotone" dataKey="income" stroke="#0d9488" strokeWidth={2} fill="url(#gIncome)" name="Income"/>
               <Area type="monotone" dataKey="expenses" stroke="#f43f5e" strokeWidth={2} fill="url(#gExpenses)" name="Expenses"/>

@@ -46,9 +46,9 @@ const MODULE_LABEL: Record<string, string> = {
 }
 
 const MODULE_COLOR: Record<string, string> = {
-  opd:             'bg-blue-50 text-blue-700',
+  opd:             'bg-emerald-50 text-emerald-700',
   ipd:             'bg-indigo-50 text-indigo-700',
-  pathology:       'bg-teal-50 text-teal-700',
+  pathology:       'bg-emerald-50 text-emerald-700',
   radiology:       'bg-cyan-50 text-cyan-700',
   pharmacy:        'bg-amber-50 text-amber-700',
   blood_issue:     'bg-rose-50 text-rose-700',
@@ -101,7 +101,7 @@ export default function BillingPage() {
                 <button
                   key={t.label}
                   onClick={() => navigate(t.to)}
-                  className="flex flex-col items-center justify-center gap-2 py-8 border border-gray-200 rounded-lg hover:border-teal-400 hover:bg-teal-50/30 transition"
+                  className="flex flex-col items-center justify-center gap-2 py-8 border border-gray-200 rounded-lg hover:border-emerald-400 hover:bg-emerald-50/30 transition"
                 >
                   <Icon size={28} className="text-gray-600" />
                   <span className="text-sm text-gray-700">{t.label}</span>
@@ -154,17 +154,17 @@ export default function BillingPage() {
               </div>
 
               <div className="grid grid-cols-4 gap-2 text-xs">
-                <div className="p-2 bg-blue-50 rounded text-center">
+                <div className="p-2 bg-emerald-50 rounded text-center">
                   <div className="text-gray-500">Amount</div>
-                  <div className="font-semibold text-blue-700">${summary.total_amount.toFixed(2)}</div>
+                  <div className="font-semibold text-emerald-700">${summary.total_amount.toFixed(2)}</div>
                 </div>
-                <div className="p-2 bg-teal-50 rounded text-center">
+                <div className="p-2 bg-emerald-50 rounded text-center">
                   <div className="text-gray-500">Net</div>
-                  <div className="font-semibold text-teal-700">${summary.total_net.toFixed(2)}</div>
+                  <div className="font-semibold text-emerald-700">${summary.total_net.toFixed(2)}</div>
                 </div>
-                <div className="p-2 bg-green-50 rounded text-center">
+                <div className="p-2 bg-emerald-50 rounded text-center">
                   <div className="text-gray-500">Paid</div>
-                  <div className="font-semibold text-green-700">${summary.total_paid.toFixed(2)}</div>
+                  <div className="font-semibold text-emerald-700">${summary.total_paid.toFixed(2)}</div>
                 </div>
                 <div className="p-2 bg-red-50 rounded text-center">
                   <div className="text-gray-500">Balance</div>
@@ -196,15 +196,15 @@ export default function BillingPage() {
                               {MODULE_LABEL[b.module] ?? b.module}
                             </span>
                           </td>
-                          <td className="px-3 py-2 font-mono text-teal-600">{b.bill_no}</td>
+                          <td className="px-3 py-2 font-mono text-emerald-600">{b.bill_no}</td>
                           <td className="px-3 py-2 text-gray-500">{b.date ? new Date(b.date).toLocaleDateString() : '—'}</td>
                           <td className="px-3 py-2 text-right">${b.amount.toFixed(2)}</td>
                           <td className="px-3 py-2 text-right font-medium">${b.net_amount.toFixed(2)}</td>
-                          <td className="px-3 py-2 text-right text-green-600">${b.paid.toFixed(2)}</td>
+                          <td className="px-3 py-2 text-right text-emerald-600">${b.paid.toFixed(2)}</td>
                           <td className="px-3 py-2 text-right">
                             {b.balance > 0
                               ? <span className="text-red-500 font-medium">${b.balance.toFixed(2)}</span>
-                              : <span className="text-green-500">$0.00</span>}
+                              : <span className="text-emerald-500">₹0.00</span>}
                           </td>
                         </tr>
                       ))}
