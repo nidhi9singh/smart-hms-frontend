@@ -149,7 +149,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-4">
-          © 2026 Cognate — Leading the way
+          © 2026 Xenocipher — Leading the way
         </p>
       </div>
     </div>
