@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { UserPlus, Search } from 'lucide-react'
+import { toast } from 'sonner'
 import { bloodBankApi } from '@/api/blood_bank'
 import { patientsApi } from '@/api/patients'
 import { hrApi } from '@/api/hr'
@@ -98,25 +99,37 @@ export default function IssueComponentModal({ open, onClose, onSuccess }: Props)
   }, [standardCharge, discount, discPct, taxPct])
 
   const mut = useMutation({
-    mutationFn: (raw: FormShape) => bloodBankApi.issueComponent({
-      component_id      : Number(raw.component_id),
-      patient_id        : raw.patient_id ? Number(raw.patient_id) : undefined,
-      case_id           : raw.case_id || undefined,
-      hospital_doctor_id: raw.hospital_doctor_id ? Number(raw.hospital_doctor_id) : undefined,
-      reference_name    : raw.reference_name || undefined,
-      technician        : raw.technician || undefined,
-      charge_category   : raw.charge_category || undefined,
-      charge_name       : raw.charge_name || undefined,
-      standard_charge   : Number(raw.standard_charge) || 0,
-      note              : raw.note || undefined,
-      apply_tpa         : !!raw.apply_tpa,
-      amount            : Number(raw.standard_charge) || 0,
-      discount          : totals.disc,
-      tax_percent       : Number(raw.tax_percent) || 0,
-      paid              : Number(raw.paid) || 0,
-      payment_mode      : raw.payment_mode || 'Cash',
-    }),
-    onSuccess,
+    mutationFn: (raw: FormShape) => {
+      if (!raw.component_id) throw new Error('Select a component bag')
+      return bloodBankApi.issueComponent({
+        component_id      : Number(raw.component_id),
+        patient_id        : raw.patient_id ? Number(raw.patient_id) : undefined,
+        case_id           : raw.case_id || undefined,
+        hospital_doctor_id: raw.hospital_doctor_id ? Number(raw.hospital_doctor_id) : undefined,
+        reference_name    : raw.reference_name || undefined,
+        technician        : raw.technician || undefined,
+        charge_category   : raw.charge_category || undefined,
+        charge_name       : raw.charge_name || undefined,
+        standard_charge   : Number(raw.standard_charge) || 0,
+        note              : raw.note || undefined,
+        apply_tpa         : !!raw.apply_tpa,
+        amount            : Number(raw.standard_charge) || 0,
+        discount          : totals.disc,
+        tax_percent       : Number(raw.tax_percent) || 0,
+        paid              : Number(raw.paid) || 0,
+        payment_mode      : raw.payment_mode || 'Cash',
+      }).then(r => r.data)
+    },
+    onSuccess: () => {
+      toast.success('Component issued')
+      qc.invalidateQueries({ queryKey: ['bb-comp-issues'] })
+      qc.invalidateQueries({ queryKey: ['bb-comps'] })
+      onSuccess()
+    },
+    onError: (e: any) => {
+      const d = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to issue component'
+      toast.error(typeof d === 'string' ? d : JSON.stringify(d))
+    },
   })
 
   return (

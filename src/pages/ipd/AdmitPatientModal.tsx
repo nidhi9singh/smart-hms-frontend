@@ -1,7 +1,8 @@
 // src/pages/ipd/AdmitPatientModal.tsx
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { ipdApi } from '@/api/ipd'
 import { hrApi } from '@/api/hr'
 import { patientsApi } from '@/api/patients'
@@ -9,6 +10,7 @@ import Modal from '@/components/ui/Modal'
 import FormField from '@/components/ui/FormField'
 
 export default function AdmitPatientModal({ open, onClose, onSuccess }: any) {
+  const qc = useQueryClient()
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: { credit_limit: 20000, payment_mode: 'Cash' },
   })
@@ -48,8 +50,25 @@ export default function AdmitPatientModal({ open, onClose, onSuccess }: any) {
   const wardTypes = [...new Set(beds.map((b: any) => b.ward_type))] as string[]
 
   const mut = useMutation({
-    mutationFn: (d: any) => ipdApi.admit(d),
-    onSuccess,
+    mutationFn: (d: any) => ipdApi.admit({
+      ...d,
+      patient_id:        Number(d.patient_id) || undefined,
+      consultant_id:     d.consultant_id ? Number(d.consultant_id) : undefined,
+      is_casualty:       d.is_casualty === 'true' || d.is_casualty === true,
+      is_old_patient:    d.is_old_patient === 'true' || d.is_old_patient === true,
+      live_consultation: d.live_consultation === 'true' || d.live_consultation === true,
+      credit_limit:      Number(d.credit_limit) || 0,
+    }).then(r => r.data),
+    onSuccess: () => {
+      toast.success('Patient admitted')
+      qc.invalidateQueries({ queryKey: ['ipd'] })
+      qc.invalidateQueries({ queryKey: ['ipd-beds'] })
+      onSuccess?.()
+    },
+    onError: (e: any) => {
+      const detail = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to admit patient'
+      toast.error(typeof detail === 'string' ? detail : JSON.stringify(detail))
+    },
   })
 
   return (
@@ -159,9 +178,10 @@ export default function AdmitPatientModal({ open, onClose, onSuccess }: any) {
             <FormField label="Consultant Doctor *">
               <select className="w-full h-10 px-3 border border-gray-300 rounded text-sm bg-white" {...register('consultant_id', { required: true })}>
                 <option value="">Select</option>
-                {doctors.map((d: any) => (
-                  <option key={d.id} value={d.id}>{d.name} ({d.staff_code})</option>
-                ))}
+                {doctors.map((d: any) => {
+                  const n = d.full_name || [d.first_name, d.last_name].filter(Boolean).join(' ') || d.name || `Staff #${d.id}`
+                  return <option key={d.id} value={d.id}>{n} ({d.staff_code})</option>
+                })}
               </select>
             </FormField>
 

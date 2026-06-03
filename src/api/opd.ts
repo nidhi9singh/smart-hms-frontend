@@ -186,13 +186,15 @@ export const opdApi = {
   delete: (id: number) =>
     api.delete<ApiResponse<null>>(`/opd/${id}`),
 
-  // Charge categories
+  // Charge categories — sourced from hospital_charges master
   chargeCategories: () =>
-    api.get<ApiResponse<ChargeCategory[]>>('/opd/charge-categories'),
+    api.get<ApiResponse<ChargeCategory[]>>('/hospital-charges/charge-categories'),
 
-  // Charges by category
+  // Charges by category — sourced from hospital_charges master
   charges: (categoryId?: number) =>
-    api.get<ApiResponse<ChargeItem[]>>('/opd/charges', { params: { category_id: categoryId } }),
+    api.get<ApiResponse<ChargeItem[]>>('/hospital-charges', {
+      params: { charge_category_id: categoryId },
+    }),
 
   // Patient visits
   patientVisits: (patientId: number) =>
@@ -205,12 +207,19 @@ export const opdApi = {
   addVital: (patientId: number, data: any) =>
     api.post<ApiResponse<any>>(`/opd/patients/${patientId}/vitals`, data),
 
-  // Timeline
+  // Timeline (OPD-scoped — kept for backwards compat)
   timeline: (opdId: number) =>
     api.get<ApiResponse<any[]>>(`/opd/${opdId}/timeline`),
 
   addTimeline: (opdId: number, data: { title: string; description?: string }) =>
     api.post<ApiResponse<any>>(`/opd/${opdId}/timeline`, data),
+
+  // Timeline (patient-scoped)
+  patientTimeline: (patientId: number) =>
+    api.get<ApiResponse<any[]>>(`/opd/patients/${patientId}/timeline`),
+
+  addPatientTimeline: (patientId: number, data: { title: string; description?: string; event_date?: string }) =>
+    api.post<ApiResponse<any>>(`/opd/patients/${patientId}/timeline`, data),
 
   // Treatment history
   treatmentHistory: (patientId: number) =>

@@ -12,6 +12,7 @@ import {
 import { useState } from 'react'
 import { useAuthStore } from '@/store/authStore'
 import { canAccess } from '@/lib/access'
+import { useHospitalSettings } from '@/hooks/useHospitalSettings'
 import { cn } from '@/lib/utils'
 
 type LeafItem  = { path: string;  label: string; icon: any }
@@ -96,6 +97,11 @@ export default function Sidebar() {
   const user = useAuthStore(s => s.user)
   const [collapsed, setCollapsed] = useState(false)
 
+  const { settings, logoUrl, smallLogoUrl } = useHospitalSettings()
+  const sidebarLogo = collapsed
+    ? (smallLogoUrl || logoUrl || '/cognate.jpg')
+    : (logoUrl       || '/cognate.jpg')
+
   const handleLogout = () => { clearAuth(); navigate('/login') }
 
   // Track which groups are expanded. Auto-expand a group when one of its children matches the current route.
@@ -112,7 +118,7 @@ export default function Sidebar() {
     )}>
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-3 py-4 border-b border-gray-100">
-        <img src="/cognate.jpg" alt="Cognate"
+        <img src={sidebarLogo} alt={settings.hospital_name || 'Hospital'}
           className={cn('object-contain flex-shrink-0', collapsed ? 'h-8 w-8' : 'h-10 w-auto max-w-[140px]')}/>
         <button onClick={() => setCollapsed(c => !c)} className="ml-auto p-1 rounded hover:bg-gray-100 flex-shrink-0">
           {collapsed ? <ChevronRight size={12}/> : <ChevronDown size={12}/>}

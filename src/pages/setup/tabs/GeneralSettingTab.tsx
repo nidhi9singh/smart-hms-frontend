@@ -1,6 +1,7 @@
 // src/pages/setup/tabs/GeneralSettingTab.tsx
 import { useEffect, useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { setupApi } from '@/api/setup'
 import api from '@/lib/axios'
 
@@ -31,7 +32,14 @@ function LogoField({
       const r = await setupApi.uploadLogo(fd, uploadLabel)
       return r.data?.data?.path as string
     },
-    onSuccess: (p) => onChange(p),
+    onSuccess: (p) => {
+      toast.success(`${label} uploaded`)
+      onChange(p)
+    },
+    onError: (e: any) => {
+      const d = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Upload failed'
+      toast.error(typeof d === 'string' ? d : JSON.stringify(d))
+    },
   })
   return (
     <div className="flex items-center gap-3">
@@ -66,8 +74,19 @@ export default function GeneralSettingTab() {
   }, [setting])
 
   const save = useMutation({
-    mutationFn: (payload: any) => setupApi.updateGeneral(payload),
-    onSuccess:  () => qc.invalidateQueries({ queryKey: ['setup-general'] }),
+    mutationFn: (payload: any) => setupApi.updateGeneral(payload).then(r => r.data),
+    onSuccess: (res: any) => {
+      toast.success('Settings saved')
+      qc.invalidateQueries({ queryKey: ['setup-general'] })
+      qc.invalidateQueries({ queryKey: ['hospital-settings'] })
+      // Apply the new title to the browser tab immediately
+      const name = res?.data?.hospital_name || form.hospital_name
+      if (name) document.title = `${name}`
+    },
+    onError: (e: any) => {
+      const d = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to save settings'
+      toast.error(typeof d === 'string' ? d : JSON.stringify(d))
+    },
   })
 
   if (isLoading) return <div className="p-6 text-gray-400">Loading…</div>

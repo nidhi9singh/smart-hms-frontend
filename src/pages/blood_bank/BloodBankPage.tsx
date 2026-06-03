@@ -392,6 +392,7 @@ export default function BloodBankPage() {
       />
       <AddComponentsModal
         open={compModal}
+        defaultBloodGroup={bg}
         onClose={() => setCompModal(false)}
         onSuccess={() => { setCompModal(false); qc.invalidateQueries({ queryKey: ['bb-comps'] }) }}
       />

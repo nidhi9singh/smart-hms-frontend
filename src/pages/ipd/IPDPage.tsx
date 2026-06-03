@@ -1,5 +1,6 @@
 // src/pages/ipd/IPDPage.tsx
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Search, Plus, Eye, Edit2, Trash2, LogOut } from 'lucide-react'
 import { ipdApi } from '@/api/ipd'
@@ -10,6 +11,7 @@ type IpdTab = 'active' | 'discharged'
 
 export default function IPDPage() {
   const qc = useQueryClient()
+  const nav = useNavigate()
   const [tab, setTab]   = useState<IpdTab>('active')
   const [search, setSearch] = useState('')
   const [modal, setModal]   = useState(false)
@@ -105,7 +107,7 @@ export default function IPDPage() {
               : admissions.map((a: any) => (
                 <tr key={a.id} className="hover:bg-gray-50/50">
                   {tab === 'active' ? <>
-                    <td className="px-4 py-3"><span className="text-emerald-600 font-medium cursor-pointer">{a.ipd_no}</span></td>
+                    <td className="px-4 py-3"><Link to={`/ipd/${a.id}`} className="text-emerald-600 font-medium hover:underline cursor-pointer">{a.ipd_no}</Link></td>
                     <td className="px-4 py-3 text-gray-500">{a.case_id || '—'}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
@@ -132,7 +134,7 @@ export default function IPDPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
-                        <button className="icon-btn"><Eye size={12}/></button>
+                        <button className="icon-btn" title="View" onClick={() => nav(`/ipd/${a.id}`)}><Eye size={12}/></button>
                         <button className="icon-btn"><Edit2 size={12}/></button>
                         <button className="icon-btn text-emerald-600" title="Discharge"><LogOut size={12}/></button>
                         <button className="icon-btn text-red-400" onClick={() => delMut.mutate(a.id)}><Trash2 size={12}/></button>
@@ -150,7 +152,7 @@ export default function IPDPage() {
                     <td className="px-4 py-3">₹{Number(a.discharge_tax||0).toFixed(2)}</td>
                     <td className="px-4 py-3">₹{Number(a.discharge_net_amount||0).toFixed(2)}</td>
                     <td className="px-4 py-3 font-semibold">₹{Number(a.discharge_total||0).toFixed(2)}</td>
-                    <td className="px-4 py-3"><button className="icon-btn"><Eye size={12}/></button></td>
+                    <td className="px-4 py-3"><button className="icon-btn" onClick={() => nav(`/ipd/${a.id}`)}><Eye size={12}/></button></td>
                   </>}
                 </tr>
               ))}

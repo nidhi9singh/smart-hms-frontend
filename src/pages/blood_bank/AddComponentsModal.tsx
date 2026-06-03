@@ -1,13 +1,15 @@
 // src/pages/blood_bank/AddComponentsModal.tsx
 import { useEffect } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { bloodBankApi } from '@/api/blood_bank'
 import Modal from '@/components/ui/Modal'
 import FormField from '@/components/ui/FormField'
 
 interface Props {
   open: boolean
+  defaultBloodGroup?: string
   onClose: () => void
   onSuccess: () => void
 }
@@ -32,10 +34,11 @@ interface FormShape {
   rows          : RowForm[]
 }
 
-export default function AddComponentsModal({ open, onClose, onSuccess }: Props) {
+export default function AddComponentsModal({ open, defaultBloodGroup, onClose, onSuccess }: Props) {
+  const qc = useQueryClient()
   const { register, handleSubmit, control, reset, watch } = useForm<FormShape>({
     defaultValues: {
-      blood_group: '', parent_bag_id: '',
+      blood_group: defaultBloodGroup || '', parent_bag_id: '',
       rows: COMPONENTS.map(c => ({
         enabled: false, component_type: c, bag_no: '', volume_ml: 0,
         volume_unit: 'ML', lot_no: '', institution: '',
@@ -46,13 +49,13 @@ export default function AddComponentsModal({ open, onClose, onSuccess }: Props) 
 
   useEffect(() => {
     if (open) reset({
-      blood_group: '', parent_bag_id: '',
+      blood_group: defaultBloodGroup || '', parent_bag_id: '',
       rows: COMPONENTS.map(c => ({
         enabled: false, component_type: c, bag_no: '', volume_ml: 0,
         volume_unit: 'ML', lot_no: '', institution: '',
       })),
     })
-  }, [open, reset])
+  }, [open, defaultBloodGroup, reset])
 
   const bloodGroup = watch('blood_group')
 
@@ -75,13 +78,25 @@ export default function AddComponentsModal({ open, onClose, onSuccess }: Props) 
           lot_no        : r.lot_no ? Number(r.lot_no) : undefined,
           institution   : r.institution || undefined,
         }))
+      if (rows.length === 0) {
+        throw new Error('Tick at least one component and fill its Bag number')
+      }
       return bloodBankApi.addComponentsBulk({
         blood_group  : raw.blood_group,
         parent_bag_id: raw.parent_bag_id ? Number(raw.parent_bag_id) : undefined,
         rows,
-      })
+      }).then(r => r.data)
     },
-    onSuccess,
+    onSuccess: () => {
+      toast.success('Components added')
+      qc.invalidateQueries({ queryKey: ['bb-comps'] })
+      qc.invalidateQueries({ queryKey: ['bb-stock'] })
+      onSuccess()
+    },
+    onError: (e: any) => {
+      const d = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to add components'
+      toast.error(typeof d === 'string' ? d : JSON.stringify(d))
+    },
   })
 
   return (
@@ -127,7 +142,7 @@ export default function AddComponentsModal({ open, onClose, onSuccess }: Props) 
                   {f.component_type}
                 </label>
                 <input className="input text-xs h-8" {...register(`rows.${idx}.bag_no` as const)} />
-                <input type="number" step="0.01" className="input text-xs h-8" {...register(`rows.${idx}.volume_ml` as const, { valueAsNumber: true })} />
+                <input type="text" inputMode="decimal" className="input text-xs h-8" {...register(`rows.${idx}.volume_ml` as const)} />
                 <select className="input text-xs h-8" {...register(`rows.${idx}.volume_unit` as const)}>
                   {UNITS.map(u => <option key={u}>{u}</option>)}
                 </select>

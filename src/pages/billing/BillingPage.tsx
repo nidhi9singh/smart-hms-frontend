@@ -1,13 +1,14 @@
 // src/pages/billing/BillingPage.tsx
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Search, CalendarCheck, Stethoscope, FlaskConical,
   Activity, Droplet, Layers,
 } from 'lucide-react'
 import api from '@/lib/axios'
 import { cn } from '@/lib/utils'
+import CaseBillDetail from './CaseBillDetail'
 
 interface UnifiedBill {
   module: string
@@ -57,7 +58,8 @@ const MODULE_COLOR: Record<string, string> = {
 
 export default function BillingPage() {
   const navigate = useNavigate()
-  const [caseInput, setCaseInput] = useState('')
+  const [searchParams] = useSearchParams()
+  const [caseInput, setCaseInput] = useState(searchParams.get('case_id') ?? '')
   const [summary, setSummary] = useState<UnifiedSummary | null>(null)
   const [error,   setError]   = useState<string | null>(null)
 
@@ -74,6 +76,13 @@ export default function BillingPage() {
     },
   })
 
+  // Auto-run search when ?case_id=N is in the URL (e.g. arrived from Patient List).
+  useEffect(() => {
+    const param = searchParams.get('case_id')
+    if (param && param.trim()) lookup.mutate(param.trim())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const tiles = [
     { label: 'Appointment',           icon: CalendarCheck, to: '/appointments' },
     { label: 'OPD',                   icon: Stethoscope,   to: '/opd'          },
@@ -82,6 +91,33 @@ export default function BillingPage() {
     { label: 'Blood Issue',           icon: Droplet,       to: '/blood-bank'   },
     { label: 'Blood Component Issue', icon: Layers,        to: '/blood-bank'   },
   ]
+
+  // Once a case is loaded, switch to the full-detail view.
+  if (summary) {
+    return (
+      <div className="p-6 space-y-4">
+        <div className="card p-4 flex items-end gap-3">
+          <div className="flex-1 max-w-md">
+            <label className="block text-xs font-medium text-gray-600 mb-1.5">
+              Case ID<span className="text-red-500 ml-0.5">*</span>
+            </label>
+            <input className="input" value={caseInput}
+              onChange={e => setCaseInput(e.target.value)}
+              placeholder="Enter Case ID"/>
+          </div>
+          <button onClick={() => caseInput.trim() && lookup.mutate(caseInput.trim())}
+            disabled={lookup.isPending || !caseInput.trim()}
+            className="btn btn-primary flex items-center gap-1.5">
+            <Search size={13}/>{lookup.isPending ? 'Searching…' : 'Search'}
+          </button>
+          <button onClick={() => { setSummary(null); setError(null); setCaseInput('') }}
+            className="btn btn-outline">Clear</button>
+        </div>
+        {error && <div className="card p-3 bg-red-50 text-red-600 text-sm">{error}</div>}
+        <CaseBillDetail data={summary as any}/>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6 space-y-5">
@@ -138,81 +174,6 @@ export default function BillingPage() {
 
           {error && (
             <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm rounded">{error}</div>
-          )}
-
-          {summary && (
-            <div className="mt-5 space-y-4">
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="p-3 bg-gray-50 rounded">
-                  <span className="text-xs text-gray-500">Patient</span>
-                  <div className="font-medium">{summary.patient_name || (summary.patient_id ? `#${summary.patient_id}` : 'Unknown')}</div>
-                </div>
-                <div className="p-3 bg-gray-50 rounded">
-                  <span className="text-xs text-gray-500">Total Bills</span>
-                  <div className="font-medium">{summary.total_bills}</div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-4 gap-2 text-xs">
-                <div className="p-2 bg-emerald-50 rounded text-center">
-                  <div className="text-gray-500">Amount</div>
-                  <div className="font-semibold text-emerald-700">${summary.total_amount.toFixed(2)}</div>
-                </div>
-                <div className="p-2 bg-emerald-50 rounded text-center">
-                  <div className="text-gray-500">Net</div>
-                  <div className="font-semibold text-emerald-700">${summary.total_net.toFixed(2)}</div>
-                </div>
-                <div className="p-2 bg-emerald-50 rounded text-center">
-                  <div className="text-gray-500">Paid</div>
-                  <div className="font-semibold text-emerald-700">${summary.total_paid.toFixed(2)}</div>
-                </div>
-                <div className="p-2 bg-red-50 rounded text-center">
-                  <div className="text-gray-500">Balance</div>
-                  <div className="font-semibold text-red-700">${summary.total_balance.toFixed(2)}</div>
-                </div>
-              </div>
-
-              {summary.bills.length === 0 ? (
-                <div className="text-center py-6 text-sm text-gray-400">No bills found for case <span className="font-mono">{summary.case_id}</span></div>
-              ) : (
-                <div className="border border-gray-100 rounded overflow-hidden">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="bg-gray-50 text-gray-500">
-                        <th className="px-3 py-2 text-left font-medium">Module</th>
-                        <th className="px-3 py-2 text-left font-medium">Bill / No</th>
-                        <th className="px-3 py-2 text-left font-medium">Date</th>
-                        <th className="px-3 py-2 text-right font-medium">Amount</th>
-                        <th className="px-3 py-2 text-right font-medium">Net</th>
-                        <th className="px-3 py-2 text-right font-medium">Paid</th>
-                        <th className="px-3 py-2 text-right font-medium">Balance</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {summary.bills.map(b => (
-                        <tr key={`${b.module}-${b.id}`}>
-                          <td className="px-3 py-2">
-                            <span className={cn('px-2 py-0.5 rounded text-[10px] font-medium', MODULE_COLOR[b.module] ?? 'bg-gray-100 text-gray-600')}>
-                              {MODULE_LABEL[b.module] ?? b.module}
-                            </span>
-                          </td>
-                          <td className="px-3 py-2 font-mono text-emerald-600">{b.bill_no}</td>
-                          <td className="px-3 py-2 text-gray-500">{b.date ? new Date(b.date).toLocaleDateString() : '—'}</td>
-                          <td className="px-3 py-2 text-right">${b.amount.toFixed(2)}</td>
-                          <td className="px-3 py-2 text-right font-medium">${b.net_amount.toFixed(2)}</td>
-                          <td className="px-3 py-2 text-right text-emerald-600">${b.paid.toFixed(2)}</td>
-                          <td className="px-3 py-2 text-right">
-                            {b.balance > 0
-                              ? <span className="text-red-500 font-medium">${b.balance.toFixed(2)}</span>
-                              : <span className="text-emerald-500">₹0.00</span>}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
           )}
         </section>
       </div>

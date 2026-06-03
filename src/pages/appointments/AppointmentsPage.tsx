@@ -1,9 +1,13 @@
 // src/pages/appointments/AppointmentsPage.tsx
 import { useState } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Plus, Search, Copy, FileSpreadsheet, FileText, Printer, Stethoscope, List } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Plus, Search, Copy, FileSpreadsheet, FileText, Printer, Stethoscope, List, Eye, CalendarClock } from 'lucide-react'
+import { toast } from 'sonner'
 import { appointmentsApi } from '@/api/appointments'
 import AppointmentFormModal from './AppointmentFormModal'
+import AppointmentDetailsModal from './AppointmentDetailsModal'
+import RescheduleModal from './RescheduleModal'
 import { cn, fmtDate } from '@/lib/utils'
 //import EmptyState from '@/components/ui/EmptyState'
 
@@ -52,6 +56,13 @@ export default function AppointmentsPage() {
   const [perPage, setPerPage] = useState(100)
   const [page, setPage]       = useState(1)
   const [modal, setModal]     = useState(false)
+  const [showAppt,    setShowAppt]    = useState<any>(null)
+  const [rescheduleAppt, setRescheduleAppt] = useState<any>(null)
+  const delMut = useMutation({
+    mutationFn: (id: number) => appointmentsApi.delete(id),
+    onSuccess: () => { toast.success('Appointment deleted'); qc.invalidateQueries({ queryKey: ['appointments'] }); setShowAppt(null) },
+    onError:   (e: any) => toast.error(e.response?.data?.detail ?? 'Failed to delete'),
+  })
   const [view, setView]       = useState<View>('list')
 
   // Doctor wise state
@@ -223,7 +234,7 @@ export default function AppointmentsPage() {
                   <tr className="border-b border-gray-200 bg-gray-50/50">
                     {['Patient Name', 'Appointment No', 'Created By', 'Appointment Date', 'Phone',
                       'Gender', 'Doctor', 'Source', 'Priority', 'Live Consultant',
-                      'Alternate Address', 'Fees (₹)', 'Discount (%)', 'Paid (₹)', 'Status'
+                      'Alternate Address', 'Fees (₹)', 'Discount (%)', 'Paid (₹)', 'Status', 'Action'
                     ].map(h => (
                       <th key={h} className="px-3 py-3 text-left font-semibold text-gray-700 whitespace-nowrap text-xs">
                         {h} <span className="text-gray-400 text-[10px]">▼</span>
@@ -235,9 +246,10 @@ export default function AppointmentsPage() {
                   {appointments.map((a: any) => (
                     <tr key={a.id} className="hover:bg-gray-50/50">
                       <td className="px-3 py-3">
-                        <span className="text-[#00a8e8] hover:underline cursor-pointer font-medium">
+                        <Link to={`/patients/${a.patient_id}`}
+                          className="text-[#00a8e8] hover:underline cursor-pointer font-medium">
                           {a.patient_name ?? `Patient #${a.patient_id}`} ({a.patient_id})
-                        </span>
+                        </Link>
                       </td>
                       <td className="px-3 py-3 text-gray-700">{a.appointment_no ?? '—'}</td>
                       <td className="px-3 py-3 text-gray-600 text-xs">{a.created_by_name ?? `Super Admin (${a.created_by ?? 9001})`}</td>
@@ -258,6 +270,17 @@ export default function AppointmentsPage() {
                         <span className={cn('inline-block px-3 py-1 rounded text-xs font-medium', statusBadge(a.status))}>
                           {a.status ?? 'Pending'}
                         </span>
+                      </td>
+                      <td className="px-3 py-3">
+                        <div className="flex items-center gap-1">
+                          <button title="Show" onClick={() => setShowAppt(a)}
+                            className="icon-btn bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100">
+                            <Eye size={12}/>
+                          </button>
+                          <button title="Reschedule" onClick={() => setRescheduleAppt(a)} className="icon-btn">
+                            <CalendarClock size={12}/>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -287,6 +310,19 @@ export default function AppointmentsPage() {
         open={modal}
         onClose={() => setModal(false)}
         onSuccess={() => { setModal(false); qc.invalidateQueries({ queryKey: ['appointments'] }) }}
+      />
+
+      <AppointmentDetailsModal
+        open={!!showAppt}
+        appointment={showAppt}
+        onClose={() => setShowAppt(null)}
+        onDelete={(id) => delMut.mutate(id)}
+      />
+
+      <RescheduleModal
+        open={!!rescheduleAppt}
+        appointment={rescheduleAppt}
+        onClose={() => setRescheduleAppt(null)}
       />
     </div>
   )

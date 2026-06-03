@@ -11,10 +11,12 @@ import DashboardPage from '@/pages/dashboard/DashboardPage'
 
 // Core modules (full UI)
 import PatientsPage from '@/pages/patients/PatientsPage'
+import PatientDetailPage from '@/pages/patients/PatientDetailPage'
 import HRPage from '@/pages/hr/HRPage'
 import AppointmentsPage from '@/pages/appointments/AppointmentsPage'
 import OPDPage from '@/pages/opd/OPDPage'
 import IPDPage from '@/pages/ipd/IPDPage'
+import IPDDetailPage from '@/pages/ipd/IPDDetailPage'
 import PharmacyPage from '@/pages/pharmacy/PharmacyPage'
 import BillingPage from '@/pages/billing/BillingPage'
 
@@ -83,10 +85,12 @@ export default function App() {
           <Route element={<RoleRoute />}>
           <Route path="/dashboard"          element={<DashboardPage />} />
           <Route path="/patients"           element={<PatientsPage />} />
+          <Route path="/patients/:id"       element={<PatientDetailPage />} />
           <Route path="/billing"            element={<BillingPage />} />
           <Route path="/appointments"       element={<AppointmentsPage />} />
           <Route path="/opd"                element={<OPDPage />} />
           <Route path="/ipd"                element={<IPDPage />} />
+          <Route path="/ipd/:id"            element={<IPDDetailPage />} />
           <Route path="/pharmacy"           element={<PharmacyPage />} />
           <Route path="/pathology"          element={<PathologyPage />} />
           <Route path="/radiology"          element={<RadiologyPage />} />

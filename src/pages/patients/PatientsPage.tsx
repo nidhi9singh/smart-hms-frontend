@@ -1,13 +1,16 @@
 // src/pages/patients/PatientsPage.tsx
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Search, Plus, Upload, Eye, Edit2, Trash2, User, Users, Printer, Copy, FileDown } from 'lucide-react'
+import { Search, Plus, Upload, Eye, Edit2, Trash2, User, Users, Printer, Copy, FileDown, Receipt } from 'lucide-react'
+import { toast } from 'sonner'
 import { patientsApi } from '@/api/patients'
 import PatientFormModal from './PatientFormModal'
 import { cn } from '@/lib/utils'
 
 export default function PatientsPage() {
   const qc = useQueryClient()
+  const nav = useNavigate()
   const [search, setSearch]             = useState('')
   const [modal, setModal]               = useState<{ open: boolean; patient?: any }>({ open: false })
   const [page, setPage]                 = useState(1)
@@ -151,16 +154,16 @@ export default function PatientsPage() {
                     onChange={toggleAll}/>
                 </th>
                 <th className="px-3 py-3 text-left text-xs font-medium text-gray-500">#</th>
-                {['Patient Name','Age','Gender','Phone','Guardian Name','Address','Dead','Action'].map(h => (
+                {['Case ID','Patient Name','Age','Gender','Phone','Guardian Name','Address','Dead','Action'].map(h => (
                   <th key={h} className="px-3 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {isLoading ? (
-                <tr><td colSpan={10} className="px-4 py-10 text-center text-gray-400">Loading...</td></tr>
+                <tr><td colSpan={11} className="px-4 py-10 text-center text-gray-400">Loading...</td></tr>
               ) : patients.length === 0 ? (
-                <tr><td colSpan={10} className="px-4 py-10 text-center text-gray-400">
+                <tr><td colSpan={11} className="px-4 py-10 text-center text-gray-400">
                   {showDisabled ? 'No disabled patients' : 'No patients found'}
                 </td></tr>
               ) : patients.map((p: any, i: number) => (
@@ -169,6 +172,21 @@ export default function PatientsPage() {
                     <input type="checkbox" checked={selected.includes(p.id)} onChange={() => toggleSelect(p.id)}/>
                   </td>
                   <td className="px-3 py-2 text-gray-400 text-xs">{(page-1)*perPage + i + 1}</td>
+                  <td className="px-3 py-2 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (p.case_id != null) {
+                          navigator.clipboard?.writeText(String(p.case_id))
+                          toast.success(`Case ID ${p.case_id} copied`)
+                        }
+                      }}
+                      title="Copy Case ID"
+                      className="font-mono font-semibold text-emerald-700 hover:bg-emerald-50 px-2 py-0.5 rounded"
+                    >
+                      {p.case_id ?? '—'}
+                    </button>
+                  </td>
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2">
                       {p.photo_path
@@ -197,7 +215,14 @@ export default function PatientsPage() {
                   </td>
                   <td className="px-3 py-2">
                     <div className="flex gap-1">
-                      <button className="icon-btn" title="View"><Eye size={12}/></button>
+                      <button className="icon-btn bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100"
+                        title="Show" onClick={() => nav(`/patients/${p.id}`)}>
+                        <Eye size={12}/>
+                      </button>
+                      <button className="icon-btn" title="Billing"
+                        onClick={() => nav(`/billing?case_id=${p.case_id ?? p.id}`)}>
+                        <Receipt size={12}/>
+                      </button>
                       <button className="icon-btn" title="Edit" onClick={() => setModal({ open: true, patient: p })}><Edit2 size={12}/></button>
                       <button className="icon-btn text-red-400 hover:text-red-600" title="Disable"
                         onClick={() => disableMut.mutate(p.id)}><Trash2 size={12}/></button>

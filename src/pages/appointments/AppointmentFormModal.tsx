@@ -176,7 +176,10 @@ export default function AppointmentFormModal({ open, onClose, onSuccess }: Props
           <select className="w-full h-10 px-3 border border-gray-300 rounded text-sm bg-white"
             value={form.doctor_id} onChange={e => setField('doctor_id', e.target.value)}>
             <option value="">Select</option>
-            {doctors.map((d: any) => <option key={d.id} value={d.id}>{d.name} ({d.staff_code})</option>)}
+            {doctors.map((d: any) => {
+              const fullName = d.full_name || [d.first_name, d.last_name].filter(Boolean).join(' ') || d.name || `Staff #${d.id}`
+              return <option key={d.id} value={d.id}>{fullName} ({d.staff_code})</option>
+            })}
           </select>
         </FormField>
         <FormField label="Doctor Fees (₹)" required>

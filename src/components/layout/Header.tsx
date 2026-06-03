@@ -9,6 +9,7 @@ import {
 import { useAuthStore } from '@/store/authStore'
 import { setupApi } from '@/api/setup'
 import { topnavApi } from '@/api/topnav'
+import { useHospitalSettings } from '@/hooks/useHospitalSettings'
 import { cn } from '@/lib/utils'
 import SwitchBranchModal from '@/components/topnav/SwitchBranchModal'
 import BedStatusModal    from '@/components/topnav/BedStatusModal'
@@ -101,6 +102,7 @@ function LanguageDropdown() {
 export default function Header() {
   const user = useAuthStore(s => s.user)
   const navigate = useNavigate()
+  const { settings } = useHospitalSettings()
   const [branchOpen, setBranchOpen] = useState(false)
   const [bedOpen,    setBedOpen]    = useState(false)
 
@@ -128,7 +130,7 @@ export default function Header() {
 
   return (
     <header className="h-14 bg-gradient-to-r from-emerald-600 to-emerald-500 flex items-center gap-3 px-4 flex-shrink-0 text-white">
-      <form onSubmit={handleSearch} className="flex-1 max-w-md">
+      <form onSubmit={handleSearch} className="w-72 max-w-md">
         <div className="relative">
           <input
             name="q"
@@ -141,6 +143,10 @@ export default function Header() {
           </button>
         </div>
       </form>
+
+      <h1 className="text-lg font-semibold text-white truncate flex-1">
+        {settings.hospital_name || ''}
+      </h1>
 
       <div className="flex items-center gap-1 ml-auto">
         <LanguageDropdown/>

@@ -121,6 +121,12 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
     }
   }, [selectedCharge])
 
+  // Auto-mirror Paid Amount to Amount as the user adjusts charge/discount/tax
+  useEffect(() => {
+    if (!amount) return
+    setForm(p => ({ ...p, paid_amount: amount.toFixed(2) }))
+  }, [amount])
+
   // ── Reset on open ────────────────────
   useEffect(() => {
     if (open) {
@@ -293,7 +299,10 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
             <FormField label="Consultant Doctor" required error={errors.consultant_id}>
               <SelectField value={form.consultant_id} onChange={e => setField('consultant_id', e.target.value)} error={!!errors.consultant_id}>
                 <option value="">Select</option>
-                {doctors.map((d: any) => <option key={d.id} value={d.id}>{d.name} ({d.staff_code})</option>)}
+                {doctors.map((d: any) => {
+                  const n = d.full_name || [d.first_name, d.last_name].filter(Boolean).join(' ') || d.name || `Staff #${d.id}`
+                  return <option key={d.id} value={d.id}>{n} ({d.staff_code})</option>
+                })}
               </SelectField>
             </FormField>
           </div>

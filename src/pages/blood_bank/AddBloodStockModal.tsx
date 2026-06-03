@@ -1,7 +1,8 @@
 // src/pages/blood_bank/AddBloodStockModal.tsx
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { bloodBankApi } from '@/api/blood_bank'
 import Modal from '@/components/ui/Modal'
 import FormField from '@/components/ui/FormField'
@@ -17,6 +18,7 @@ const BLOOD_GROUPS = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 const UNITS        = ['ML', 'g/dl', 'Litter', 'per day', 'Hour']
 
 export default function AddBloodStockModal({ open, defaultBloodGroup, onClose, onSuccess }: Props) {
+  const qc = useQueryClient()
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       bag_no: '', blood_group: defaultBloodGroup || '', volume_ml: 0, volume_unit: 'ML',
@@ -38,11 +40,25 @@ export default function AddBloodStockModal({ open, defaultBloodGroup, onClose, o
 
   const mut = useMutation({
     mutationFn: (d: any) => bloodBankApi.addStock({
-      ...d,
-      donor_id: d.donor_id ? Number(d.donor_id) : undefined,
-      volume_ml: Number(d.volume_ml) || 0,
-    }),
-    onSuccess,
+      bag_no          : d.bag_no,
+      blood_group     : d.blood_group,
+      volume_ml       : Number(d.volume_ml) || 0,
+      volume_unit     : d.volume_unit || 'ML',
+      lot_no          : d.lot_no || undefined,
+      institution     : d.institution || undefined,
+      donor_id        : d.donor_id ? Number(d.donor_id) : undefined,
+      collection_date : d.collection_date || undefined,
+      expiry_date     : d.expiry_date || undefined,
+    }).then(r => r.data),
+    onSuccess: () => {
+      toast.success('Blood bag added')
+      qc.invalidateQueries({ queryKey: ['bb-stock'] })
+      onSuccess()
+    },
+    onError: (e: any) => {
+      const d = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to add stock'
+      toast.error(typeof d === 'string' ? d : JSON.stringify(d))
+    },
   })
 
   return (
@@ -75,7 +91,7 @@ export default function AddBloodStockModal({ open, defaultBloodGroup, onClose, o
         </div>
         <div className="grid grid-cols-3 gap-3">
           <FormField label="Volume" required>
-            <input type="number" step="0.01" className="input" {...register('volume_ml', { valueAsNumber: true })} />
+            <input type="text" inputMode="decimal" className="input" {...register('volume_ml')} />
           </FormField>
           <FormField label="Unit">
             <select className="input" {...register('volume_unit')}>

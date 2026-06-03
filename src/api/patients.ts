@@ -3,6 +3,7 @@ import api from '@/lib/axios'
 
 export interface Patient {
   id: number
+  case_id?: number
   name: string
   guardian_name?: string
   guardian_relation?: string

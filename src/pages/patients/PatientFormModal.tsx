@@ -1,8 +1,9 @@
 // src/pages/patients/PatientFormModal.tsx
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { patientsApi, type PatientCreate } from '@/api/patients'
+import { tpaApi } from '@/api/tpa'
 import Modal from '@/components/ui/Modal'
 import FormField from '@/components/ui/FormField'
 
@@ -18,6 +19,14 @@ export default function PatientFormModal({ open, patient, onClose, onSuccess }: 
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [photoFile, setPhotoFile]       = useState<File | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
+
+  // TPA dropdown options
+  const { data: tpaData } = useQuery({
+    queryKey: ['tpa-list'],
+    queryFn:  () => tpaApi.list({ is_active: 'true' }).then(r => r.data),
+    enabled:  open,
+  })
+  const tpas: any[] = tpaData?.data ?? []
 
   useEffect(() => {
     if (patient) { reset(patient); setPhotoPreview(patient.photo_path ?? null) }
@@ -121,8 +130,12 @@ export default function PatientFormModal({ open, patient, onClose, onSuccess }: 
           <FormField label="Marital Status">
             <select className="input" {...register('marital_status')}>
               <option value="">Select</option>
-              <option>Single</option><option>Married</option>
-              <option>Divorced</option><option>Widowed</option>
+              <option>Single</option>
+              <option>Married</option>
+              <option>Divorced</option>
+              <option>Widowed</option>
+              <option>Separated</option>
+              <option>Not Specified</option>
             </select>
           </FormField>
 
@@ -170,6 +183,11 @@ export default function PatientFormModal({ open, patient, onClose, onSuccess }: 
           <FormField label="TPA">
             <select className="input" {...register('tpa_id', { setValueAs: v => v === '' ? null : Number(v) })}>
               <option value="">Select</option>
+              {tpas.map(t => (
+                <option key={t.id} value={t.id}>
+                  {t.name}{t.code ? ` (${t.code})` : ''}
+                </option>
+              ))}
             </select>
           </FormField>
           <FormField label="TPA ID">
