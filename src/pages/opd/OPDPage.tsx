@@ -10,8 +10,9 @@ import type { OPDRecord } from '@/api/opd'
 import AddOPDModal from './AddOPDModal'
 import OPDDetailPage from './OPDDetailPage'
 import { useDeleteOPD } from '@/hooks/useOPD'
+import { useAuthStore } from '@/store/authStore'
 function PageLoader() {
-  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#00a8e8] rounded-full animate-spin" /></div>
+  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#059669] rounded-full animate-spin" /></div>
 }
 
 function EmptyState({ icon, title, action }: { icon?: React.ReactNode; title: string; action?: React.ReactNode }) {
@@ -45,6 +46,9 @@ function fmtDateTime(d: string) {
 
 export default function OPDPage() {
   const qc = useQueryClient()
+  const role = useAuthStore(s => s.user?.role)
+  // Diagnostic roles are view-only — they can browse OPD records but not add them.
+  const canManageOPD = !['pathologist', 'radiologist', 'pharmacist', 'nurse'].includes(role ?? '')
   const [tab, setTab]         = useState<Tab>('today')
   const [search, setSearch]   = useState('')
   const [perPage, setPerPage] = useState(100)
@@ -94,7 +98,7 @@ export default function OPDPage() {
               className={cn(
                 'px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
                 tab === t.id
-                  ? 'border-[#00a8e8] text-[#00a8e8]'
+                  ? 'border-[#059669] text-[#059669]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -102,12 +106,14 @@ export default function OPDPage() {
             </button>
           ))}
         </nav>
-        <button
-          onClick={() => setModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2 bg-[#00a8e8] hover:bg-[#0090c7] text-white text-sm font-medium rounded transition-colors"
-        >
-          <Plus className="w-4 h-4" /> Add Patient
-        </button>
+        {canManageOPD && (
+          <button
+            onClick={() => setModal(true)}
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded transition-colors"
+          >
+            <Plus className="w-4 h-4" /> Add Patient
+          </button>
+        )}
       </div>
 
       {/* ── Search + Export Bar ─────────── */}
@@ -147,7 +153,7 @@ export default function OPDPage() {
             <EmptyState
               icon={<Stethoscope className="w-8 h-8 text-gray-400" />}
               title="No OPD records found"
-              action={<button onClick={() => setModal(true)} className="px-4 py-2 bg-[#00a8e8] text-white text-sm rounded hover:bg-[#0090c7]">+ Add Patient</button>}
+              action={canManageOPD ? <button onClick={() => setModal(true)} className="px-4 py-2 bg-[#059669] text-white text-sm rounded hover:bg-[#047857]">+ Add Patient</button> : undefined}
             />
           ) : (
             <table className="w-full text-sm">
@@ -171,7 +177,7 @@ export default function OPDPage() {
                 {visits.map(v => (
                   <tr key={v.id} className="hover:bg-gray-50/50 group">
                     <td className="px-4 py-3">
-                      <button onClick={() => setDetailId(v.id)} className="text-[#00a8e8] hover:underline font-medium">
+                      <button onClick={() => setDetailId(v.id)} className="text-[#059669] hover:underline font-medium">
                         {v.opd_no}
                       </button>
                     </td>
@@ -227,7 +233,7 @@ export default function OPDPage() {
             <div className="flex gap-1">
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
                 className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">‹</button>
-              <span className="px-3 py-1 border border-[#00a8e8] bg-[#00a8e8] text-white rounded text-xs">{page}</span>
+              <span className="px-3 py-1 border border-[#059669] bg-[#059669] text-white rounded text-xs">{page}</span>
               <button onClick={() => setPage(p => p + 1)} disabled={visits.length < perPage}
                 className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">›</button>
             </div>

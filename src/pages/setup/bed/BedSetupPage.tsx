@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Plus, Search, Edit2, Trash2, Check, X } from 'lucide-react'
 import { bedSetupApi } from '@/api/bedSetup'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 type Tab = 'status' | 'bed' | 'type' | 'group' | 'floor'
 
-const TABS: Array<{ id: Tab; label: string }> = [
+const ALL_TABS: Array<{ id: Tab; label: string }> = [
   { id: 'status', label: 'Bed Status' },
   { id: 'bed',    label: 'Bed' },
   { id: 'type',   label: 'Bed Type' },
@@ -17,6 +18,11 @@ const TABS: Array<{ id: Tab; label: string }> = [
 
 
 export default function BedSetupPage() {
+  const role = useAuthStore(s => s.user?.role)
+  // Nurses get a read-only Bed Status + Bed view only.
+  const TABS = role === 'nurse'
+    ? ALL_TABS.filter(t => t.id === 'status' || t.id === 'bed')
+    : ALL_TABS
   const [tab, setTab] = useState<Tab>('status')
   return (
     <div className="p-6">
@@ -115,6 +121,8 @@ function BedStatusTab() {
 // ───────────────────────────────────────────────────────────────────
 function BedTab() {
   const qc = useQueryClient()
+  const role = useAuthStore(s => s.user?.role)
+  const canManageBeds = role !== 'nurse'
   const [search, setSearch] = useState('')
   const [edit, setEdit] = useState<{ open: boolean; bed?: any }>({ open: false })
 
@@ -136,9 +144,11 @@ function BedTab() {
     <div className="card">
       <div className="flex items-center justify-between px-5 py-3 border-b">
         <h2 className="text-base font-semibold text-gray-800">Bed List</h2>
-        <button onClick={() => setEdit({ open: true })} className="btn btn-primary flex items-center gap-1.5">
-          <Plus size={14}/> Add Bed
-        </button>
+        {canManageBeds && (
+          <button onClick={() => setEdit({ open: true })} className="btn btn-primary flex items-center gap-1.5">
+            <Plus size={14}/> Add Bed
+          </button>
+        )}
       </div>
       <div className="px-5 py-3 border-b">
         <div className="relative max-w-xs">
@@ -171,10 +181,14 @@ function BedTab() {
                   </td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => setEdit({ open: true, bed: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
-                      <button onClick={() => { if (confirm('Delete this bed?')) del.mutate(r.id) }}
-                        className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
+                      {canManageBeds && (
+                        <>
+                          <button onClick={() => setEdit({ open: true, bed: r })}
+                            className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                          <button onClick={() => { if (confirm('Delete this bed?')) del.mutate(r.id) }}
+                            className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

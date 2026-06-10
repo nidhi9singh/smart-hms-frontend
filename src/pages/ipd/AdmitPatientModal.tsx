@@ -77,14 +77,14 @@ export default function AdmitPatientModal({ open, onClose, onSuccess }: any) {
       onClose={onClose}
       title="Admit Patient — IPD"
       size="xl"
-      headerClassName="bg-[#34ace0] text-white"
+      headerClassName="bg-[#059669] text-white"
       footer={
         <div className="flex gap-2 justify-end">
           <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-300 text-gray-700 text-sm rounded hover:bg-gray-50">
             Cancel
           </button>
           <button form="ipd-form" type="submit" disabled={mut.isPending}
-            className="px-5 py-2 bg-[#00a8e8] hover:bg-[#0090c7] text-white text-sm font-medium rounded transition-colors">
+            className="px-5 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded transition-colors">
             {mut.isPending ? 'Admitting...' : 'Admit Patient'}
           </button>
         </div>

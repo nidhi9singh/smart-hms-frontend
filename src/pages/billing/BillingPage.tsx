@@ -7,6 +7,7 @@ import {
   Activity, Droplet, Layers,
 } from 'lucide-react'
 import api from '@/lib/axios'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 import CaseBillDetail from './CaseBillDetail'
 
@@ -58,6 +59,7 @@ const MODULE_COLOR: Record<string, string> = {
 
 export default function BillingPage() {
   const navigate = useNavigate()
+  const role = useAuthStore(s => s.user?.role)
   const [searchParams] = useSearchParams()
   const [caseInput, setCaseInput] = useState(searchParams.get('case_id') ?? '')
   const [summary, setSummary] = useState<UnifiedSummary | null>(null)
@@ -83,7 +85,15 @@ export default function BillingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const tiles = [
+  // Each role only sees the billing modules it's responsible for.
+  // Falls back to the full list (super_admin / admin / receptionist / doctor / nurse).
+  const TILES_BY_ROLE: Record<string, string[]> = {
+    pathologist: ['Pathology'],
+    radiologist: ['Radiology'],
+    pharmacist:  ['OPD'],
+    accountant:  ['OPD', 'Pathology', 'Radiology', 'Blood Issue', 'Blood Component Issue'],
+  }
+  const allTiles = [
     { label: 'Appointment',           icon: CalendarCheck, to: '/appointments' },
     { label: 'OPD',                   icon: Stethoscope,   to: '/opd'          },
     { label: 'Pathology',             icon: FlaskConical,  to: '/pathology'    },
@@ -91,6 +101,9 @@ export default function BillingPage() {
     { label: 'Blood Issue',           icon: Droplet,       to: '/blood-bank'   },
     { label: 'Blood Component Issue', icon: Layers,        to: '/blood-bank'   },
   ]
+  const tiles = role && TILES_BY_ROLE[role]
+    ? allTiles.filter(t => TILES_BY_ROLE[role].includes(t.label))
+    : allTiles
 
   // Once a case is loaded, switch to the full-detail view.
   if (summary) {

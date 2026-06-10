@@ -3,8 +3,10 @@ import { useState, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Search, Plus, Upload, Eye, Edit2, Trash2, Check, X, Download, Save } from 'lucide-react'
 import { hrApi } from '@/api/hr'
+import { useNavigate } from 'react-router-dom'
 import StaffFormModal from './StaffFormModal'
 import LeaveFormModal from './LeaveFormModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn, fmtDate } from '@/lib/utils'
 import { toast } from 'sonner'
 
@@ -155,7 +157,19 @@ function PayrollTab({ staffList, markPaid }: { staffList: any[]; markPaid: any }
 
 export default function HRPage() {
   const qc = useQueryClient()
-  const [tab, setTab]           = useState<Tab>('staff')
+  const nav = useNavigate()
+  const user = useAuthStore(s => s.user)
+  const role = (user?.role ?? '').toLowerCase()
+  // Admin-tier roles have full HR control (Add/Import/Export/Attendance/Payroll).
+  // Accountant retains full HR access because payroll lives in their workflow.
+  const canManageHR = !['pathologist', 'radiologist', 'pharmacist', 'doctor', 'nurse'].includes(role)
+  // All clinical roles except pathologist get a read-only Staff Directory + My Leaves.
+  // Pathologist still gets only the "My Leaves" workspace.
+  const canViewStaff = canManageHR || ['doctor', 'nurse', 'pharmacist', 'radiologist'].includes(role)
+  // Doctors can only open their OWN profile; everyone else's Show button is hidden for them.
+  const canShowStaff = (s: any) =>
+    canManageHR || Number(s?.staff_code) === Number(user?.staff_code)
+  const [tab, setTab]           = useState<Tab>(canViewStaff ? 'staff' : 'leaves')
   const [search, setSearch]     = useState('')
   const [staffModal, setStaffModal] = useState<{ open: boolean; staff?: any }>({ open: false })
   const [leaveModal, setLeaveModal] = useState(false)
@@ -204,17 +218,38 @@ export default function HRPage() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['leaves'] }),
   })
 
+  const deleteLeave = useMutation({
+    mutationFn: (id: number) => hrApi.deleteLeave(id),
+    onSuccess: () => {
+      toast.success('Leave request deleted')
+      qc.invalidateQueries({ queryKey: ['leaves'] })
+    },
+    onError: (e: any) => {
+      const d = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to delete leave'
+      toast.error(typeof d === 'string' ? d : JSON.stringify(d))
+    },
+  })
+
   const markPaid = useMutation({
     mutationFn: (id: number) => hrApi.markPaid(id),
     onSuccess:  () => qc.invalidateQueries({ queryKey: ['payroll'] }),
   })
 
-  const tabs: { id: Tab; label: string }[] = [
-    { id: 'staff',      label: 'Staff Directory' },
-    { id: 'leaves',     label: 'Leave Requests'  },
-    { id: 'attendance', label: 'Attendance'       },
-    { id: 'payroll',    label: 'Payroll'          },
-  ]
+  const tabs: { id: Tab; label: string }[] = canManageHR
+    ? [
+        { id: 'staff',      label: 'Staff Directory' },
+        { id: 'leaves',     label: 'Leave Requests'  },
+        { id: 'attendance', label: 'Attendance'       },
+        { id: 'payroll',    label: 'Payroll'          },
+      ]
+    : canViewStaff
+    ? [
+        { id: 'staff',  label: 'Staff Directory' },
+        { id: 'leaves', label: 'My Leaves'       },
+      ]
+    : [
+        { id: 'leaves', label: 'My Leaves' },
+      ]
 
   const avatarColors = ['bg-emerald-100 text-emerald-700','bg-emerald-100 text-emerald-700','bg-amber-100 text-amber-700','bg-pink-100 text-pink-700']
 
@@ -269,10 +304,12 @@ export default function HRPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900">Human Resource</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Staff management, leaves, attendance and payroll</p>
+          <p className="text-sm text-gray-500 mt-0.5">
+            {canManageHR ? 'Staff management, leaves, attendance and payroll' : 'Apply for and track your leave requests'}
+          </p>
         </div>
         <div className="flex gap-2">
-          {tab === 'staff' && <>
+          {canManageHR && tab === 'staff' && <>
             <button className="btn btn-outline flex items-center gap-1.5"><Upload size={14}/> Import Staff</button>
             <button className="btn btn-outline flex items-center gap-1.5"><Download size={14}/> Export</button>
             <button
@@ -288,20 +325,22 @@ export default function HRPage() {
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-3">
-        {[
-          { label:'Total Staff',     value: staffList.length,                                     color:'bg-emerald-50 text-emerald-700'   },
-          { label:'Doctors',         value: staffList.filter((s:any) => s.role==='doctor').length, color:'bg-emerald-50 text-emerald-700'   },
-          { label:'Pending Leaves',  value: leaves.filter((l:any) => l.status==='Pending').length, color:'bg-amber-50 text-amber-700' },
-          { label:'Approved Leaves', value: leaves.filter((l:any) => l.status==='Approved').length,color:'bg-emerald-50 text-emerald-700' },
-        ].map(s => (
-          <div key={s.label} className="card p-4 flex items-center gap-3">
-            <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center font-bold text-sm', s.color)}>{s.value}</div>
-            <span className="text-sm text-gray-600">{s.label}</span>
-          </div>
-        ))}
-      </div>
+      {/* Stats — admin/manager view only */}
+      {canManageHR && (
+        <div className="grid grid-cols-4 gap-3">
+          {[
+            { label:'Total Staff',     value: staffList.length,                                     color:'bg-emerald-50 text-emerald-700'   },
+            { label:'Doctors',         value: staffList.filter((s:any) => s.role==='doctor').length, color:'bg-emerald-50 text-emerald-700'   },
+            { label:'Pending Leaves',  value: leaves.filter((l:any) => l.status==='Pending').length, color:'bg-amber-50 text-amber-700' },
+            { label:'Approved Leaves', value: leaves.filter((l:any) => l.status==='Approved').length,color:'bg-emerald-50 text-emerald-700' },
+          ].map(s => (
+            <div key={s.label} className="card p-4 flex items-center gap-3">
+              <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center font-bold text-sm', s.color)}>{s.value}</div>
+              <span className="text-sm text-gray-600">{s.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="border-b border-gray-200">
@@ -369,9 +408,13 @@ export default function HRPage() {
                       <td className="px-4 py-3"><span className={cn('badge', s.is_active ? 'badge-green' : 'badge-gray')}>{s.is_active ? 'Active' : 'Inactive'}</span></td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1">
-                          <button className="icon-btn"><Eye size={13}/></button>
-                          <button className="icon-btn" onClick={() => setStaffModal({ open: true, staff: s })}><Edit2 size={13}/></button>
-                          <button className="icon-btn text-red-400 hover:text-red-600"><Trash2 size={13}/></button>
+                          {canShowStaff(s) && (
+                            <button className="icon-btn" title="Show" onClick={() => nav(`/hr/staff/${s.id}`)}><Eye size={13}/></button>
+                          )}
+                          {canManageHR && <>
+                            <button className="icon-btn" onClick={() => setStaffModal({ open: true, staff: s })}><Edit2 size={13}/></button>
+                            <button className="icon-btn text-red-400 hover:text-red-600"><Trash2 size={13}/></button>
+                          </>}
                         </div>
                       </td>
                     </tr>
@@ -396,8 +439,12 @@ export default function HRPage() {
                   <span className="badge badge-blue text-xs capitalize">{s.role}</span>
                   <div className="text-xs text-gray-400">{s.department || '—'}</div>
                   <div className="flex gap-1 mt-1">
-                    <button className="icon-btn"><Eye size={12}/></button>
-                    <button className="icon-btn" onClick={() => setStaffModal({ open: true, staff: s })}><Edit2 size={12}/></button>
+                    {canShowStaff(s) && (
+                      <button className="icon-btn" title="Show" onClick={() => nav(`/hr/staff/${s.id}`)}><Eye size={12}/></button>
+                    )}
+                    {canManageHR && (
+                      <button className="icon-btn" onClick={() => setStaffModal({ open: true, staff: s })}><Edit2 size={12}/></button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -440,11 +487,17 @@ export default function HRPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
-                        {l.status === 'Pending' && <>
+                        {canManageHR && l.status === 'Pending' && <>
                           <button className="icon-btn text-emerald-600" title="Approve" onClick={() => updateLeaveStatus.mutate({ id: l.id, status: 'Approved' })}><Check size={13}/></button>
                           <button className="icon-btn text-red-400" title="Reject" onClick={() => updateLeaveStatus.mutate({ id: l.id, status: 'Disapprove' })}><X size={13}/></button>
                         </>}
-                        <button className="icon-btn"><Eye size={13}/></button>
+                        <button className="icon-btn" title="View"><Eye size={13}/></button>
+                        {l.status === 'Pending' && (
+                          <button className="icon-btn text-red-500 hover:bg-red-50" title="Delete"
+                            onClick={() => { if (window.confirm('Delete this leave request?')) deleteLeave.mutate(l.id) }}>
+                            <Trash2 size={13}/>
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

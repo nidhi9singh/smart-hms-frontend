@@ -7,7 +7,7 @@ import {
   Receipt, Banknote, Share2, Shield, MessageSquare,
   Video, Download, Award, Globe, BarChart3, Settings,
   LogOut, ChevronDown, ChevronRight, Boxes, Wrench,
-  Activity, ScanLine, HeartPulse
+  Activity, ScanLine, HeartPulse, Printer
 } from 'lucide-react'
 import { useState } from 'react'
 import { useAuthStore } from '@/store/authStore'
@@ -66,28 +66,55 @@ const NAV: NavItem[] = [
   {
     label: 'Setup', icon: Wrench,
     children: [
-      { path:'/setup/settings',         label:'Settings',         icon:Settings },
-      { path:'/setup/hospital-charges', label:'Hospital Charges', icon:Receipt },
-      { path:'/setup/bed',              label:'Bed',              icon:Bed },
-      { path:'/setup/front-office',     label:'Front Office',     icon:Building2 },
-      { path:'/setup/operations',       label:'Operations',       icon:Stethoscope },
-      { path:'/setup/pharmacy',         label:'Pharmacy',         icon:Pill },
-      { path:'/setup/pathology',        label:'Pathology',        icon:FlaskConical },
-      { path:'/setup/radiology',        label:'Radiology',        icon:RadioTower },
-      { path:'/setup/blood-bank',       label:'Blood Bank',       icon:Droplets },
-      { path:'/setup/symptoms',         label:'Symptoms',         icon:Activity },
-      { path:'/setup/findings',         label:'Findings',         icon:ScanLine },
-      { path:'/setup/vitals',           label:'Vitals',           icon:HeartPulse },
-      { path:'/setup/zoom',             label:'Zoom Setting',     icon:Video },
-      { path:'/setup/finance',          label:'Finance',          icon:Banknote },
-      { path:'/setup/human-resource',   label:'Human Resource',   icon:UserCog },
-      { path:'/setup/referral',         label:'Referral',         icon:Share2 },
-      { path:'/setup/appointment',      label:'Appointment',      icon:Calendar },
-      { path:'/setup/inventory',        label:'Inventory',        icon:Boxes },
-      { path:'/setup/custom-fields',    label:'Custom Field',     icon:ClipboardList },
+      { path:'/setup/settings',            label:'Settings',            icon:Settings },
+      { path:'/setup/print-header-footer', label:'Print Header Footer', icon:Printer },
+      { path:'/setup/hospital-charges',    label:'Hospital Charges',    icon:Receipt },
+      { path:'/setup/bed',                 label:'Bed',                 icon:Bed },
+      { path:'/setup/front-office',        label:'Front Office',        icon:Building2 },
+      { path:'/setup/operations',          label:'Operations',          icon:Stethoscope },
+      { path:'/setup/pharmacy',            label:'Pharmacy',            icon:Pill },
+      { path:'/setup/pathology',           label:'Pathology',           icon:FlaskConical },
+      { path:'/setup/radiology',           label:'Radiology',           icon:RadioTower },
+      { path:'/setup/blood-bank',          label:'Blood Bank',          icon:Droplets },
+      { path:'/setup/symptoms',            label:'Symptoms',            icon:Activity },
+      { path:'/setup/findings',            label:'Findings',            icon:ScanLine },
+      { path:'/setup/vitals',              label:'Vitals',              icon:HeartPulse },
+      { path:'/setup/zoom',                label:'Zoom Setting',        icon:Video },
+      { path:'/setup/finance',             label:'Finance',             icon:Banknote },
+      { path:'/setup/human-resource',      label:'Human Resource',      icon:UserCog },
+      { path:'/setup/referral',            label:'Referral',            icon:Share2 },
+      { path:'/setup/appointment',         label:'Appointment',         icon:Calendar },
+      { path:'/setup/inventory',           label:'Inventory',           icon:Boxes },
+      { path:'/setup/custom-fields',       label:'Custom Field',        icon:ClipboardList },
     ],
   },
 ]
+
+// Per-role Setup sub-menu whitelist. Roles not listed here see every Setup
+// child their `setup` module access permits (the existing canAccess pipeline).
+const SETUP_BY_ROLE: Record<string, string[]> = {
+  pathologist: [
+    '/setup/print-header-footer',
+    '/setup/pathology',
+    '/setup/blood-bank',
+    '/setup/finance',
+  ],
+  nurse: [
+    '/setup/bed',
+  ],
+  pharmacist: [
+    '/setup/hospital-charges',
+    '/setup/print-header-footer',
+    '/setup/pharmacy',
+    '/setup/finance',
+  ],
+  radiologist: [
+    '/setup/hospital-charges',
+    '/setup/print-header-footer',
+    '/setup/radiology',
+    '/setup/finance',
+  ],
+}
 
 
 export default function Sidebar() {
@@ -131,7 +158,10 @@ export default function Sidebar() {
           // Filter: leaves hidden when role lacks access; groups hidden when ALL children blocked.
           .map(item => {
             if (!isGroup(item)) return canAccess(user?.role, item.path) ? item : null
-            const visible = item.children.filter(c => canAccess(user?.role, c.path))
+            const roleWhitelist = SETUP_BY_ROLE[user?.role ?? '']
+            const visible = item.children
+              .filter(c => canAccess(user?.role, c.path))
+              .filter(c => !roleWhitelist || roleWhitelist.includes(c.path))
             return visible.length ? { ...item, children: visible } : null
           })
           .filter((x): x is NavItem => x !== null)

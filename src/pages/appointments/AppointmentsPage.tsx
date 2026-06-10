@@ -102,7 +102,7 @@ export default function AppointmentsPage() {
               className={cn(
                 'px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
                 tab === t.id && view === 'list'
-                  ? 'border-[#00a8e8] text-[#00a8e8]'
+                  ? 'border-[#059669] text-[#059669]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -113,7 +113,7 @@ export default function AppointmentsPage() {
         <div className="flex gap-2">
           <button
             onClick={() => setModal(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#00a8e8] hover:bg-[#0090c7] text-white text-sm font-medium rounded transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded transition-colors"
           >
             <Plus className="w-4 h-4" /> Add Appointment
           </button>
@@ -152,7 +152,7 @@ export default function AppointmentsPage() {
               <input type="date" className="w-full h-10 px-3 border border-gray-300 rounded text-sm" value={dwDate} onChange={e => setDwDate(e.target.value)} />
             </div>
             <div className="flex items-end">
-              <button className="px-5 py-2 bg-[#00a8e8] text-white text-sm font-medium rounded hover:bg-[#0090c7]">Search</button>
+              <button className="px-5 py-2 bg-[#059669] text-white text-sm font-medium rounded hover:bg-[#047857]">Search</button>
             </div>
           </div>
         </div>
@@ -189,8 +189,8 @@ export default function AppointmentsPage() {
               </select>
             </div>
             <div className="flex items-end gap-2">
-              <button className="px-4 py-2 bg-[#00a8e8] text-white text-sm font-medium rounded hover:bg-[#0090c7]">Reorder Queue</button>
-              <button className="px-4 py-2 bg-[#00a8e8] text-white text-sm font-medium rounded hover:bg-[#0090c7]">Search</button>
+              <button className="px-4 py-2 bg-[#059669] text-white text-sm font-medium rounded hover:bg-[#047857]">Reorder Queue</button>
+              <button className="px-4 py-2 bg-[#059669] text-white text-sm font-medium rounded hover:bg-[#047857]">Search</button>
             </div>
           </div>
         </div>
@@ -223,11 +223,11 @@ export default function AppointmentsPage() {
           <div className="overflow-x-auto">
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="w-8 h-8 border-2 border-gray-300 border-t-[#00a8e8] rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-gray-300 border-t-[#059669] rounded-full animate-spin" />
               </div>
             ) : appointments.length === 0 ? (
               <EmptyState icon={<Stethoscope className="w-8 h-8 text-gray-400" />} title="No appointments found"
-                action={<button onClick={() => setModal(true)} className="px-4 py-2 bg-[#00a8e8] text-white text-sm rounded">+ Add Appointment</button>} />
+                action={<button onClick={() => setModal(true)} className="px-4 py-2 bg-[#059669] text-white text-sm rounded">+ Add Appointment</button>} />
             ) : (
               <table className="w-full text-sm">
                 <thead>
@@ -247,7 +247,7 @@ export default function AppointmentsPage() {
                     <tr key={a.id} className="hover:bg-gray-50/50">
                       <td className="px-3 py-3">
                         <Link to={`/patients/${a.patient_id}`}
-                          className="text-[#00a8e8] hover:underline cursor-pointer font-medium">
+                          className="text-[#059669] hover:underline cursor-pointer font-medium">
                           {a.patient_name ?? `Patient #${a.patient_id}`} ({a.patient_id})
                         </Link>
                       </td>
@@ -296,7 +296,7 @@ export default function AppointmentsPage() {
               <div className="flex gap-1">
                 <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
                   className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">‹</button>
-                <span className="px-3 py-1 border border-[#00a8e8] bg-[#00a8e8] text-white rounded text-xs">{page}</span>
+                <span className="px-3 py-1 border border-[#059669] bg-[#059669] text-white rounded text-xs">{page}</span>
                 <button onClick={() => setPage(p => p + 1)} disabled={appointments.length < perPage}
                   className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">›</button>
               </div>

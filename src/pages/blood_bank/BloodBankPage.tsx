@@ -8,6 +8,7 @@ import AddBloodStockModal from './AddBloodStockModal'
 import AddComponentsModal from './AddComponentsModal'
 import IssueBloodModal from './IssueBloodModal'
 import IssueComponentModal from './IssueComponentModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 type Tab = 'status' | 'donors' | 'issues' | 'component_issues' | 'components'
@@ -16,6 +17,12 @@ const BLOOD_GROUPS = ['B+', 'A+', 'AB-', 'AB+', 'O-', 'A-', 'B-', 'O+']
 
 export default function BloodBankPage() {
   const qc = useQueryClient()
+  const role = useAuthStore(s => s.user?.role)
+  // Doctors / nurses / accountants view stock + issue history only — donor management
+  // and any add/issue mutations stay with the blood-bank team.
+  const canManageBloodBank = !['doctor', 'nurse', 'accountant'].includes(role ?? '')
+  // Accountant additionally keeps the Components list view for read-only audit.
+  const canViewComponents  = canManageBloodBank || role === 'accountant'
   const [tab, setTab] = useState<Tab>('status')
   const [bg, setBg]   = useState<string>('B+')
   const [search, setSearch] = useState('')
@@ -66,18 +73,22 @@ export default function BloodBankPage() {
           <p className="text-sm text-gray-500 mt-0.5">Donors, stock, components and issues</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setTab('donors')} className="btn btn-outline flex items-center gap-1.5">
-            <Users size={14}/> Donor Details
-          </button>
+          {canManageBloodBank && (
+            <button onClick={() => setTab('donors')} className="btn btn-outline flex items-center gap-1.5">
+              <Users size={14}/> Donor Details
+            </button>
+          )}
           <button onClick={() => setTab('issues')} className="btn btn-outline flex items-center gap-1.5">
             <Droplet size={14}/> Blood Issue Details
           </button>
           <button onClick={() => setTab('component_issues')} className="btn btn-outline flex items-center gap-1.5">
             <Activity size={14}/> Component Issue
           </button>
-          <button onClick={() => setTab('components')} className="btn btn-outline flex items-center gap-1.5">
-            <Layers size={14}/> Components
-          </button>
+          {canViewComponents && (
+            <button onClick={() => setTab('components')} className="btn btn-outline flex items-center gap-1.5">
+              <Layers size={14}/> Components
+            </button>
+          )}
         </div>
       </div>
 
@@ -85,10 +96,10 @@ export default function BloodBankPage() {
         <div className="flex">
           {[
             { id: 'status', label: 'Blood Bank Status' },
-            { id: 'donors', label: 'Donor Details' },
+            ...(canManageBloodBank ? [{ id: 'donors', label: 'Donor Details' }] : []),
             { id: 'issues', label: 'Blood Issue Details' },
             { id: 'component_issues', label: 'Components Issue Details' },
-            { id: 'components', label: 'Components List' },
+            ...(canViewComponents ? [{ id: 'components', label: 'Components List' }] : []),
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
@@ -116,9 +127,11 @@ export default function BloodBankPage() {
                 <span className="text-sm font-semibold text-gray-800">Blood</span>
                 <span className="ml-3 text-xs text-gray-500">{stock.filter(s => !s.is_issued).length} Bags</span>
               </div>
-              <button onClick={() => setStockModal(true)} className="px-2 py-1 rounded bg-emerald-500 text-white text-xs hover:bg-emerald-600">
-                <Plus size={12}/>
-              </button>
+              {canManageBloodBank && (
+                <button onClick={() => setStockModal(true)} className="px-2 py-1 rounded bg-emerald-500 text-white text-xs hover:bg-emerald-600">
+                  <Plus size={12}/>
+                </button>
+              )}
             </div>
             <table className="w-full text-sm">
               <thead>
@@ -138,10 +151,12 @@ export default function BloodBankPage() {
                     <td className="px-3 py-2 text-gray-500">{s.lot_no || ''}</td>
                     <td className="px-3 py-2 text-gray-500">{s.institution || ''}</td>
                     <td className="px-3 py-2">
-                      <button disabled={s.is_issued} onClick={() => setIssueModal(true)}
-                              className="px-3 py-1 bg-emerald-500 text-white rounded text-xs hover:bg-emerald-600 disabled:opacity-40">
-                        {s.is_issued ? 'Issued' : 'Issue'}
-                      </button>
+                      {canManageBloodBank && (
+                        <button disabled={s.is_issued} onClick={() => setIssueModal(true)}
+                                className="px-3 py-1 bg-emerald-500 text-white rounded text-xs hover:bg-emerald-600 disabled:opacity-40">
+                          {s.is_issued ? 'Issued' : 'Issue'}
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -155,9 +170,11 @@ export default function BloodBankPage() {
                 <span className="text-sm font-semibold text-gray-800">Components</span>
                 <span className="ml-3 text-xs text-gray-500">{comps.filter(c => !c.is_issued).length} Bags</span>
               </div>
-              <button onClick={() => setCompModal(true)} className="px-2 py-1 rounded bg-emerald-500 text-white text-xs hover:bg-emerald-600">
-                <Plus size={12}/>
-              </button>
+              {canManageBloodBank && (
+                <button onClick={() => setCompModal(true)} className="px-2 py-1 rounded bg-emerald-500 text-white text-xs hover:bg-emerald-600">
+                  <Plus size={12}/>
+                </button>
+              )}
             </div>
             <table className="w-full text-sm">
               <thead>
@@ -177,10 +194,12 @@ export default function BloodBankPage() {
                     <td className="px-3 py-2 text-gray-500">{c.lot_no || ''}</td>
                     <td className="px-3 py-2 text-gray-500">{c.component_type}</td>
                     <td className="px-3 py-2">
-                      <button disabled={c.is_issued} onClick={() => setCIssueModal(true)}
-                              className="px-3 py-1 bg-emerald-500 text-white rounded text-xs hover:bg-emerald-600 disabled:opacity-40">
-                        {c.is_issued ? 'Issued' : 'Issue'}
-                      </button>
+                      {canManageBloodBank && (
+                        <button disabled={c.is_issued} onClick={() => setCIssueModal(true)}
+                                className="px-3 py-1 bg-emerald-500 text-white rounded text-xs hover:bg-emerald-600 disabled:opacity-40">
+                          {c.is_issued ? 'Issued' : 'Issue'}
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -199,9 +218,11 @@ export default function BloodBankPage() {
               <input className="input pl-8 h-9 text-sm" placeholder="Search donors..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <div className="flex-1" />
-            <button onClick={() => setDonorModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5">
-              <Plus size={13}/> Add Blood Donor
-            </button>
+            {canManageBloodBank && (
+              <button onClick={() => setDonorModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5">
+                <Plus size={13}/> Add Blood Donor
+              </button>
+            )}
           </div>
           <table className="w-full text-sm">
             <thead>
@@ -294,9 +315,11 @@ export default function BloodBankPage() {
               <input className="input pl-8 h-9 text-sm" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <div className="flex-1" />
-            <button onClick={() => setCIssueModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5">
-              <Plus size={13}/> Issue Component
-            </button>
+            {canManageBloodBank && (
+              <button onClick={() => setCIssueModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5">
+                <Plus size={13}/> Issue Component
+              </button>
+            )}
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -349,9 +372,11 @@ export default function BloodBankPage() {
               <input className="input pl-8 h-9 text-sm" placeholder="Search..." />
             </div>
             <div className="flex-1" />
-            <button onClick={() => setCompModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5">
-              <Plus size={13}/> Add Components
-            </button>
+            {canManageBloodBank && (
+              <button onClick={() => setCompModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5">
+                <Plus size={13}/> Add Components
+              </button>
+            )}
           </div>
           <table className="w-full text-sm">
             <thead>

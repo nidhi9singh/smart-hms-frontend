@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { opdApi, type OPDRecord, type OPDCharge, type OPDPayment } from '@/api/opd'
 function PageLoader() {
-  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#00a8e8] rounded-full animate-spin" /></div>
+  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#059669] rounded-full animate-spin" /></div>
 }
 import { cn, fmtDate } from '@/lib/utils'
 
@@ -107,7 +107,7 @@ export default function OPDDetailPage({ opdId, onBack }: Props) {
               className={cn(
                 'flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium border-b-2 transition-colors whitespace-nowrap',
                 subTab === t.id
-                  ? 'border-[#00a8e8] text-[#00a8e8]'
+                  ? 'border-[#059669] text-[#059669]'
                   : 'border-transparent text-gray-500 hover:text-gray-700',
               )}
             >

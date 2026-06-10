@@ -6,12 +6,16 @@ import { pharmacyApi } from '@/api/pharmacy'
 import GenerateBillModal from './GenerateBillModal'
 import AddMedicineModal from './AddMedicineModal'
 import PurchaseMedicineModal from './PurchaseMedicineModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 type PharmTab = 'bills' | 'medicines' | 'purchases'
 
 export default function PharmacyPage() {
   const qc = useQueryClient()
+  const role = (useAuthStore(s => s.user?.role) ?? '').toLowerCase()
+  // Accountant views pharmacy data only — no bill generation, no stock writes.
+  const canManagePharmacy = !['accountant', 'doctor', 'nurse'].includes(role)
   const [tab, setTab]     = useState<PharmTab>('bills')
   const [search, setSearch] = useState('')
   const [billModal, setBillModal]       = useState(false)
@@ -57,9 +61,11 @@ export default function PharmacyPage() {
           <button onClick={() => setTab('medicines')} className="btn btn-outline flex items-center gap-1.5">
             💊 Medicines
           </button>
-          <button onClick={() => setBillModal(true)} className="btn btn-primary flex items-center gap-1.5">
-            <Plus size={14}/> Generate Bill
-          </button>
+          {canManagePharmacy && (
+            <button onClick={() => setBillModal(true)} className="btn btn-primary flex items-center gap-1.5">
+              <Plus size={14}/> Generate Bill
+            </button>
+          )}
         </div>
       </div>
 
@@ -81,7 +87,7 @@ export default function PharmacyPage() {
       {/* Tabs */}
       <div className="border-b border-gray-200">
         <div className="flex">
-          {[{ id:'bills', label:'Pharmacy Bills' }, { id:'medicines', label:'Medicines Stock' }, { id:'purchases', label:'Purchases' }].map(t => (
+          {[{ id:'bills', label:'Pharmacy Bills' }, { id:'medicines', label:'Medicines Stock' }, { id:'purchases', label:'Medicine Purchase List' }].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as PharmTab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
                 tab===t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -136,7 +142,9 @@ export default function PharmacyPage() {
                       <div className="flex gap-1">
                         <button className="icon-btn" title="Print"><Printer size={11}/></button>
                         <button className="icon-btn" title="View"><Eye size={11}/></button>
-                        <button className="icon-btn text-red-400" onClick={() => delBill.mutate(b.id)}><Trash2 size={11}/></button>
+                        {canManagePharmacy && (
+                          <button className="icon-btn text-red-400" onClick={() => delBill.mutate(b.id)}><Trash2 size={11}/></button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -157,9 +165,13 @@ export default function PharmacyPage() {
               <input className="input pl-8 h-9 text-sm" placeholder="Search medicines..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <div className="flex-1" />
-            <button className="btn btn-outline text-sm flex items-center gap-1.5"><Upload size={13}/> Import</button>
-            <button onClick={() => setPurchaseModal(true)} className="btn btn-outline text-sm flex items-center gap-1.5"><ShoppingCart size={13}/> Purchase</button>
-            <button onClick={() => setMedModal({ open: true })} className="btn btn-primary text-sm flex items-center gap-1.5"><Plus size={13}/> Add Medicine</button>
+            {canManagePharmacy && (
+              <button className="btn btn-outline text-sm flex items-center gap-1.5"><Upload size={13}/> Import</button>
+            )}
+            <button onClick={() => setTab('purchases')} className="btn btn-outline text-sm flex items-center gap-1.5"><ShoppingCart size={13}/> Purchase</button>
+            {canManagePharmacy && (
+              <button onClick={() => setMedModal({ open: true })} className="btn btn-primary text-sm flex items-center gap-1.5"><Plus size={13}/> Add Medicine</button>
+            )}
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -188,8 +200,12 @@ export default function PharmacyPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
-                        <button className="icon-btn" onClick={() => setMedModal({ open: true, medicine: m })}><Edit2 size={12}/></button>
-                        <button className="icon-btn text-red-400" onClick={() => delMed.mutate(m.id)}><Trash2 size={12}/></button>
+                        {canManagePharmacy && (
+                          <>
+                            <button className="icon-btn" onClick={() => setMedModal({ open: true, medicine: m })}><Edit2 size={12}/></button>
+                            <button className="icon-btn text-red-400" onClick={() => delMed.mutate(m.id)}><Trash2 size={12}/></button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -203,19 +219,23 @@ export default function PharmacyPage() {
       {/* Purchases Tab */}
       {tab === 'purchases' && (
         <div className="card overflow-hidden p-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+            <h2 className="text-base font-semibold text-gray-800">Medicine Purchase List</h2>
+            {canManagePharmacy && (
+              <button onClick={() => setPurchaseModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5"><Plus size={13}/> Add Purchase</button>
+            )}
+          </div>
           <div className="flex items-center gap-3 p-3 border-b border-gray-100">
             <div className="relative flex-1 max-w-xs">
               <Search size={14} className="absolute left-2.5 top-2.5 text-gray-400" />
               <input className="input pl-8 h-9 text-sm" placeholder="Search purchases..." />
             </div>
-            <div className="flex-1" />
-            <button onClick={() => setPurchaseModal(true)} className="btn btn-primary text-sm flex items-center gap-1.5"><Plus size={13}/> Purchase Medicine</button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/50">
-                  {['Purchase No','Purchase Date','Bill No','Supplier','Total (₹)','Discount (₹)','Tax (₹)','Net Amount (₹)','Action'].map(h => (
+                  {['Pharmacy Purchase No','Purchase Date','Bill No','Supplier Name','Total (₹)','Discount (₹)','Tax (₹)','Net Amount (₹)','Action'].map(h => (
                     <th key={h} className="px-4 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -235,7 +255,9 @@ export default function PharmacyPage() {
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
                         <button className="icon-btn"><Eye size={12}/></button>
-                        <button className="icon-btn text-red-400"><Trash2 size={12}/></button>
+                        {canManagePharmacy && (
+                          <button className="icon-btn text-red-400"><Trash2 size={12}/></button>
+                        )}
                       </div>
                     </td>
                   </tr>

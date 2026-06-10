@@ -95,7 +95,7 @@ export default function PatientDetailPage() {
                 className={cn(
                   'flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap -mb-px',
                   active
-                    ? 'border-[#00a8e8] text-[#00a8e8]'
+                    ? 'border-[#059669] text-[#059669]'
                     : 'border-transparent text-gray-600 hover:text-gray-800'
                 )}>
                 <Icon size={14}/> {t.label}
@@ -256,7 +256,7 @@ function OverviewTab({ p, caseId, age, sections, barcodeUrl, qrUrl }: any) {
           <MiniTable
             head={['OPD No', 'Case ID', 'Appointment Date', 'Consultant', 'Reference', 'Symptoms']}
             rows={opd.map((v: any) => [
-              <span className="text-[#00a8e8]">{v.opd_no || '—'}</span>,
+              <span className="text-[#059669]">{v.opd_no || '—'}</span>,
               v.case_id, v.date, v.doctor_name, '—', v.symptoms || '',
             ])}/>
         </div>
@@ -271,7 +271,7 @@ function OverviewTab({ p, caseId, age, sections, barcodeUrl, qrUrl }: any) {
           <MiniTable
             head={['OPD No', 'Case ID', 'Appointment Date', 'Consultant', 'Symptoms']}
             rows={opd.map((v: any) => [
-              <span className="text-[#00a8e8]">{v.opd_no || '—'}</span>,
+              <span className="text-[#059669]">{v.opd_no || '—'}</span>,
               v.case_id, v.date, v.doctor_name, v.symptoms || '',
             ])}/>
         </div>
@@ -288,7 +288,7 @@ function VisitsTab({ sections, onAddVisit }: { sections: any; onAddVisit: () => 
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">Visits</h3>
         <button onClick={onAddVisit}
-          className="flex items-center gap-1 px-3 py-2 bg-[#00a8e8] hover:bg-[#0090c7] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
           <ArrowLeftRight size={14}/> New Visit
         </button>
       </div>
@@ -296,7 +296,7 @@ function VisitsTab({ sections, onAddVisit }: { sections: any; onAddVisit: () => 
       <FullTable
         head={['OPD No', 'Case ID', 'Appointment Date', 'Consultant', 'Reference', 'Symptoms', 'Previous Medical Issue', 'Action']}
         rows={rows.map((v: any) => [
-          <span className="text-[#00a8e8] font-medium">{v.opd_no || '—'}</span>,
+          <span className="text-[#059669] font-medium">{v.opd_no || '—'}</span>,
           v.case_id ?? '—',
           v.date || '—',
           v.doctor_name || '—',
@@ -324,7 +324,7 @@ function LabTab({ sections }: any) {
         <FullTable
           head={['Test Name', 'Case ID', 'Lab', 'Sample Collected', 'Expected Date', 'Approved By', 'Action']}
           rows={rows.map((b: any) => [
-            <span className="text-[#00a8e8]">{b.bill_no || '—'}</span>,
+            <span className="text-[#059669]">{b.bill_no || '—'}</span>,
             b.case_id ?? '—',
             'Pathology',
             b.date || '—',
@@ -348,7 +348,7 @@ function TreatmentTab({ sections }: any) {
       <FullTable
         head={['OPD No', 'Case ID', 'Appointment Date', 'Symptoms', 'Consultant', 'Action']}
         rows={rows.map((v: any) => [
-          <span className="text-[#00a8e8] font-medium">{v.opd_no || '—'}</span>,
+          <span className="text-[#059669] font-medium">{v.opd_no || '—'}</span>,
           v.case_id ?? '—',
           v.date || '—',
           v.symptoms || '—',
@@ -374,7 +374,7 @@ function TimelineTab({ pid, onAdd }: { pid: number; onAdd: () => void }) {
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">Timeline</h3>
         <button onClick={onAdd}
-          className="flex items-center gap-1 px-3 py-2 bg-[#00a8e8] hover:bg-[#0090c7] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
           <Plus size={14}/> Add Timeline
         </button>
       </div>
@@ -416,7 +416,7 @@ function VitalsTab({ pid, onAdd }: { pid: number; onAdd: () => void }) {
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">Vitals</h3>
         <button onClick={onAdd}
-          className="flex items-center gap-1 px-3 py-2 bg-[#00a8e8] hover:bg-[#0090c7] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
           <Plus size={14}/> Add Vital
         </button>
       </div>
@@ -574,7 +574,7 @@ function Footer({ count }: { count: number }) {
       <span>Records: {count === 0 ? '0 to 0 of 0' : `1 to ${count} of ${count}`}</span>
       <div className="flex gap-1">
         <button className="px-2 py-1 border border-gray-300 rounded text-gray-400">‹</button>
-        <span className="px-3 py-1 border border-[#00a8e8] bg-[#00a8e8] text-white rounded text-xs">1</span>
+        <span className="px-3 py-1 border border-[#059669] bg-[#059669] text-white rounded text-xs">1</span>
         <button className="px-2 py-1 border border-gray-300 rounded text-gray-400">›</button>
       </div>
     </div>

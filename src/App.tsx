@@ -13,6 +13,7 @@ import DashboardPage from '@/pages/dashboard/DashboardPage'
 import PatientsPage from '@/pages/patients/PatientsPage'
 import PatientDetailPage from '@/pages/patients/PatientDetailPage'
 import HRPage from '@/pages/hr/HRPage'
+import StaffDetailPage from '@/pages/hr/StaffDetailPage'
 import AppointmentsPage from '@/pages/appointments/AppointmentsPage'
 import OPDPage from '@/pages/opd/OPDPage'
 import IPDPage from '@/pages/ipd/IPDPage'
@@ -46,6 +47,7 @@ import StaffIdCardPage    from '@/pages/certificates/StaffIdCardPage'
 import CMSPage from '@/pages/cms/CMSPage'
 import ReportsPage from '@/pages/reports/ReportsPage'
 import SettingsPage from '@/pages/setup/SettingsPage'
+import PrintHeaderFooterPage from '@/pages/setup/print_header_footer/PrintHeaderFooterPage'
 import HospitalChargesPage from '@/pages/setup/charges/HospitalChargesPage'
 import BedSetupPage        from '@/pages/setup/bed/BedSetupPage'
 import FrontOfficeSetupPage from '@/pages/setup/front_office/FrontOfficeSetupPage'
@@ -100,6 +102,7 @@ export default function App() {
           <Route path="/birth-death"        element={<BirthDeathPage />} />
           <Route path="/multi-branch"       element={<MultiBranchPage />} />
           <Route path="/hr"                 element={<HRPage />} />
+          <Route path="/hr/staff/:id"       element={<StaffDetailPage />} />
           <Route path="/attendance"          element={<QRAttendancePage />} />
           <Route path="/attendance/settings" element={<QRAttendanceSettingsPage />} />
           <Route path="/duty-roster"        element={<DutyRosterPage />} />
@@ -124,8 +127,9 @@ export default function App() {
           <Route path="/reports"            element={<ReportsPage />} />
           <Route path="/settings"           element={<SettingsPage />} />
           <Route path="/setup"              element={<SettingsPage />} />
-          <Route path="/setup/settings"          element={<SettingsPage />} />
-          <Route path="/setup/hospital-charges"  element={<HospitalChargesPage />} />
+          <Route path="/setup/settings"            element={<SettingsPage />} />
+          <Route path="/setup/print-header-footer" element={<PrintHeaderFooterPage />} />
+          <Route path="/setup/hospital-charges"    element={<HospitalChargesPage />} />
           <Route path="/setup/bed"               element={<BedSetupPage />} />
           <Route path="/setup/front-office"      element={<FrontOfficeSetupPage />} />
           <Route path="/setup/operations"        element={<OperationsSetupPage />} />

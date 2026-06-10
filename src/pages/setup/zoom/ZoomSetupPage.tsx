@@ -108,7 +108,7 @@ export default function ZoomSetupPage() {
 
           {/* Right: Zoom branding panel */}
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-3 lg:pl-6 lg:border-l">
-            <div className="text-4xl font-bold text-blue-600 tracking-tight">zoom</div>
+            <div className="text-4xl font-bold text-emerald-600 tracking-tight">zoom</div>
             <p className="text-sm text-gray-700">
               To set zoom api{' '}
               <a href="https://marketplace.zoom.us/develop/create" target="_blank" rel="noreferrer"

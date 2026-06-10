@@ -5,6 +5,7 @@ import { Plus, Search, Video, X } from 'lucide-react'
 import { liveApi } from '@/api/liveConsultation'
 import AddConsultationModal from './AddConsultationModal'
 import LiveSessionModal      from './LiveSessionModal'
+import AddCredentialModal    from './AddCredentialModal'
 
 const STATUSES = ['Awaited', 'Started', 'Finished', 'Cancelled']
 
@@ -13,6 +14,7 @@ export default function LiveConsultationPage() {
   const qc = useQueryClient()
   const [search, setSearch] = useState('')
   const [addOpen, setAddOpen] = useState(false)
+  const [credOpen, setCredOpen] = useState(false)
   const [session, setSession] = useState<any | null>(null)
 
   const { data, isLoading } = useQuery({
@@ -36,9 +38,14 @@ export default function LiveConsultationPage() {
       <div className="card">
         <div className="flex items-center justify-between px-5 py-3 border-b">
           <h1 className="text-base font-semibold text-gray-800">Live Consultation</h1>
-          <button onClick={() => setAddOpen(true)} className="btn btn-primary flex items-center gap-1.5">
-            <Plus size={14}/> Add
-          </button>
+          <div className="flex gap-2">
+            <button onClick={() => setAddOpen(true)} className="btn btn-primary flex items-center gap-1.5">
+              <Plus size={14}/> Add
+            </button>
+            <button onClick={() => setCredOpen(true)} className="btn btn-primary flex items-center gap-1.5">
+              <Plus size={14}/> Add Credential
+            </button>
+          </div>
         </div>
 
         <div className="px-5 py-3 border-b">
@@ -115,6 +122,7 @@ export default function LiveConsultationPage() {
       </div>
 
       <AddConsultationModal open={addOpen} onClose={() => setAddOpen(false)} />
+      <AddCredentialModal   open={credOpen} onClose={() => setCredOpen(false)} />
       <LiveSessionModal open={!!session} onClose={() => setSession(null)} kind="consultation" item={session} />
     </div>
   )

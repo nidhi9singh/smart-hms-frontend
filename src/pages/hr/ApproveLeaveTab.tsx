@@ -350,7 +350,7 @@ export default function ApproveLeaveTab() {
         onClose={() => setModalOpen(false)}
         title="Add Details"
         size="lg"
-        headerClassName="bg-[#34ace0] text-white"
+        headerClassName="bg-[#059669] text-white"
         footer={
           <div className="flex justify-end">
             <button onClick={handleSubmit} disabled={isBusy}

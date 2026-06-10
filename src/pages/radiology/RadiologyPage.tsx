@@ -5,12 +5,16 @@ import { Search, Plus, Eye, Edit2, Trash2, Printer, Activity } from 'lucide-reac
 import { radiologyApi } from '@/api/radiology'
 import AddRadiologyTestModal from './AddRadiologyTestModal'
 import GenerateRadiologyBillModal from './GenerateRadiologyBillModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 type Tab = 'bills' | 'tests'
 
 export default function RadiologyPage() {
   const qc = useQueryClient()
+  const role = useAuthStore(s => s.user?.role)
+  // Doctors view results only — billing + test catalog edits stay with the radiology team.
+  const canManageRadiology = !['doctor', 'nurse', 'accountant'].includes(role ?? '')
   const [tab, setTab] = useState<Tab>('bills')
   const [search, setSearch] = useState('')
   const [billModal, setBillModal] = useState(false)
@@ -50,19 +54,21 @@ export default function RadiologyPage() {
           <button onClick={() => setTab('tests')} className="btn btn-outline flex items-center gap-1.5">
             <Activity size={14}/> Radiology Test
           </button>
-          <button onClick={() => setBillModal(true)} className="btn btn-primary flex items-center gap-1.5">
-            <Plus size={14}/> Generate Bill
-          </button>
+          {canManageRadiology && (
+            <button onClick={() => setBillModal(true)} className="btn btn-primary flex items-center gap-1.5">
+              <Plus size={14}/> Generate Bill
+            </button>
+          )}
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3">
+      <div className={cn('grid gap-3', canManageRadiology ? 'grid-cols-4' : 'grid-cols-2')}>
         {[
-          { label: 'Total Bills',     value: bills.length,                  color: 'bg-emerald-50 text-emerald-700'   },
-          { label: 'Total Revenue',   value: `₹${totalRevenue.toFixed(2)}`, color: 'bg-emerald-50 text-emerald-700'   },
-          { label: 'Pending Balance', value: `₹${totalBalance.toFixed(2)}`, color: 'bg-red-50 text-red-700'     },
-          { label: 'Tests',           value: tests.length,                  color: 'bg-amber-50 text-amber-700' },
-        ].map(s => (
+          { label: 'Total Bills',     value: bills.length,                  color: 'bg-emerald-50 text-emerald-700', financial: false },
+          { label: 'Total Revenue',   value: `₹${totalRevenue.toFixed(2)}`, color: 'bg-emerald-50 text-emerald-700', financial: true  },
+          { label: 'Pending Balance', value: `₹${totalBalance.toFixed(2)}`, color: 'bg-red-50 text-red-700',         financial: true  },
+          { label: 'Tests',           value: tests.length,                  color: 'bg-amber-50 text-amber-700',     financial: false },
+        ].filter(s => canManageRadiology || !s.financial).map(s => (
           <div key={s.label} className="card p-4 flex items-center gap-3">
             <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs', s.color)}>{s.value}</div>
             <span className="text-sm text-gray-600">{s.label}</span>
@@ -144,9 +150,11 @@ export default function RadiologyPage() {
               <input className="input pl-8 h-9 text-sm" placeholder="Search tests..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <div className="flex-1" />
-            <button onClick={() => setTestModal({ open: true })} className="btn btn-primary text-sm flex items-center gap-1.5">
-              <Plus size={13}/> Add Radiology Test
-            </button>
+            {canManageRadiology && (
+              <button onClick={() => setTestModal({ open: true })} className="btn btn-primary text-sm flex items-center gap-1.5">
+                <Plus size={13}/> Add Radiology Test
+              </button>
+            )}
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -173,8 +181,12 @@ export default function RadiologyPage() {
                     <td className="px-4 py-3 font-medium">₹{Number(t.amount || 0).toFixed(2)}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
-                        <button className="icon-btn" onClick={() => setTestModal({ open: true, test: t })}><Edit2 size={12}/></button>
-                        <button className="icon-btn text-red-400" onClick={() => confirm(`Delete ${t.name}?`) && delTest.mutate(t.id)}><Trash2 size={12}/></button>
+                        {canManageRadiology && (
+                          <>
+                            <button className="icon-btn" onClick={() => setTestModal({ open: true, test: t })}><Edit2 size={12}/></button>
+                            <button className="icon-btn text-red-400" onClick={() => confirm(`Delete ${t.name}?`) && delTest.mutate(t.id)}><Trash2 size={12}/></button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>

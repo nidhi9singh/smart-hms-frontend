@@ -75,43 +75,56 @@ const ROLE_ACCESS: Record<Role, Set<Module>> = {
   admin:       ALL_MODULES,
 
   doctor: new Set<Module>([
-    'dashboard', 'patients', 'appointment', 'opd', 'ipd',
-    'pharmacy', 'pathology', 'radiology', 'blood_bank',
-    'billing', 'live_consultation', 'messaging',
-    'downloads', 'certificates', 'reports', 'setup',
+    'dashboard', 'patients', 'billing', 'appointment',
+    'opd', 'ipd', 'pathology', 'radiology',
+    'blood_bank', 'ambulance', 'birth_death',
+    'human_resource', 'qr_attendance', 'tpa',
+    'messaging', 'downloads', 'certificates',
+    'live_consultation', 'reports', 'setup',
   ]),
 
   nurse: new Set<Module>([
-    'dashboard', 'patients', 'billing', 'opd', 'ipd',
-    'pharmacy', 'blood_bank', 'human_resource',
-    'messaging', 'downloads', 'live_consultation',
-    'reports', 'setup',
+    'dashboard', 'patients', 'opd', 'ipd',
+    'human_resource', 'messaging', 'downloads',
+    'live_consultation', 'reports', 'setup',
   ]),
 
   pharmacist: new Set<Module>([
-    'dashboard', 'patients', 'pharmacy', 'billing',
-    'messaging', 'downloads', 'reports', 'setup',
+    'dashboard', 'patients', 'billing',
+    'opd', 'ipd', 'pharmacy', 'blood_bank',
+    'human_resource', 'messaging', 'downloads',
+    'live_consultation', 'reports', 'setup',
   ]),
 
   pathologist: new Set<Module>([
-    'dashboard', 'patients', 'pathology', 'billing',
-    'messaging', 'downloads', 'reports', 'setup',
+    'dashboard', 'patients', 'billing',
+    'opd', 'ipd', 'pathology', 'blood_bank',
+    'human_resource', 'messaging', 'downloads',
+    'live_consultation', 'reports', 'setup',
   ]),
 
   radiologist: new Set<Module>([
-    'dashboard', 'patients', 'radiology', 'billing',
-    'messaging', 'downloads', 'reports', 'setup',
+    'dashboard', 'patients', 'billing',
+    'opd', 'ipd', 'radiology',
+    'human_resource', 'messaging', 'downloads',
+    'live_consultation', 'reports', 'setup',
   ]),
 
   accountant: new Set<Module>([
-    'dashboard', 'billing', 'finance', 'referral', 'tpa',
-    'messaging', 'downloads', 'reports', 'setup',
+    'dashboard', 'patients', 'billing',
+    'opd', 'ipd', 'pharmacy', 'pathology', 'radiology',
+    'blood_bank', 'ambulance', 'human_resource',
+    'referral', 'tpa', 'finance',
+    'messaging', 'inventory', 'downloads',
+    'live_consultation', 'reports', 'setup',
   ]),
 
   receptionist: new Set<Module>([
-    'dashboard', 'patients', 'appointment', 'opd',
-    'front_office', 'billing', 'messaging',
-    'downloads', 'reports', 'setup',
+    'dashboard', 'patients', 'billing', 'appointment',
+    'opd', 'ipd', 'pharmacy', 'pathology', 'radiology',
+    'blood_bank', 'ambulance', 'front_office', 'birth_death',
+    'human_resource', 'tpa', 'messaging', 'inventory',
+    'downloads', 'live_consultation', 'reports', 'setup',
   ]),
 }
 

@@ -1,21 +1,26 @@
 // src/pages/hr/LeaveFormModal.tsx
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { hrApi } from '@/api/hr'
+import { useAuthStore } from '@/store/authStore'
 import Modal from '@/components/ui/Modal'
 import FormField from '@/components/ui/FormField'
 
 export default function LeaveFormModal({ open, onClose, onSuccess }: any) {
-  const { register, handleSubmit, reset } = useForm({
+  const user = useAuthStore(s => s.user)
+  // Admin / receptionist can apply leave on behalf of any staff; everyone else is locked to themselves.
+  const canPickStaff = ['super_admin', 'admin', 'receptionist'].includes(user?.role ?? '')
+  const { register, handleSubmit, reset, setValue } = useForm({
     defaultValues: { apply_date: new Date().toISOString().split('T')[0] }
   })
   const [docFile, setDocFile]       = useState<File | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
   const { data: staffData } = useQuery({
-    queryKey: ['staff'],
-    queryFn:  () => hrApi.listStaff().then(r => r.data)
+    queryKey: ['staff-all-for-leave'],
+    queryFn:  () => hrApi.listStaff({ per_page: 500 }).then(r => r.data),
   })
   const { data: ltData } = useQuery({
     queryKey: ['leave-types'],
@@ -25,16 +30,46 @@ export default function LeaveFormModal({ open, onClose, onSuccess }: any) {
   const staff      = staffData?.data ?? []
   const leaveTypes = ltData?.data    ?? []
 
+  // Auto-select the current user's staff record for non-admin applicants.
+  const mySelf = !canPickStaff
+    ? staff.find((s: any) => s.staff_code === user?.staff_code)
+    : undefined
+  useEffect(() => {
+    if (mySelf?.id) setValue('staff_id', mySelf.id)
+  }, [mySelf?.id, setValue])
+
   const mut = useMutation({
     mutationFn: async (d: any) => {
-      const res = await hrApi.applyLeave(d)
-      // Upload document if attached
+      // For non-admin applicants we let the backend resolve staff_id from
+      // the JWT (it walks users.staff_code -> hr_staff.id). That avoids any
+      // dependence on what's persisted in localStorage.
+      let staffId = canPickStaff
+        ? (d.staff_id ? Number(d.staff_id) : 0)
+        : (mySelf?.id ?? 0)
+
+      const payload: any = {
+        leave_type_id : Number(d.leave_type_id) || 0,
+        apply_date    : d.apply_date,
+        from_date     : d.from_date,
+        to_date       : d.to_date,
+        reason        : d.reason || undefined,
+      }
+      if (staffId) payload.staff_id = staffId
+
+      const res = await hrApi.applyLeave(payload)
       if (docFile && res.data?.data?.id) {
         try { await hrApi.uploadLeaveDoc(res.data.data.id, docFile) } catch {}
       }
       return res
     },
-    onSuccess: () => { reset(); setDocFile(null); onSuccess() },
+    onSuccess: () => {
+      toast.success('Leave applied')
+      reset(); setDocFile(null); onSuccess()
+    },
+    onError: (e: any) => {
+      const msg = e?.response?.data?.detail ?? e?.response?.data?.message ?? e?.message ?? 'Failed to apply leave'
+      toast.error(typeof msg === 'string' ? msg : JSON.stringify(msg))
+    },
   })
 
   const today = new Date().toLocaleDateString('en-US', { month:'2-digit', day:'2-digit', year:'numeric' })
@@ -54,10 +89,13 @@ export default function LeaveFormModal({ open, onClose, onSuccess }: any) {
         {/* Apply Date | Leave Type */}
         <div className="grid grid-cols-2 gap-4">
           <FormField label="Apply Date *">
-            <input className="input bg-gray-50" readOnly
-              value={today} />
-            <input type="hidden" {...register('apply_date')}
-              value={new Date().toISOString().split('T')[0]} />
+            <div className="relative">
+              <span className="absolute left-3 top-2.5 text-gray-400 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </span>
+              <input type="date" className="input pl-9"
+                {...register('apply_date', { required: true })} />
+            </div>
           </FormField>
           <FormField label="Leave Type *">
             <select className="input" {...register('leave_type_id', { required: true, valueAsNumber: true })}>
@@ -71,17 +109,22 @@ export default function LeaveFormModal({ open, onClose, onSuccess }: any) {
           </FormField>
         </div>
 
-        {/* Staff (for admin applying on behalf) */}
-        <FormField label="Staff *">
-          <select className="input" {...register('staff_id', { required: true, valueAsNumber: true })}>
-            <option value="">Select Staff</option>
-            {staff.map((s: any) => (
-              <option key={s.id} value={s.id}>
-                {s.first_name} {s.last_name} (#{s.staff_code})
-              </option>
-            ))}
-          </select>
-        </FormField>
+        {/* Staff (admin / receptionist apply on behalf of someone else;
+             everyone else has staff_id auto-locked to their own record). */}
+        {canPickStaff ? (
+          <FormField label="Staff *">
+            <select className="input" {...register('staff_id', { required: true, valueAsNumber: true })}>
+              <option value="">Select Staff</option>
+              {staff.map((s: any) => (
+                <option key={s.id} value={s.id}>
+                  {s.first_name} {s.last_name} (#{s.staff_code})
+                </option>
+              ))}
+            </select>
+          </FormField>
+        ) : (
+          <input type="hidden" {...register('staff_id', { valueAsNumber: true })} />
+        )}
 
         {/* Leave From Date | Leave To Date */}
         <div className="grid grid-cols-2 gap-4">
@@ -125,7 +168,14 @@ export default function LeaveFormModal({ open, onClose, onSuccess }: any) {
             onChange={e => setDocFile(e.target.files?.[0] ?? null)} />
         </div>
 
-        {mut.isError && <p className="text-red-500 text-sm">Failed to submit leave. Please try again.</p>}
+        {mut.isError && (
+          <p className="text-red-500 text-sm">
+            {(mut.error as any)?.response?.data?.detail
+              ?? (mut.error as any)?.response?.data?.message
+              ?? (mut.error as any)?.message
+              ?? 'Failed to submit leave. Please try again.'}
+          </p>
+        )}
       </form>
     </Modal>
   )

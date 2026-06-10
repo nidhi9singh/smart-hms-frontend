@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Search, Plus, Eye, Edit2, Trash2, LogOut } from 'lucide-react'
 import { ipdApi } from '@/api/ipd'
 import AdmitPatientModal from './AdmitPatientModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 type IpdTab = 'active' | 'discharged'
@@ -12,6 +13,9 @@ type IpdTab = 'active' | 'discharged'
 export default function IPDPage() {
   const qc = useQueryClient()
   const nav = useNavigate()
+  const role = useAuthStore(s => s.user?.role)
+  // Diagnostic roles are view-only — they can browse IPD records but not admit / discharge / delete.
+  const canManageIPD = !['pathologist', 'radiologist', 'pharmacist', 'nurse'].includes(role ?? '')
   const [tab, setTab]   = useState<IpdTab>('active')
   const [search, setSearch] = useState('')
   const [modal, setModal]   = useState(false)
@@ -42,9 +46,11 @@ export default function IPDPage() {
           <button onClick={() => setTab(tab === 'active' ? 'discharged' : 'active')} className="btn btn-outline flex items-center gap-1.5">
             <LogOut size={14}/> {tab === 'active' ? 'Discharged Patients' : 'Active Patients'}
           </button>
-          <button onClick={() => setModal(true)} className="btn btn-primary flex items-center gap-1.5">
-            <Plus size={14}/> Add Patient
-          </button>
+          {canManageIPD && (
+            <button onClick={() => setModal(true)} className="btn btn-primary flex items-center gap-1.5">
+              <Plus size={14}/> Add Patient
+            </button>
+          )}
         </div>
       </div>
 
@@ -135,9 +141,13 @@ export default function IPDPage() {
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
                         <button className="icon-btn" title="View" onClick={() => nav(`/ipd/${a.id}`)}><Eye size={12}/></button>
-                        <button className="icon-btn"><Edit2 size={12}/></button>
-                        <button className="icon-btn text-emerald-600" title="Discharge"><LogOut size={12}/></button>
-                        <button className="icon-btn text-red-400" onClick={() => delMut.mutate(a.id)}><Trash2 size={12}/></button>
+                        {canManageIPD && (
+                          <>
+                            <button className="icon-btn"><Edit2 size={12}/></button>
+                            <button className="icon-btn text-emerald-600" title="Discharge"><LogOut size={12}/></button>
+                            <button className="icon-btn text-red-400" onClick={() => delMut.mutate(a.id)}><Trash2 size={12}/></button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </> : <>

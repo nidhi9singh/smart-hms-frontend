@@ -6,11 +6,15 @@ import { Search, Plus, Upload, Eye, Edit2, Trash2, User, Users, Printer, Copy, F
 import { toast } from 'sonner'
 import { patientsApi } from '@/api/patients'
 import PatientFormModal from './PatientFormModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 export default function PatientsPage() {
   const qc = useQueryClient()
   const nav = useNavigate()
+  const role = useAuthStore(s => s.user?.role)
+  // Read-only roles: can browse the patient list but not add / import / disable patients.
+  const canManagePatients = !['pathologist', 'radiologist', 'pharmacist', 'nurse'].includes(role ?? '')
   const [search, setSearch]             = useState('')
   const [modal, setModal]               = useState<{ open: boolean; patient?: any }>({ open: false })
   const [page, setPage]                 = useState(1)
@@ -83,18 +87,22 @@ export default function PatientsPage() {
           <p className="text-sm text-gray-500 mt-0.5">Manage all registered patients</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setModal({ open: true })} className="btn btn-primary flex items-center gap-1.5">
-            <Plus size={14}/> Add New Patient
-          </button>
-          <button className="btn btn-primary flex items-center gap-1.5">
-            <Upload size={14}/> Import Patient
-          </button>
-          <button
-            onClick={() => { setShowDisabled(v => !v); setSelected([]); setPage(1) }}
-            className="btn btn-primary flex items-center gap-1.5"
-          >
-            <Users size={14}/> {showDisabled ? 'Active Patient List' : 'Disabled Patient List'}
-          </button>
+          {canManagePatients && (
+            <>
+              <button onClick={() => setModal({ open: true })} className="btn btn-primary flex items-center gap-1.5">
+                <Plus size={14}/> Add New Patient
+              </button>
+              <button className="btn btn-primary flex items-center gap-1.5">
+                <Upload size={14}/> Import Patient
+              </button>
+              <button
+                onClick={() => { setShowDisabled(v => !v); setSelected([]); setPage(1) }}
+                className="btn btn-primary flex items-center gap-1.5"
+              >
+                <Users size={14}/> {showDisabled ? 'Active Patient List' : 'Disabled Patient List'}
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -124,7 +132,7 @@ export default function PatientsPage() {
               value={search} onChange={e => { setSearch(e.target.value); setPage(1) }}/>
           </div>
           <div className="flex-1"/>
-          {selected.length > 0 && (
+          {canManagePatients && selected.length > 0 && (
             <button
               onClick={() => bulkDisableMut.mutate(selected)}
               disabled={bulkDisableMut.isPending}
@@ -223,9 +231,13 @@ export default function PatientsPage() {
                         onClick={() => nav(`/billing?case_id=${p.case_id ?? p.id}`)}>
                         <Receipt size={12}/>
                       </button>
-                      <button className="icon-btn" title="Edit" onClick={() => setModal({ open: true, patient: p })}><Edit2 size={12}/></button>
-                      <button className="icon-btn text-red-400 hover:text-red-600" title="Disable"
-                        onClick={() => disableMut.mutate(p.id)}><Trash2 size={12}/></button>
+                      {canManagePatients && (
+                        <>
+                          <button className="icon-btn" title="Edit" onClick={() => setModal({ open: true, patient: p })}><Edit2 size={12}/></button>
+                          <button className="icon-btn text-red-400 hover:text-red-600" title="Disable"
+                            onClick={() => disableMut.mutate(p.id)}><Trash2 size={12}/></button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

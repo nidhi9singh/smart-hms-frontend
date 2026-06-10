@@ -5,12 +5,16 @@ import { Search, Plus, Edit2, Trash2, Truck, Eye, Printer } from 'lucide-react'
 import { ambulanceApi } from '@/api/ambulance'
 import AddAmbulanceModal from './AddAmbulanceModal'
 import AddAmbulanceCallModal from './AddAmbulanceCallModal'
+import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
 
 type Tab = 'calls' | 'vehicles'
 
 export default function AmbulancePage() {
   const qc = useQueryClient()
+  const role = (useAuthStore(s => s.user?.role) ?? '').toLowerCase()
+  // Accountants / doctors / nurses view ambulance data only — no add / edit / delete.
+  const canManageAmbulance = !['accountant', 'doctor', 'nurse'].includes(role)
   const [tab, setTab] = useState<Tab>('calls')
   const [search, setSearch] = useState('')
   const [callModal, setCallModal] = useState(false)
@@ -47,9 +51,11 @@ export default function AmbulancePage() {
           <button onClick={() => setTab('vehicles')} className="btn btn-outline flex items-center gap-1.5">
             <Truck size={14}/> Ambulance List
           </button>
-          <button onClick={() => setCallModal(true)} className="btn btn-primary flex items-center gap-1.5">
-            <Plus size={14}/> Add Ambulance Call
-          </button>
+          {canManageAmbulance && (
+            <button onClick={() => setCallModal(true)} className="btn btn-primary flex items-center gap-1.5">
+              <Plus size={14}/> Add Ambulance Call
+            </button>
+          )}
         </div>
       </div>
 
@@ -131,9 +137,11 @@ export default function AmbulancePage() {
               <input className="input pl-8 h-9 text-sm" placeholder="Search vehicles..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <div className="flex-1" />
-            <button onClick={() => setVehModal({ open: true })} className="btn btn-primary text-sm flex items-center gap-1.5">
-              <Plus size={13}/> Add Ambulance
-            </button>
+            {canManageAmbulance && (
+              <button onClick={() => setVehModal({ open: true })} className="btn btn-primary text-sm flex items-center gap-1.5">
+                <Plus size={13}/> Add Ambulance
+              </button>
+            )}
           </div>
           <table className="w-full text-sm">
             <thead>
@@ -158,8 +166,12 @@ export default function AmbulancePage() {
                   <td className="px-4 py-3"><span className="badge badge-blue">{v.vehicle_type || '—'}</span></td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
-                      <button className="icon-btn" onClick={() => setVehModal({ open: true, vehicle: v })}><Edit2 size={12}/></button>
-                      <button className="icon-btn text-red-400" onClick={() => confirm(`Delete ${v.vehicle_no}?`) && delVeh.mutate(v.id)}><Trash2 size={12}/></button>
+                      {canManageAmbulance && (
+                        <>
+                          <button className="icon-btn" onClick={() => setVehModal({ open: true, vehicle: v })}><Edit2 size={12}/></button>
+                          <button className="icon-btn text-red-400" onClick={() => confirm(`Delete ${v.vehicle_no}?`) && delVeh.mutate(v.id)}><Trash2 size={12}/></button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

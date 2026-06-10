@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/store/authStore'
 import FinanceReports from './FinanceReports'
 import { AppointmentReports, OpdReports, IpdReports, PharmacyReports } from './ModuleReports'
 import { PathologyReports, RadiologyReports, BloodBankReports } from './ModuleReportsExt'
@@ -31,9 +32,17 @@ const CATEGORIES = [
   { key: 'patient',          label: 'Patient' },
 ]
 
+// Per-role allowlist for Reports categories. Roles not listed see all.
+const REPORTS_BY_ROLE: Record<string, string[]> = {
+  pharmacist: ['pharmacy'],
+}
+
 
 export default function ReportsPage() {
-  const [active, setActive] = useState('finance')
+  const role = useAuthStore(s => s.user?.role)
+  const allowed = role && REPORTS_BY_ROLE[role]
+  const categories = allowed ? CATEGORIES.filter(c => allowed.includes(c.key)) : CATEGORIES
+  const [active, setActive] = useState(categories[0]?.key ?? 'finance')
   const [open, setOpen]     = useState(true)
 
   return (
@@ -47,7 +56,7 @@ export default function ReportsPage() {
           </button>
           {open && (
             <nav className="text-sm">
-              {CATEGORIES.map(c => (
+              {categories.map(c => (
                 <button key={c.key} onClick={() => setActive(c.key)}
                   className={cn(
                     'w-full text-left px-4 py-2 border-b text-gray-700 flex items-center gap-2',
