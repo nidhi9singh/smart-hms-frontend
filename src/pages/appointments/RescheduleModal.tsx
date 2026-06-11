@@ -8,7 +8,7 @@ import { hrApi } from '@/api/hr'
 
 const SHIFTS     = ['Morning', 'Afternoon', 'Evening', 'Night']
 const PRIORITIES = ['Normal', 'Urgent', 'Very Urgent', 'Low', 'Emergency']
-const STATUSES   = ['Pending', 'Approved', 'Confirmed', 'Completed', 'Cancelled']
+const STATUSES   = ['Pending', 'Approved', 'Cancelled']
 const SLOTS = [
   '09:00 AM - 12:00 PM',
   '12:00 PM - 03:00 PM',
@@ -21,6 +21,9 @@ export default function RescheduleModal({ open, onClose, appointment }: {
   open: boolean; onClose: () => void; appointment: any
 }) {
   const qc = useQueryClient()
+  // Doctor + Doctor Fees are locked for every role on reschedule — both are
+  // tied to the original booking and can't be retroactively changed.
+  const lockDoctorFields = true
   const [form, setForm] = useState({
     doctor_id          : '',
     doctor_fees        : '',
@@ -37,7 +40,7 @@ export default function RescheduleModal({ open, onClose, appointment }: {
 
   const { data: staffData } = useQuery({
     queryKey: ['staff-all'],
-    queryFn:  () => hrApi.listStaff({ per_page: 500 }).then(r => r.data),
+    queryFn:  () => hrApi.listStaff({ per_page: '500' }).then(r => r.data),
     enabled:  open,
   })
   const doctors = ((staffData?.data ?? []) as any[]).filter(s => /doctor/i.test(s.role ?? ''))
@@ -99,7 +102,8 @@ export default function RescheduleModal({ open, onClose, appointment }: {
             <Field label="Doctor" required>
               <select required value={form.doctor_id}
                 onChange={e => setForm({ ...form, doctor_id: e.target.value })}
-                className="input w-full">
+                disabled={lockDoctorFields}
+                className={`input w-full ${lockDoctorFields ? 'bg-gray-100 cursor-not-allowed text-gray-600' : ''}`}>
                 <option value="">Select</option>
                 {doctors.map((d: any) => {
                   const name = d.full_name || [d.first_name, d.last_name].filter(Boolean).join(' ') || d.name || `Staff #${d.id}`
@@ -110,7 +114,8 @@ export default function RescheduleModal({ open, onClose, appointment }: {
             <Field label="Doctor Fees (₹)" required>
               <input type="number" step="0.01" min="0" required value={form.doctor_fees}
                 onChange={e => setForm({ ...form, doctor_fees: e.target.value })}
-                className="input w-full"/>
+                readOnly={lockDoctorFields}
+                className={`input w-full ${lockDoctorFields ? 'bg-gray-100 cursor-not-allowed text-gray-600' : ''}`}/>
             </Field>
             <Field label="Shift" required>
               <select required value={form.shift}

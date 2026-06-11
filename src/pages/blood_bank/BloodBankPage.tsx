@@ -20,9 +20,11 @@ export default function BloodBankPage() {
   const role = useAuthStore(s => s.user?.role)
   // Doctors / nurses / accountants view stock + issue history only — donor management
   // and any add/issue mutations stay with the blood-bank team.
-  const canManageBloodBank = !['doctor', 'nurse', 'accountant'].includes(role ?? '')
+  const canManageBloodBank = !['doctor', 'nurse', 'accountant', 'pharmacist'].includes(role ?? '')
   // Accountant additionally keeps the Components list view for read-only audit.
   const canViewComponents  = canManageBloodBank || role === 'accountant'
+  // Pharmacist sees the Blood Bank Status board only — no other tabs / nav buttons.
+  const statusOnly         = role === 'pharmacist'
   const [tab, setTab] = useState<Tab>('status')
   const [bg, setBg]   = useState<string>('B+')
   const [search, setSearch] = useState('')
@@ -72,42 +74,46 @@ export default function BloodBankPage() {
           <h1 className="text-xl font-semibold text-gray-900">Blood Bank</h1>
           <p className="text-sm text-gray-500 mt-0.5">Donors, stock, components and issues</p>
         </div>
-        <div className="flex gap-2">
-          {canManageBloodBank && (
-            <button onClick={() => setTab('donors')} className="btn btn-outline flex items-center gap-1.5">
-              <Users size={14}/> Donor Details
+        {!statusOnly && (
+          <div className="flex gap-2">
+            {canManageBloodBank && (
+              <button onClick={() => setTab('donors')} className="btn btn-outline flex items-center gap-1.5">
+                <Users size={14}/> Donor Details
+              </button>
+            )}
+            <button onClick={() => setTab('issues')} className="btn btn-outline flex items-center gap-1.5">
+              <Droplet size={14}/> Blood Issue Details
             </button>
-          )}
-          <button onClick={() => setTab('issues')} className="btn btn-outline flex items-center gap-1.5">
-            <Droplet size={14}/> Blood Issue Details
-          </button>
-          <button onClick={() => setTab('component_issues')} className="btn btn-outline flex items-center gap-1.5">
-            <Activity size={14}/> Component Issue
-          </button>
-          {canViewComponents && (
-            <button onClick={() => setTab('components')} className="btn btn-outline flex items-center gap-1.5">
-              <Layers size={14}/> Components
+            <button onClick={() => setTab('component_issues')} className="btn btn-outline flex items-center gap-1.5">
+              <Activity size={14}/> Component Issue
             </button>
-          )}
-        </div>
+            {canViewComponents && (
+              <button onClick={() => setTab('components')} className="btn btn-outline flex items-center gap-1.5">
+                <Layers size={14}/> Components
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
-      <div className="border-b border-gray-200">
-        <div className="flex">
-          {[
-            { id: 'status', label: 'Blood Bank Status' },
-            ...(canManageBloodBank ? [{ id: 'donors', label: 'Donor Details' }] : []),
-            { id: 'issues', label: 'Blood Issue Details' },
-            { id: 'component_issues', label: 'Components Issue Details' },
-            ...(canViewComponents ? [{ id: 'components', label: 'Components List' }] : []),
-          ].map(t => (
-            <button key={t.id} onClick={() => setTab(t.id as Tab)}
-              className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
-              )}>{t.label}</button>
-          ))}
+      {!statusOnly && (
+        <div className="border-b border-gray-200">
+          <div className="flex">
+            {[
+              { id: 'status', label: 'Blood Bank Status' },
+              ...(canManageBloodBank ? [{ id: 'donors', label: 'Donor Details' }] : []),
+              { id: 'issues', label: 'Blood Issue Details' },
+              { id: 'component_issues', label: 'Components Issue Details' },
+              ...(canViewComponents ? [{ id: 'components', label: 'Components List' }] : []),
+            ].map(t => (
+              <button key={t.id} onClick={() => setTab(t.id as Tab)}
+                className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
+                  tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                )}>{t.label}</button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* STATUS TAB */}
       {tab === 'status' && (

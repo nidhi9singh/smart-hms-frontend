@@ -53,6 +53,9 @@ export default function AppointmentsPage() {
   const qc = useQueryClient()
   const [tab, setTab]         = useState<Tab>('today')
   const [search, setSearch]   = useState('')
+  const [filterDate, setFilterDate] = useState('')
+  const [filterTime, setFilterTime] = useState('')
+  const [filterSlot, setFilterSlot] = useState('')
   const [perPage, setPerPage] = useState(100)
   const [page, setPage]       = useState(1)
   const [modal, setModal]     = useState(false)
@@ -86,8 +89,34 @@ export default function AppointmentsPage() {
     enabled: view === 'list',
   })
 
-  const appointments = (data?.data ?? []) as any[]
-  const total = data?.pagination?.total ?? appointments.length
+  const rawAppointments = (data?.data ?? []) as any[]
+  // Client-side narrowing by Date / Time / Slot. Date matches YYYY-MM-DD,
+  // Time matches HH:MM in the appointment's local time.
+  const appointments = rawAppointments.filter((a: any) => {
+    if (!filterDate && !filterTime && !filterSlot) return true
+    const dt = a.appointment_date ? new Date(a.appointment_date) : null
+    if (!dt || isNaN(dt.getTime())) return false
+    if (filterDate) {
+      const yyyy = dt.getFullYear()
+      const mm   = String(dt.getMonth() + 1).padStart(2, '0')
+      const dd   = String(dt.getDate()).padStart(2, '0')
+      if (`${yyyy}-${mm}-${dd}` !== filterDate) return false
+    }
+    if (filterTime) {
+      const hh = String(dt.getHours()).padStart(2, '0')
+      const mi = String(dt.getMinutes()).padStart(2, '0')
+      if (`${hh}:${mi}` !== filterTime) return false
+    }
+    if (filterSlot) {
+      const slot = String(a.slot ?? '').toLowerCase()
+      if (!slot.includes(filterSlot.toLowerCase())) return false
+    }
+    return true
+  })
+  const total = appointments.length
+
+  // Unique slot values from the loaded set — keep the dropdown to what actually exists.
+  const slotOptions = Array.from(new Set(rawAppointments.map((a: any) => a.slot).filter(Boolean))) as string[]
 
   return (
     <div className="p-6 space-y-0 animate-fade-in">
@@ -199,6 +228,37 @@ export default function AppointmentsPage() {
       {/* ── List View ───────────────── */}
       {view === 'list' && (
         <div className="bg-white border border-gray-200 border-t-0 rounded-b-lg">
+          {/* Filter row — Date / Time / Slot */}
+          <div className="flex items-end flex-wrap gap-3 px-5 py-3 border-b border-gray-100 bg-gray-50/50">
+            <div>
+              <label className="block text-[10px] uppercase tracking-wide font-semibold text-gray-500 mb-1">Date</label>
+              <input type="date" value={filterDate}
+                onChange={e => { setFilterDate(e.target.value); setPage(1) }}
+                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label className="block text-[10px] uppercase tracking-wide font-semibold text-gray-500 mb-1">Time</label>
+              <input type="time" value={filterTime}
+                onChange={e => { setFilterTime(e.target.value); setPage(1) }}
+                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+            </div>
+            <div>
+              <label className="block text-[10px] uppercase tracking-wide font-semibold text-gray-500 mb-1">Slot</label>
+              <select value={filterSlot}
+                onChange={e => { setFilterSlot(e.target.value); setPage(1) }}
+                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 bg-white">
+                <option value="">All Slots</option>
+                {slotOptions.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+            {(filterDate || filterTime || filterSlot) && (
+              <button onClick={() => { setFilterDate(''); setFilterTime(''); setFilterSlot(''); setPage(1) }}
+                className="px-3 py-1.5 text-xs border border-gray-300 rounded hover:bg-white text-gray-600">
+                Clear filters
+              </button>
+            )}
+          </div>
+
           {/* Search + Export */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
             <input type="text" placeholder="Search..." value={search}

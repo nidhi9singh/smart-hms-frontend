@@ -114,6 +114,23 @@ const SETUP_BY_ROLE: Record<string, string[]> = {
     '/setup/radiology',
     '/setup/finance',
   ],
+  doctor: [
+    '/setup/hospital-charges',
+    '/setup/bed',
+    '/setup/print-header-footer',
+    '/setup/pharmacy',
+    '/setup/symptoms',
+    '/setup/finance',
+    '/setup/appointment',
+  ],
+}
+
+// Per-role Certificate sub-menu whitelist. Roles not listed see every child.
+const CERTIFICATE_BY_ROLE: Record<string, string[]> = {
+  doctor: [
+    '/certificates',
+    '/certificates/patient-id',
+  ],
 }
 
 
@@ -158,7 +175,13 @@ export default function Sidebar() {
           // Filter: leaves hidden when role lacks access; groups hidden when ALL children blocked.
           .map(item => {
             if (!isGroup(item)) return canAccess(user?.role, item.path) ? item : null
-            const roleWhitelist = SETUP_BY_ROLE[user?.role ?? '']
+            // Whitelists are group-scoped — applying SETUP_BY_ROLE to every group
+            // would wipe out unrelated groups (Live Consultation, Download, etc.).
+            const roleKey = user?.role ?? ''
+            const roleWhitelist =
+              item.label === 'Setup'       ? SETUP_BY_ROLE[roleKey] :
+              item.label === 'Certificate' ? CERTIFICATE_BY_ROLE[roleKey] :
+              undefined
             const visible = item.children
               .filter(c => canAccess(user?.role, c.path))
               .filter(c => !roleWhitelist || roleWhitelist.includes(c.path))

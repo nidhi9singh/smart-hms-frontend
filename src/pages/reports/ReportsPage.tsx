@@ -34,7 +34,14 @@ const CATEGORIES = [
 
 // Per-role allowlist for Reports categories. Roles not listed see all.
 const REPORTS_BY_ROLE: Record<string, string[]> = {
-  pharmacist: ['pharmacy'],
+  pharmacist:  ['pharmacy'],
+  nurse:       ['opd', 'ipd', 'ot', 'patient'],
+  radiologist: ['radiology'],
+  doctor:      [
+    'finance', 'appointment', 'opd', 'ipd',
+    'blood_bank', 'ambulance', 'birth_death',
+    'tpa', 'live_consultation', 'ot', 'patient',
+  ],
 }
 
 

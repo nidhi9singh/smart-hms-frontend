@@ -64,7 +64,7 @@ export default function AddBranchModal({ open, branch, onClose, onSuccess }: Pro
         <FormField label="Branch URL">
           <input className="input" placeholder="https://demo.smart-hospital.in/branch1/" {...register('url')} />
         </FormField>
-        <FormField label="Envato Purchase Code" required>
+        <FormField label="Purchase Code" required>
           <input className="input" {...register('envato_purchase_code', { required: true })} />
         </FormField>
 
