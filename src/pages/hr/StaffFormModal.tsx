@@ -44,7 +44,12 @@ export default function StaffFormModal({ open, staff, onClose, onSuccess }: Prop
 
   const mut = useMutation({
     mutationFn: async (d: any) => {
-      const res = staff ? await hrApi.updateStaff(staff.id, d) : await hrApi.createStaff(d)
+      // Drop empty-string values so Pydantic gets `null`/absent for optional
+      // dates and enums. `date_of_joining: ""` is rejected as "input too short".
+      const payload = Object.fromEntries(
+        Object.entries(d).filter(([, v]) => v !== '' && v !== null && !(typeof v === 'number' && Number.isNaN(v)))
+      )
+      const res = staff ? await hrApi.updateStaff(staff.id, payload) : await hrApi.createStaff(payload)
       const savedId = res.data?.data?.id ?? staff?.id
       if (photoFile && savedId) {
         try { await hrApi.uploadPhoto(savedId, photoFile) }
@@ -226,7 +231,13 @@ export default function StaffFormModal({ open, staff, onClose, onSuccess }: Prop
           <textarea className="input resize-none" rows={2} {...register('note')} />
         </FormField>
 
-        {mut.isError && <p className="text-red-500 text-sm">Failed to save. Please try again.</p>}
+        {mut.isError && (
+          <p className="text-red-500 text-sm">
+            {(mut.error as any)?.response?.data?.message
+              ?? (mut.error as any)?.response?.data?.detail
+              ?? 'Failed to save. Please try again.'}
+          </p>
+        )}
       </form>
     </Modal>
   )
