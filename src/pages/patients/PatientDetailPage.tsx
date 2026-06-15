@@ -74,14 +74,14 @@ export default function PatientDetailPage() {
   return (
     <div className="p-6 space-y-4">
       {/* Title bar */}
-      <div className="bg-emerald-600 text-white rounded-lg px-5 py-3 flex items-center justify-between">
+      <div className="bg-brand-600 text-white rounded-lg px-5 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => nav(-1)} className="hover:bg-white/20 rounded p-1">
             <ArrowLeft size={16}/>
           </button>
           <h1 className="text-lg font-semibold">Patient Details</h1>
         </div>
-        <span className="text-xs text-emerald-50">Patient Visit Report</span>
+        <span className="text-xs text-brand-50">Patient Visit Report</span>
       </div>
 
       {/* Tabs */}
@@ -95,7 +95,7 @@ export default function PatientDetailPage() {
                 className={cn(
                   'flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap -mb-px',
                   active
-                    ? 'border-[#059669] text-[#059669]'
+                    ? 'border-[#47C0BD] text-[#47C0BD]'
                     : 'border-transparent text-gray-600 hover:text-gray-800'
                 )}>
                 <Icon size={14}/> {t.label}
@@ -158,8 +158,8 @@ function OverviewTab({ p, caseId, age, sections, barcodeUrl, qrUrl }: any) {
     return row
   })
   const colors: Record<string, string> = {
-    OPD: '#7dd3fc', Pharmacy: '#34d399', Pathology: '#f87171',
-    Radiology: '#60a5fa', 'Blood Bank': '#fb7185', Ambulance: '#fbbf24',
+    OPD: '#7dd3fc', Pharmacy: '#92E3E1', Pathology: '#f87171',
+    Radiology: '#92E3E1', 'Blood Bank': '#fb7185', Ambulance: '#fbbf24',
   }
 
   const consultantList = Array.from(
@@ -216,7 +216,7 @@ function OverviewTab({ p, caseId, age, sections, barcodeUrl, qrUrl }: any) {
             : <ul className="space-y-2">
                 {consultantList.map((name: any) => (
                   <li key={name} className="flex items-center gap-3 text-sm text-gray-700">
-                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-semibold">
+                    <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-semibold">
                       {String(name).split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0,2)}
                     </div>
                     {name}
@@ -256,7 +256,7 @@ function OverviewTab({ p, caseId, age, sections, barcodeUrl, qrUrl }: any) {
           <MiniTable
             head={['OPD No', 'Case ID', 'Appointment Date', 'Consultant', 'Reference', 'Symptoms']}
             rows={opd.map((v: any) => [
-              <span className="text-[#059669]">{v.opd_no || '—'}</span>,
+              <span className="text-[#47C0BD]">{v.opd_no || '—'}</span>,
               v.case_id, v.date, v.doctor_name, '—', v.symptoms || '',
             ])}/>
         </div>
@@ -271,7 +271,7 @@ function OverviewTab({ p, caseId, age, sections, barcodeUrl, qrUrl }: any) {
           <MiniTable
             head={['OPD No', 'Case ID', 'Appointment Date', 'Consultant', 'Symptoms']}
             rows={opd.map((v: any) => [
-              <span className="text-[#059669]">{v.opd_no || '—'}</span>,
+              <span className="text-[#47C0BD]">{v.opd_no || '—'}</span>,
               v.case_id, v.date, v.doctor_name, v.symptoms || '',
             ])}/>
         </div>
@@ -288,7 +288,7 @@ function VisitsTab({ sections, onAddVisit }: { sections: any; onAddVisit: () => 
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">Visits</h3>
         <button onClick={onAddVisit}
-          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
           <ArrowLeftRight size={14}/> New Visit
         </button>
       </div>
@@ -296,7 +296,7 @@ function VisitsTab({ sections, onAddVisit }: { sections: any; onAddVisit: () => 
       <FullTable
         head={['OPD No', 'Case ID', 'Appointment Date', 'Consultant', 'Reference', 'Symptoms', 'Previous Medical Issue', 'Action']}
         rows={rows.map((v: any) => [
-          <span className="text-[#059669] font-medium">{v.opd_no || '—'}</span>,
+          <span className="text-[#47C0BD] font-medium">{v.opd_no || '—'}</span>,
           v.case_id ?? '—',
           v.date || '—',
           v.doctor_name || '—',
@@ -324,7 +324,7 @@ function LabTab({ sections }: any) {
         <FullTable
           head={['Test Name', 'Case ID', 'Lab', 'Sample Collected', 'Expected Date', 'Approved By', 'Action']}
           rows={rows.map((b: any) => [
-            <span className="text-[#059669]">{b.bill_no || '—'}</span>,
+            <span className="text-[#47C0BD]">{b.bill_no || '—'}</span>,
             b.case_id ?? '—',
             'Pathology',
             b.date || '—',
@@ -348,7 +348,7 @@ function TreatmentTab({ sections }: any) {
       <FullTable
         head={['OPD No', 'Case ID', 'Appointment Date', 'Symptoms', 'Consultant', 'Action']}
         rows={rows.map((v: any) => [
-          <span className="text-[#059669] font-medium">{v.opd_no || '—'}</span>,
+          <span className="text-[#47C0BD] font-medium">{v.opd_no || '—'}</span>,
           v.case_id ?? '—',
           v.date || '—',
           v.symptoms || '—',
@@ -374,7 +374,7 @@ function TimelineTab({ pid, onAdd }: { pid: number; onAdd: () => void }) {
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">Timeline</h3>
         <button onClick={onAdd}
-          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
           <Plus size={14}/> Add Timeline
         </button>
       </div>
@@ -383,10 +383,10 @@ function TimelineTab({ pid, onAdd }: { pid: number; onAdd: () => void }) {
           No Record Found
         </div>
       ) : (
-        <ul className="relative border-l-2 border-emerald-200 ml-2 space-y-4 pt-2 pl-5">
+        <ul className="relative border-l-2 border-brand-200 ml-2 space-y-4 pt-2 pl-5">
           {rows.map((t: any) => (
             <li key={t.id} className="relative">
-              <span className="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white"/>
+              <span className="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-brand-500 border-2 border-white"/>
               <div className="bg-white border border-gray-200 rounded p-3 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-gray-800">{t.title}</span>
@@ -416,7 +416,7 @@ function VitalsTab({ pid, onAdd }: { pid: number; onAdd: () => void }) {
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">Vitals</h3>
         <button onClick={onAdd}
-          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
           <Plus size={14}/> Add Vital
         </button>
       </div>
@@ -529,7 +529,7 @@ function EmptyTableState({ head }: { head: string[] }) {
         <div className="flex justify-center mb-2 text-gray-300">
           <FileText size={48}/>
         </div>
-        <p className="text-xs text-emerald-700">← Add new record or search with different criteria.</p>
+        <p className="text-xs text-brand-700">← Add new record or search with different criteria.</p>
       </div>
     </div>
   )
@@ -539,7 +539,7 @@ function TableToolbar() {
   return (
     <div className="flex items-center justify-between">
       <input type="text" placeholder="Search..."
-        className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400" />
+        className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400" />
       <div className="flex items-center gap-2">
         <select className="border border-gray-300 rounded px-2 py-1 text-xs text-gray-600" defaultValue={100}>
           {[10, 25, 50, 100].map(n => <option key={n} value={n}>{n}</option>)}
@@ -574,7 +574,7 @@ function Footer({ count }: { count: number }) {
       <span>Records: {count === 0 ? '0 to 0 of 0' : `1 to ${count} of ${count}`}</span>
       <div className="flex gap-1">
         <button className="px-2 py-1 border border-gray-300 rounded text-gray-400">‹</button>
-        <span className="px-3 py-1 border border-[#059669] bg-[#059669] text-white rounded text-xs">1</span>
+        <span className="px-3 py-1 border border-[#47C0BD] bg-[#47C0BD] text-white rounded text-xs">1</span>
         <button className="px-2 py-1 border border-gray-300 rounded text-gray-400">›</button>
       </div>
     </div>

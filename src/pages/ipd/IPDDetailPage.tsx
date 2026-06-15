@@ -145,14 +145,14 @@ export default function IPDDetailPage() {
   return (
     <div className="p-6 space-y-4">
       {/* Title bar */}
-      <div className="bg-emerald-600 text-white rounded-lg px-5 py-3 flex items-center justify-between">
+      <div className="bg-brand-600 text-white rounded-lg px-5 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => nav(-1)} className="hover:bg-white/20 rounded p-1">
             <ArrowLeft size={16}/>
           </button>
           <h1 className="text-lg font-semibold">IPD — {a.ipd_no}</h1>
         </div>
-        <span className="text-xs text-emerald-50">
+        <span className="text-xs text-brand-50">
           {a.is_discharged ? 'Discharged' : 'Admitted'} · Case #{caseId}
         </span>
       </div>
@@ -168,7 +168,7 @@ export default function IPDDetailPage() {
                 className={cn(
                   'flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap -mb-px',
                   active
-                    ? 'border-[#059669] text-[#059669]'
+                    ? 'border-[#47C0BD] text-[#47C0BD]'
                     : 'border-transparent text-gray-600 hover:text-gray-800'
                 )}>
                 <Icon size={13}/> {t.label}
@@ -250,13 +250,13 @@ function AntenatalTab({ isAntenatal }: { isAntenatal: boolean }) {
           <h3 className="text-base font-semibold text-gray-800">Antenatal</h3>
           <span className={cn(
             'px-2 py-0.5 rounded text-xs font-medium',
-            isAntenatal ? 'bg-emerald-500 text-white' : 'bg-gray-200 text-gray-600'
+            isAntenatal ? 'bg-brand-500 text-white' : 'bg-gray-200 text-gray-600'
           )}>
             {isAntenatal ? 'Yes' : 'No'}
           </span>
         </div>
         <button onClick={() => toast.info('Antenatal visit editor coming soon')}
-          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
           <Plus size={14}/> Add Antenatal Visit
         </button>
       </div>
@@ -273,7 +273,7 @@ function PlaceholderTab({ title, addLabel, head }: { title: string; addLabel: st
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-gray-800">{title}</h3>
         <button onClick={() => toast.info(`${title} editor coming soon`)}
-          className="flex items-center gap-1 px-3 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+          className="flex items-center gap-1 px-3 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
           <Plus size={14}/> {addLabel}
         </button>
       </div>
@@ -371,7 +371,7 @@ function OverviewTab(props: any) {
                     </div>
                     {v.status && <span className={cn(
                       'px-2 py-0.5 rounded text-xs font-medium',
-                      v.status === 'Normal'   ? 'bg-emerald-500 text-white' :
+                      v.status === 'Normal'   ? 'bg-brand-500 text-white' :
                       v.status === 'High'     ? 'bg-amber-500 text-white' :
                       v.status === 'Critical' ? 'bg-rose-500 text-white' :
                                                 'bg-gray-400 text-white'
@@ -393,7 +393,7 @@ function OverviewTab(props: any) {
         <div>
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">Consultant Doctor</h3>
-            <button title="Add" className="p-1 text-emerald-600 hover:bg-emerald-50 rounded"><Plus size={14}/></button>
+            <button title="Add" className="p-1 text-brand-600 hover:bg-brand-50 rounded"><Plus size={14}/></button>
           </div>
           {consultants.filter(Boolean).length === 0
             ? <p className="text-xs text-gray-400 italic">No consultant on record</p>
@@ -403,10 +403,10 @@ function OverviewTab(props: any) {
                   const n = c.full_name || [c.first_name, c.last_name].filter(Boolean).join(' ') || c.name || `Staff #${c.id}`
                   return (
                     <li key={c.id} className="flex items-center gap-3 text-sm text-gray-700">
-                      <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-semibold">
+                      <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-semibold">
                         {String(n).split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0,2)}
                       </div>
-                      <span className="text-[#059669]">{n} ({c.staff_code ?? c.id})</span>
+                      <span className="text-[#47C0BD]">{n} ({c.staff_code ?? c.id})</span>
                     </li>
                   )
                 })}
@@ -422,7 +422,7 @@ function OverviewTab(props: any) {
           renderTime={(n: any) => fmtDateTime(n.date)}
           renderCard={(n: any) => (
             <>
-              <div className="text-sm text-[#059669] font-medium mb-1">{staffName(n.nurse_id)}</div>
+              <div className="text-sm text-[#47C0BD] font-medium mb-1">{staffName(n.nurse_id)}</div>
               {n.note && <div className="text-sm"><div className="text-xs text-gray-500">Note</div>{n.note}</div>}
               {n.comment && <div className="text-sm mt-2"><div className="text-xs text-gray-500">Comment</div>{n.comment}</div>}
             </>
@@ -464,7 +464,7 @@ function OverviewTab(props: any) {
         <DataTable
           head={['Prescription No', 'Date', 'Prescribe By', 'Generated By']}
           rows={prescriptions.map((r: any) => [
-            <span className="text-[#059669]">{r.prescription_no}</span>,
+            <span className="text-[#47C0BD]">{r.prescription_no}</span>,
             fmtDate(r.date),
             staffName(r.prescribed_by),
             staffName(r.generated_by),
@@ -489,7 +489,7 @@ function OverviewTab(props: any) {
         <DataTable
           head={['Reference No', 'Operation Date', 'Operation Name', 'Operation Category', 'OT Technician']}
           rows={operations.map((o: any) => [
-            <span className="text-[#059669]">{o.reference_no}</span>,
+            <span className="text-[#47C0BD]">{o.reference_no}</span>,
             fmtDateTime(o.operation_date), o.operation_name, o.operation_category, o.ot_technician,
           ])}/>
 
@@ -522,7 +522,7 @@ function OverviewTab(props: any) {
         <DataTable
           head={['IPD No', 'Symptoms', 'Consultant', 'Bed']}
           rows={treatment.map((t: any) => [
-            <span className="text-[#059669]">{t.ipd_no}</span>,
+            <span className="text-[#47C0BD]">{t.ipd_no}</span>,
             t.symptoms_title || '', staffName(t.consultant_id), t.bed_number,
           ])}/>
 
@@ -633,7 +633,7 @@ function BillBar({ title, icon: Icon, pct, value }: { title: string; icon: any; 
       </div>
       <div className="flex items-center gap-3">
         <div className="h-2 flex-1 bg-gray-100 rounded overflow-hidden">
-          <div className={cn('h-full', filled ? 'bg-emerald-500' : 'bg-gray-300')} style={{ width: `${pct}%` }}/>
+          <div className={cn('h-full', filled ? 'bg-brand-500' : 'bg-gray-300')} style={{ width: `${pct}%` }}/>
         </div>
         <span className="text-xs text-gray-600 whitespace-nowrap">{pct}%</span>
         <span className="text-xs text-gray-500 whitespace-nowrap ml-2">{value ?? '₹0/₹0'}</span>
@@ -652,14 +652,14 @@ function Donut({ percent, limit, used, balance }: {
     <div className="flex flex-col items-center">
       <svg viewBox="0 0 100 100" className="w-32 h-32">
         <circle cx="50" cy="50" r={radius} fill="none" stroke="#e5e7eb" strokeWidth="10"/>
-        <circle cx="50" cy="50" r={radius} fill="none" stroke="#10b981" strokeWidth="10"
+        <circle cx="50" cy="50" r={radius} fill="none" stroke="#8BDFDD" strokeWidth="10"
                 strokeDasharray={`${dash} ${circ - dash}`} strokeDashoffset={circ / 4} transform="rotate(-90 50 50)"/>
-        <text x="50" y="55" textAnchor="middle" fontSize="14" fill="#10b981" fontWeight="600">{percent}%</text>
+        <text x="50" y="55" textAnchor="middle" fontSize="14" fill="#8BDFDD" fontWeight="600">{percent}%</text>
       </svg>
       <div className="text-xs space-y-0.5 mt-2 text-center">
-        <div><span className="text-emerald-700">Credit Limit:</span> ₹{limit.toFixed(2)}</div>
+        <div><span className="text-brand-700">Credit Limit:</span> ₹{limit.toFixed(2)}</div>
         <div><span className="text-rose-600">Used Credit:</span> ₹{used.toFixed(2)}</div>
-        <div><span className="text-emerald-700">Balance:</span> ₹{balance.toFixed(2)}</div>
+        <div><span className="text-brand-700">Balance:</span> ₹{balance.toFixed(2)}</div>
       </div>
     </div>
   )

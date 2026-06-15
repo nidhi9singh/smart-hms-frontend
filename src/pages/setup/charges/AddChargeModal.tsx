@@ -119,7 +119,7 @@ export default function AddChargeModal({ open, onClose, charge }: Props) {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 overflow-y-auto">
       <div className="bg-white rounded-lg shadow-xl w-[1080px] max-w-[96vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">{editing ? 'Edit Charges' : 'Add Charges'}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>

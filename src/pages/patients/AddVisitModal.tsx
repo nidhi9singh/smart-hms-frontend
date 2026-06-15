@@ -198,7 +198,7 @@ export default function AddVisitModal({ open, onClose, patient }: {
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-6">
       <div className="bg-white rounded-lg shadow-xl w-[1280px] max-w-[97vw] max-h-[92vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 bg-[#059669] text-white rounded-t-lg sticky top-0 z-10">
+        <div className="flex items-center justify-between px-5 py-3 bg-[#47C0BD] text-white rounded-t-lg sticky top-0 z-10">
           <h2 className="text-base font-semibold">Patient Details</h2>
           <button onClick={onClose}><X size={18}/></button>
         </div>
@@ -314,7 +314,7 @@ export default function AddVisitModal({ open, onClose, patient }: {
 
             <label className="flex items-center gap-2 mt-3 cursor-pointer">
               <input type="checkbox" checked={form.apply_tpa} onChange={e => setField('apply_tpa', e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300 text-emerald-500"/>
+                className="w-4 h-4 rounded border-gray-300 text-brand-500"/>
               <span className="text-sm text-gray-700">Apply TPA</span>
             </label>
 
@@ -381,7 +381,7 @@ export default function AddVisitModal({ open, onClose, patient }: {
               </Field>
               <label className="flex items-end pb-1 gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.is_antenatal} onChange={e => setField('is_antenatal', e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300 text-emerald-500"/>
+                  className="w-4 h-4 rounded border-gray-300 text-brand-500"/>
                 <span className="text-sm text-gray-700">Is Antenatal</span>
               </label>
             </div>
@@ -391,11 +391,11 @@ export default function AddVisitModal({ open, onClose, patient }: {
         {/* Footer */}
         <div className="flex justify-end gap-2 px-5 py-3 bg-gray-100 border-t border-gray-200 rounded-b-lg sticky bottom-0">
           <button onClick={() => submit(true)} disabled={createOPD.isPending}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
             <Printer size={14}/> Save & Print
           </button>
           <button onClick={() => submit(false)} disabled={createOPD.isPending}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
             {createOPD.isPending ? <Loader2 size={14} className="animate-spin"/> : <Save size={14}/>} Save
           </button>
         </div>

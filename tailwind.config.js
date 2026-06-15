@@ -4,6 +4,21 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Brand palette keyed to the user-supplied aqua #8BDFDD at shade 500.
+        // Lighter tints (50–400) and darker shades (600–950) derived in HSL.
+        brand: {
+          50:'#ECFAFA',  100:'#DAF6F5', 200:'#BAEFEE',
+          300:'#A0E7E5', 400:'#92E3E1', 500:'#8BDFDD',
+          600:'#47C0BD', 700:'#309C99', 800:'#207473',
+          900:'#155555', 950:'#0A3434'
+        },
+        // Companion accents from the same brand palette card.
+        accent: {
+          cream:  '#FFF6DE',
+          aqua:   '#8BDFDD',  // same as brand-500
+          coral:  '#F48F68',
+          yellow: '#FFE394',
+        },
         navy: {
           50:'#f0f4ff', 100:'#dce6ff', 200:'#b9ccff',
           300:'#85a3ff', 400:'#4d73ff', 500:'#1a47ff',

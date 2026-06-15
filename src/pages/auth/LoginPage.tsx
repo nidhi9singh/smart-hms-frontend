@@ -70,7 +70,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center mb-6">
@@ -118,8 +118,8 @@ export default function LoginPage() {
                   <button key={q.role} type="button" onClick={() => pickRole(q)}
                     className={`flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-xs border transition
                       ${active
-                        ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                        : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700'}`}>
+                        ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                        : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-brand-50 hover:border-brand-200 hover:text-brand-700'}`}>
                     <q.icon size={13} className="flex-shrink-0"/>
                     <span className="truncate">{q.label}</span>
                   </button>
@@ -132,16 +132,16 @@ export default function LoginPage() {
           <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
             <button type="button"
               onClick={() => toast.info('Password reset is not yet wired — contact your admin.')}
-              className="flex items-center gap-1 text-emerald-700 hover:underline">
+              className="flex items-center gap-1 text-brand-700 hover:underline">
               <KeyRound size={12}/> Forgot Password?
             </button>
             <div className="flex items-center gap-4">
-              <a href="/" className="flex items-center gap-1 text-gray-500 hover:text-emerald-700">
+              <a href="/" className="flex items-center gap-1 text-gray-500 hover:text-brand-700">
                 <Globe size={12}/> Front Site
               </a>
               <button type="button"
                 onClick={() => toast.info('Patient portal login is not yet wired.')}
-                className="flex items-center gap-1 text-gray-500 hover:text-emerald-700">
+                className="flex items-center gap-1 text-gray-500 hover:text-brand-700">
                 <UserIcon size={12}/> User Login
               </button>
             </div>

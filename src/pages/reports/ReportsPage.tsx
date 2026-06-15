@@ -57,7 +57,7 @@ export default function ReportsPage() {
       <div className="grid grid-cols-12 gap-5">
         <aside className="col-span-12 lg:col-span-2 card overflow-hidden h-fit">
           <button onClick={() => setOpen(o => !o)}
-            className="w-full flex items-center gap-2 px-4 py-2.5 border-b text-sm font-semibold text-emerald-700 hover:bg-gray-50">
+            className="w-full flex items-center gap-2 px-4 py-2.5 border-b text-sm font-semibold text-brand-700 hover:bg-gray-50">
             {open ? <ChevronDown size={14}/> : <ChevronRight size={14}/>}
             Reports
           </button>
@@ -67,7 +67,7 @@ export default function ReportsPage() {
                 <button key={c.key} onClick={() => setActive(c.key)}
                   className={cn(
                     'w-full text-left px-4 py-2 border-b text-gray-700 flex items-center gap-2',
-                    active === c.key ? 'bg-emerald-50 text-emerald-700 font-medium' : 'hover:bg-gray-50'
+                    active === c.key ? 'bg-brand-50 text-brand-700 font-medium' : 'hover:bg-gray-50'
                   )}>
                   <ChevronRight size={12} className="opacity-50"/>
                   {c.label}

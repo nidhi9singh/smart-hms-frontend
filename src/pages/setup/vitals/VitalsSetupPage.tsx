@@ -61,12 +61,12 @@ function VitalsTab() {
               ? <tr><td colSpan={4} className="px-3 py-6 text-center text-gray-400">No vitals</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.name}</td>
-                  <td className="px-3 py-2 text-emerald-700">{r.reference_range}</td>
-                  <td className="px-3 py-2 text-emerald-700">{r.unit || '—'}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.name}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.reference_range}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.unit || '—'}</td>
                   <td className="px-3 py-2 text-right">
                     <button onClick={() => setModal({ open: true, item: r })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                   </td>
                 </tr>
               ))
@@ -158,7 +158,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[560px] max-w-[92vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>

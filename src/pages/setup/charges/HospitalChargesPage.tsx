@@ -31,7 +31,7 @@ export default function HospitalChargesPage() {
               <button key={t.id} onClick={() => setTab(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  tab === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  tab === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}>
                 {t.label}
               </button>
@@ -115,7 +115,7 @@ function ChargesTab() {
                     <td className="px-3 py-2 text-right">
                       <div className="flex items-center justify-end gap-1">
                         <button onClick={() => setEdit({ open: true, charge: c })}
-                          className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                          className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                         <button onClick={() => { if (confirm('Delete this charge?')) del.mutate(c.id) }}
                           className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                       </div>
@@ -189,7 +189,7 @@ function ChargeCategoryTab() {
                 <td className="px-3 py-2 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <button onClick={() => setEdit({ open: true, entity: c })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                     <button onClick={() => { if (confirm('Delete this category?')) del.mutate(c.id) }}
                       className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                   </div>
@@ -307,7 +307,7 @@ function ChargeTypeTab() {
                       <td className="px-3 py-2 text-right">
                         <div className="flex items-center justify-end gap-1">
                           <button onClick={() => setEdit({ open: true, entity: t })}
-                            className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                            className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                           <button onClick={() => { if (confirm('Delete this type?')) del.mutate(t.id) }}
                             className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                         </div>
@@ -375,7 +375,7 @@ function TaxCategoryTab() {
                 <td className="px-3 py-2 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <button onClick={() => setEdit({ open: true, entity: t })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                     <button onClick={() => { if (confirm('Delete?')) del.mutate(t.id) }}
                       className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                   </div>
@@ -444,7 +444,7 @@ function UnitTypeTab() {
                 <td className="px-3 py-2 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <button onClick={() => setEdit({ open: true, entity: u })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                     <button onClick={() => { if (confirm('Delete?')) del.mutate(u.id) }}
                       className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                   </div>

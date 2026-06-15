@@ -102,8 +102,8 @@ export default function AssignRosterModal({ open, onClose, onSuccess }: Props) {
                   className={cn(
                     'text-left p-3 border rounded transition',
                     selectedShift === s.id
-                      ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-300'
-                      : 'border-gray-200 hover:border-emerald-300'
+                      ? 'border-brand-500 bg-brand-50 ring-1 ring-brand-300'
+                      : 'border-gray-200 hover:border-brand-300'
                   )}
                 >
                   <div className="text-sm font-medium text-gray-800">{s.name}</div>

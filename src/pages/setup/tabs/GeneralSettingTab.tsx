@@ -227,7 +227,7 @@ export default function GeneralSettingTab() {
         {THEMES.map(t => (
           <button type="button" key={t}
             onClick={() => set('theme', t)}
-            className={'border rounded p-4 text-sm capitalize ' + (form.theme === t ? 'bg-emerald-50 border-emerald-400' : 'hover:bg-gray-50')}
+            className={'border rounded p-4 text-sm capitalize ' + (form.theme === t ? 'bg-brand-50 border-brand-400' : 'hover:bg-gray-50')}
           >
             {t}
           </button>

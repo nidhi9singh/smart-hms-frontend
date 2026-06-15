@@ -44,7 +44,7 @@ export default function LanguagesTab() {
                 <td className="px-3 py-2">{r.short_code}</td>
                 <td className="px-3 py-2">{r.country_code || '—'}</td>
                 <td className="px-3 py-2">
-                  {r.is_active && <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-700 rounded">Active</span>}
+                  {r.is_active && <span className="px-2 py-0.5 text-xs bg-brand-100 text-brand-700 rounded">Active</span>}
                 </td>
                 <td className="px-3 py-2">
                   <input type="radio" name="default-lang" checked={!!r.is_default}
@@ -57,7 +57,7 @@ export default function LanguagesTab() {
                 <td className="px-3 py-2 text-right">
                   <button onClick={() => upd.mutate({ id: r.id, payload: { is_active: !r.is_active } })}
                     className={'inline-flex items-center w-10 h-5 rounded-full transition-colors ' +
-                      (r.is_active ? 'bg-emerald-600' : 'bg-gray-300')}>
+                      (r.is_active ? 'bg-brand-600' : 'bg-gray-300')}>
                     <span className={'w-4 h-4 bg-white rounded-full transition-transform ' +
                       (r.is_active ? 'translate-x-5' : 'translate-x-0.5')}/>
                   </button>

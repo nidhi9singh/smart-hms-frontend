@@ -67,7 +67,7 @@ export default function AmbulancePage() {
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -95,7 +95,7 @@ export default function AmbulancePage() {
                 : calls.length === 0 ? <tr><td colSpan={17} className="px-4 py-8 text-center text-gray-400">No calls</td></tr>
                 : calls.map(c => (
                   <tr key={c.id} className="hover:bg-gray-50/50">
-                    <td className="px-3 py-3 text-emerald-600 text-xs font-medium">{c.bill_no}</td>
+                    <td className="px-3 py-3 text-brand-600 text-xs font-medium">{c.bill_no}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{c.case_id || '—'}</td>
                     <td className="px-3 py-3 text-xs">{c.patient_name || (c.patient_id ? `#${c.patient_id}` : '—')}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{c.generated_by_name || '—'}</td>
@@ -109,11 +109,11 @@ export default function AmbulancePage() {
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(c.discount || 0).toFixed(2)} ({Number(c.discount_percent || 0).toFixed(0)} %)</td>
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(c.tax_amount || 0).toFixed(2)} ({Number(c.tax_percent || 0).toFixed(0)} %)</td>
                     <td className="px-3 py-3 text-xs font-medium">₹{Number(c.net_amount || 0).toFixed(2)}</td>
-                    <td className="px-3 py-3 text-xs text-emerald-600">₹{Number(c.paid || 0).toFixed(2)}</td>
+                    <td className="px-3 py-3 text-xs text-brand-600">₹{Number(c.paid || 0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-xs">
                       {Number(c.balance || 0) > 0
                         ? <span className="text-red-500 font-medium">₹{Number(c.balance).toFixed(2)}</span>
-                        : <span className="text-emerald-500">₹0.00</span>}
+                        : <span className="text-brand-500">₹0.00</span>}
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex gap-1">
@@ -156,7 +156,7 @@ export default function AmbulancePage() {
               : vehicles.length === 0 ? <tr><td colSpan={9} className="px-4 py-8 text-center text-gray-400">No vehicles</td></tr>
               : vehicles.map(v => (
                 <tr key={v.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-emerald-600 font-medium">{v.vehicle_no}</td>
+                  <td className="px-4 py-3 text-brand-600 font-medium">{v.vehicle_no}</td>
                   <td className="px-4 py-3">{v.model || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{v.year_made || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{v.driver_name || '—'}</td>

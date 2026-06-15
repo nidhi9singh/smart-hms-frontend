@@ -104,7 +104,7 @@ function AmbulanceReport() {
               ? <tr><td colSpan={14} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.ambulance_call_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.ambulance_call_no}</td>
                   <td className="px-3 py-2">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.date}</td>
                   <td className="px-3 py-2">{r.contact_no || '—'}</td>
@@ -150,7 +150,7 @@ export function BirthDeathReports() {
             <button key={r.key} onClick={() => setTab(r.key as BdTab)}
               className={cn(
                 'flex items-center gap-2 px-3 py-2 rounded text-sm text-left',
-                tab === r.key ? 'bg-emerald-50 text-emerald-700 font-semibold' : 'text-gray-700 hover:bg-gray-50'
+                tab === r.key ? 'bg-brand-50 text-brand-700 font-semibold' : 'text-gray-700 hover:bg-gray-50'
               )}>
               <FileText size={14} className="text-gray-400 shrink-0"/>{r.label}
             </button>
@@ -209,7 +209,7 @@ function BirthReport() {
             ? <tr><td colSpan={9} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.reference_no}</td>
+                <td className="px-3 py-2 text-brand-700">{r.reference_no}</td>
                 <td className="px-3 py-2">{r.case_id || '—'}</td>
                 <td className="px-3 py-2">{r.child_name || '—'}</td>
                 <td className="px-3 py-2">{r.gender}</td>
@@ -271,7 +271,7 @@ function DeathReport() {
             ? <tr><td colSpan={7} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.reference_no}</td>
+                <td className="px-3 py-2 text-brand-700">{r.reference_no}</td>
                 <td className="px-3 py-2">{r.case_id || '—'}</td>
                 <td className="px-3 py-2">{r.guardian_name || '—'}</td>
                 <td className="px-3 py-2">{r.death_date}</td>
@@ -357,7 +357,7 @@ function PayrollReport() {
               ? <tr><td colSpan={13} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.name || '—'}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.name || '—'}</td>
                   <td className="px-3 py-2">{r.role || '—'}</td>
                   <td className="px-3 py-2">{r.designation || '—'}</td>
                   <td className="px-3 py-2">{r.month}</td>
@@ -442,7 +442,7 @@ function PayrollMonthReport() {
               ? <tr><td colSpan={12} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.name || '—'}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.name || '—'}</td>
                   <td className="px-3 py-2">{r.role || '—'}</td>
                   <td className="px-3 py-2">{r.designation || '—'}</td>
                   <td className="px-3 py-2">{r.month}</td>
@@ -524,10 +524,10 @@ function StaffAttendanceReport() {
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
                 <td className="px-3 py-2">{r.staff_id}</td>
-                <td className="px-3 py-2 text-emerald-700">{r.name || '—'}</td>
+                <td className="px-3 py-2 text-brand-700">{r.name || '—'}</td>
                 <td className="px-3 py-2">{r.role || '—'}</td>
                 <td className="px-3 py-2">{r.designation || '—'}</td>
-                <td className="px-3 py-2 text-right text-emerald-700">{r.present}</td>
+                <td className="px-3 py-2 text-right text-brand-700">{r.present}</td>
                 <td className="px-3 py-2 text-right text-rose-600">{r.absent}</td>
                 <td className="px-3 py-2 text-right">{r.late}</td>
                 <td className="px-3 py-2 text-right">{r.half_day}</td>
@@ -609,11 +609,11 @@ function StaffDayAttendanceReport() {
                 <td className="px-3 py-2">{r.row_no}</td>
                 <td className="px-3 py-2">{r.staff_id}</td>
                 <td className="px-3 py-2">{r.role}</td>
-                <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                <td className="px-3 py-2 text-brand-700">{r.name}</td>
                 <td className="px-3 py-2">
                   <span className={cn(
                     'px-2 py-0.5 rounded text-xs',
-                    r.attendance === 'Present' ? 'bg-emerald-50 text-emerald-700' :
+                    r.attendance === 'Present' ? 'bg-brand-50 text-brand-700' :
                     r.attendance === 'Absent'  ? 'bg-rose-50 text-rose-600' :
                     'bg-amber-50 text-amber-700'
                   )}>{r.attendance}</span>
@@ -714,7 +714,7 @@ function TpaReport() {
               ? <tr><td colSpan={16} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.checkup_ipd_no || '—'}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.checkup_ipd_no || '—'}</td>
                   <td className="px-3 py-2">{r.case_id || '—'}</td>
                   <td className="px-3 py-2">{r.head}</td>
                   <td className="px-3 py-2">{r.tpa_id || '—'}</td>
@@ -801,7 +801,7 @@ function InventoryStockReport() {
             ? <tr><td colSpan={7} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                <td className="px-3 py-2 text-brand-700">{r.name}</td>
                 <td className="px-3 py-2">{r.category || '—'}</td>
                 <td className="px-3 py-2">{r.supplier || '—'}</td>
                 <td className="px-3 py-2">{r.store || '—'}</td>
@@ -855,7 +855,7 @@ function InventoryItemReport() {
             ? <tr><td colSpan={7} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.name || '—'}</td>
+                <td className="px-3 py-2 text-brand-700">{r.name || '—'}</td>
                 <td className="px-3 py-2">{r.category || '—'}</td>
                 <td className="px-3 py-2">{r.supplier || '—'}</td>
                 <td className="px-3 py-2">{r.store || '—'}</td>
@@ -908,7 +908,7 @@ function InventoryIssueReport() {
             ? <tr><td colSpan={6} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.item || '—'}</td>
+                <td className="px-3 py-2 text-brand-700">{r.item || '—'}</td>
                 <td className="px-3 py-2">{r.item_category || '—'}</td>
                 <td className="px-3 py-2">{r.issue_return}</td>
                 <td className="px-3 py-2">{r.issue_to || '—'}</td>
@@ -1002,7 +1002,7 @@ function LiveConsultationReport() {
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
                 <td className="px-3 py-2">{r.module}</td>
-                <td className="px-3 py-2 text-emerald-700">{r.consultation_title}</td>
+                <td className="px-3 py-2 text-brand-700">{r.consultation_title}</td>
                 <td className="px-3 py-2">{r.patient || '—'}</td>
                 <td className="px-3 py-2">{r.date}</td>
                 <td className="px-3 py-2">{r.api_used}</td>
@@ -1010,7 +1010,7 @@ function LiveConsultationReport() {
                 <td className="px-3 py-2 text-right">{r.total_join}</td>
                 <td className="px-3 py-2">
                   {r.meeting_link && (
-                    <a href={r.meeting_link} target="_blank" rel="noreferrer" className="text-emerald-700 hover:underline text-xs">Open</a>
+                    <a href={r.meeting_link} target="_blank" rel="noreferrer" className="text-brand-700 hover:underline text-xs">Open</a>
                   )}
                 </td>
               </tr>
@@ -1069,14 +1069,14 @@ function LiveMeetingReport() {
             ? <tr><td colSpan={6} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.meeting_title}</td>
+                <td className="px-3 py-2 text-brand-700">{r.meeting_title}</td>
                 <td className="px-3 py-2">{r.date}</td>
                 <td className="px-3 py-2">{r.api_used}</td>
                 <td className="px-3 py-2">{r.created_by || '—'}</td>
                 <td className="px-3 py-2 text-right">{r.total_join}</td>
                 <td className="px-3 py-2">
                   {r.meeting_link && (
-                    <a href={r.meeting_link} target="_blank" rel="noreferrer" className="text-emerald-700 hover:underline text-xs">Open</a>
+                    <a href={r.meeting_link} target="_blank" rel="noreferrer" className="text-brand-700 hover:underline text-xs">Open</a>
                   )}
                 </td>
               </tr>
@@ -1155,7 +1155,7 @@ function UserLogReport() {
             ? <tr><td colSpan={5} className="px-3 py-6 text-center text-gray-400">No log records</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.user}</td>
+                <td className="px-3 py-2 text-brand-700">{r.user}</td>
                 <td className="px-3 py-2">{r.role}</td>
                 <td className="px-3 py-2">{r.ip_address}</td>
                 <td className="px-3 py-2">{r.login_time}</td>
@@ -1206,7 +1206,7 @@ function EmailSmsLogReport() {
             ? <tr><td colSpan={6} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.title}</td>
+                <td className="px-3 py-2 text-brand-700">{r.title}</td>
                 <td className="px-3 py-2">{r.date}</td>
                 <td className="px-3 py-2">{r.email}</td>
                 <td className="px-3 py-2">{r.sms}</td>
@@ -1297,7 +1297,7 @@ function CardGrid({ title, reports, active, onChange }: {
             className={cn(
               'flex items-center gap-2 px-3 py-2 rounded text-sm text-left',
               active === r.key
-                ? 'bg-emerald-50 text-emerald-700 font-semibold'
+                ? 'bg-brand-50 text-brand-700 font-semibold'
                 : 'text-gray-700 hover:bg-gray-50'
             )}>
             <FileText size={14} className="text-gray-400 shrink-0"/>

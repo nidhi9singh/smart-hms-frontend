@@ -79,7 +79,7 @@ export default function CaseBillDetail({ data }: { data: CaseDetail }) {
           type="button"
           onClick={() => setShowModuleMenu(v => !v)}
           title="Single Module Billing"
-          className="w-9 h-9 rounded bg-emerald-600 text-white flex items-center justify-center hover:bg-emerald-700"
+          className="w-9 h-9 rounded bg-brand-600 text-white flex items-center justify-center hover:bg-brand-700"
         >
           <Menu size={16}/>
         </button>
@@ -94,7 +94,7 @@ export default function CaseBillDetail({ data }: { data: CaseDetail }) {
                     <button
                       type="button"
                       onClick={() => { setShowModuleMenu(false); navigate(o.to) }}
-                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700"
+                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-brand-50 text-gray-700 hover:text-brand-700"
                     >
                       <o.icon size={13} className="text-gray-400 flex-shrink-0"/>
                       {o.label}
@@ -124,7 +124,7 @@ export default function CaseBillDetail({ data }: { data: CaseDetail }) {
           <div className="flex-1 grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
             <Row label="Case ID"          value={<span className="font-semibold text-gray-900">{caseId}</span>}/>
             <Row label="Appointment Date" value={data.appointment_date ? new Date(data.appointment_date).toLocaleString() : '—'}/>
-            <Row label="Name"             value={<span className="text-emerald-700 font-medium">{p?.name} {p?.case_id ? <span className="text-gray-500 font-normal">({p.case_id})</span> : null}</span>}/>
+            <Row label="Name"             value={<span className="text-brand-700 font-medium">{p?.name} {p?.case_id ? <span className="text-gray-500 font-normal">({p.case_id})</span> : null}</span>}/>
             <Row label="Guardian Name"    value={p?.guardian_name || '—'}/>
             <Row label="Gender"           value={p?.gender || '—'}/>
             <Row label="Age"              value={age}/>
@@ -148,8 +148,8 @@ export default function CaseBillDetail({ data }: { data: CaseDetail }) {
                 className={cn(
                   'px-3 py-2 text-xs border-b-2 transition',
                   tab === t.key
-                    ? 'text-emerald-700 font-semibold border-emerald-600'
-                    : 'text-gray-600 border-transparent hover:text-emerald-700'
+                    ? 'text-brand-700 font-semibold border-brand-600'
+                    : 'text-gray-600 border-transparent hover:text-brand-700'
                 )}>
                 {t.label}{count > 0 && <span className="ml-1 text-[10px] text-gray-400">({count})</span>}
               </button>
@@ -316,7 +316,7 @@ function PharmacyTable({ rows }: { rows: any[] }) {
       <tbody>
         {rows.length === 0 ? <EmptyRow colSpan={9}/> : rows.map((r, i) => (
           <tr key={i} className="border-t hover:bg-gray-50">
-            <td className="px-3 py-2 font-mono text-emerald-700">{r.bill_no}</td>
+            <td className="px-3 py-2 font-mono text-brand-700">{r.bill_no}</td>
             <td className="px-3 py-2">{r.date}</td>
             <td className="px-3 py-2">{r.medicine || '—'}</td>
             <td className="px-3 py-2">{r.batch_no || '—'}</td>
@@ -350,7 +350,7 @@ function TestTable({ rows }: { rows: any[] }) {
       <tbody>
         {rows.length === 0 ? <EmptyRow colSpan={6}/> : rows.map((r, i) => (
           <tr key={i} className="border-t hover:bg-gray-50">
-            <td className="px-3 py-2 font-mono text-emerald-700">{r.bill_no}</td>
+            <td className="px-3 py-2 font-mono text-brand-700">{r.bill_no}</td>
             <td className="px-3 py-2">{r.date}</td>
             <td className="px-3 py-2">{r.test_name}</td>
             <td className="px-3 py-2 text-right">{Number(r.price || 0).toFixed(2)}</td>
@@ -385,7 +385,7 @@ function BloodTable({ rows }: { rows: any[] }) {
       <tbody>
         {rows.length === 0 ? <EmptyRow colSpan={10}/> : rows.map((r, i) => (
           <tr key={i} className="border-t hover:bg-gray-50">
-            <td className="px-3 py-2 font-mono text-emerald-700">{r.bill_no}</td>
+            <td className="px-3 py-2 font-mono text-brand-700">{r.bill_no}</td>
             <td className="px-3 py-2">{r.date}</td>
             <td className="px-3 py-2">{r.blood_group || '—'}</td>
             <td className="px-3 py-2">{r.bag_no || '—'}</td>
@@ -424,7 +424,7 @@ function ComponentTable({ rows }: { rows: any[] }) {
       <tbody>
         {rows.length === 0 ? <EmptyRow colSpan={10}/> : rows.map((r, i) => (
           <tr key={i} className="border-t hover:bg-gray-50">
-            <td className="px-3 py-2 font-mono text-emerald-700">{r.bill_no}</td>
+            <td className="px-3 py-2 font-mono text-brand-700">{r.bill_no}</td>
             <td className="px-3 py-2">{r.date}</td>
             <td className="px-3 py-2">{r.blood_group || '—'}</td>
             <td className="px-3 py-2">{r.component || '—'}</td>
@@ -463,7 +463,7 @@ function AmbulanceTable({ rows }: { rows: any[] }) {
       <tbody>
         {rows.length === 0 ? <EmptyRow colSpan={10}/> : rows.map((r, i) => (
           <tr key={i} className="border-t hover:bg-gray-50">
-            <td className="px-3 py-2 font-mono text-emerald-700">{r.bill_no}</td>
+            <td className="px-3 py-2 font-mono text-brand-700">{r.bill_no}</td>
             <td className="px-3 py-2">{r.date}</td>
             <td className="px-3 py-2">{r.vehicle_no || '—'}</td>
             <td className="px-3 py-2">{r.vehicle_model || '—'}</td>

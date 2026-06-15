@@ -147,7 +147,7 @@ export default function CertificateTemplateModal({ open, onClose, template }: Pr
                 <button
                   key={ph} type="button"
                   onClick={() => insertPlaceholder(ph)}
-                  className="text-xs text-emerald-600 hover:underline"
+                  className="text-xs text-brand-600 hover:underline"
                 >{ph}</button>
               ))}
             </div>

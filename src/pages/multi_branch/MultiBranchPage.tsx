@@ -179,7 +179,7 @@ export default function MultiBranchPage() {
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -251,7 +251,7 @@ export default function MultiBranchPage() {
                     )}
                   >
                     <FileText size={13} className="text-gray-500 flex-shrink-0"/>
-                    <span className="text-sm text-emerald-700">{r.label}</span>
+                    <span className="text-sm text-brand-700">{r.label}</span>
                   </button>
                 )
               })}
@@ -311,7 +311,7 @@ export default function MultiBranchPage() {
                 ) : !report?.rows?.length ? (
                   <tr><td colSpan={report?.extra_label ? 4 : 3} className="px-4 py-12 text-center">
                     <div className="text-rose-400 text-xs mb-2">No data available in table</div>
-                    <div className="text-emerald-600 text-xs">← Add new record or search with different criteria.</div>
+                    <div className="text-brand-600 text-xs">← Add new record or search with different criteria.</div>
                   </td></tr>
                 ) : report.rows.map((row: any, i: number) => (
                   <tr key={i} className="hover:bg-gray-50/50">
@@ -359,8 +359,8 @@ export default function MultiBranchPage() {
               : filtered.length === 0 ? <tr><td colSpan={3} className="px-4 py-8 text-center text-gray-400">No branches</td></tr>
               : filtered.map(b => (
                 <tr key={b.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-emerald-600 font-medium">{b.name}</td>
-                  <td className="px-4 py-3 text-emerald-600">{b.url || '—'}</td>
+                  <td className="px-4 py-3 text-brand-600 font-medium">{b.name}</td>
+                  <td className="px-4 py-3 text-brand-600">{b.url || '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
                       <button className="icon-btn" onClick={() => setBranchModal({ open: true, branch: b })}><Edit2 size={12}/></button>

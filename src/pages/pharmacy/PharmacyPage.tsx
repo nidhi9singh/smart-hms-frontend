@@ -72,8 +72,8 @@ export default function PharmacyPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: 'Total Bills',     value: bills.length,                                  color: 'bg-emerald-50 text-emerald-700'   },
-          { label: 'Total Revenue',   value: `₹${totalRevenue.toFixed(2)}`,                 color: 'bg-emerald-50 text-emerald-700'   },
+          { label: 'Total Bills',     value: bills.length,                                  color: 'bg-brand-50 text-brand-700'   },
+          { label: 'Total Revenue',   value: `₹${totalRevenue.toFixed(2)}`,                 color: 'bg-brand-50 text-brand-700'   },
           { label: 'Pending Balance', value: `₹${totalBalance.toFixed(2)}`,                 color: 'bg-red-50 text-red-700'     },
           { label: 'Medicines',       value: medicines.length,                              color: 'bg-amber-50 text-amber-700' },
         ].map(s => (
@@ -90,7 +90,7 @@ export default function PharmacyPage() {
           {[{ id:'bills', label:'Pharmacy Bills' }, { id:'medicines', label:'Medicines Stock' }, { id:'purchases', label:'Medicine Purchase List' }].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as PharmTab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab===t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab===t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -121,7 +121,7 @@ export default function PharmacyPage() {
                 : bills.length === 0 ? <tr><td colSpan={14} className="px-4 py-8 text-center text-gray-400">No bills found</td></tr>
                 : bills.map((b: any) => (
                   <tr key={b.id} className="hover:bg-gray-50/50">
-                    <td className="px-3 py-3"><span className="text-emerald-600 font-medium cursor-pointer text-xs">{b.bill_no}</span></td>
+                    <td className="px-3 py-3"><span className="text-brand-600 font-medium cursor-pointer text-xs">{b.bill_no}</span></td>
                     <td className="px-3 py-3 text-xs text-gray-500">{b.case_id ?? '—'}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{b.date ? new Date(b.date).toLocaleString() : '—'}</td>
                     <td className="px-3 py-3 text-sm">{b.patient_name || (b.patient_id ? `#${b.patient_id}` : '—')}</td>
@@ -131,12 +131,12 @@ export default function PharmacyPage() {
                     <td className="px-3 py-3 text-gray-500 text-xs">₹{Number(b.discount||0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-gray-500 text-xs">₹{Number(b.tax||0).toFixed(2)}</td>
                     <td className="px-3 py-3 font-medium">₹{Number(b.net_amount||0).toFixed(2)}</td>
-                    <td className="px-3 py-3 text-emerald-600">₹{Number(b.paid_amount||0).toFixed(2)}</td>
+                    <td className="px-3 py-3 text-brand-600">₹{Number(b.paid_amount||0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-gray-500">₹{Number(b.refund_amount||0).toFixed(2)}</td>
                     <td className="px-3 py-3">
                       {Number(b.balance_amount||0) > 0
                         ? <span className="text-red-500 font-medium">₹{Number(b.balance_amount).toFixed(2)}</span>
-                        : <span className="text-emerald-500">₹0.00</span>}
+                        : <span className="text-brand-500">₹0.00</span>}
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex gap-1">
@@ -196,7 +196,7 @@ export default function PharmacyPage() {
                     <td className="px-4 py-3 text-gray-500">{m.group_id || '—'}</td>
                     <td className="px-4 py-3 text-gray-400 text-xs">{m.unit_id || '—'}</td>
                     <td className="px-4 py-3">
-                      <span className={cn('font-semibold', m.available_qty < 100 ? 'text-red-500' : 'text-emerald-600')}>{m.available_qty}</span>
+                      <span className={cn('font-semibold', m.available_qty < 100 ? 'text-red-500' : 'text-brand-600')}>{m.available_qty}</span>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
@@ -244,7 +244,7 @@ export default function PharmacyPage() {
                 {purchases.length === 0 ? <tr><td colSpan={9} className="px-4 py-8 text-center text-gray-400">No purchases found</td></tr>
                 : purchases.map((p: any) => (
                   <tr key={p.id} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3"><span className="text-emerald-600 font-medium text-xs">{p.purchase_no}</span></td>
+                    <td className="px-4 py-3"><span className="text-brand-600 font-medium text-xs">{p.purchase_no}</span></td>
                     <td className="px-4 py-3 text-xs text-gray-500">{p.purchase_date ? new Date(p.purchase_date).toLocaleString() : '—'}</td>
                     <td className="px-4 py-3 text-gray-400">{p.bill_no || '—'}</td>
                     <td className="px-4 py-3">{p.supplier_name || '—'}</td>

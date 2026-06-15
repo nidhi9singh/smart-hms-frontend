@@ -26,7 +26,7 @@ function assetUrl(path: string | null | undefined): string | null {
 function mediaIcon(t: string | null | undefined) {
   const x = (t || '').toLowerCase()
   if (x === 'youtube') return <Youtube    size={20} className="text-red-500"/>
-  if (['jpg','jpeg','png','gif','webp','bmp'].includes(x)) return <FileImage size={20} className="text-emerald-500"/>
+  if (['jpg','jpeg','png','gif','webp','bmp'].includes(x)) return <FileImage size={20} className="text-brand-500"/>
   return <FileText size={20} className="text-gray-500"/>
 }
 
@@ -182,7 +182,7 @@ export default function MediaManagerModal({ open, onClose, onSelect }: Props) {
                       <button
                         type="button"
                         onClick={() => { onSelect(m); onClose() }}
-                        className="text-xs text-emerald-600 hover:underline truncate flex-1 text-left"
+                        className="text-xs text-brand-600 hover:underline truncate flex-1 text-left"
                         title={m.file_name ?? m.youtube_link ?? ''}
                       >
                         {(m.file_name ?? m.youtube_link ?? '').toString().slice(0, 30)}

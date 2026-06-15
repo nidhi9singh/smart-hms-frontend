@@ -37,7 +37,7 @@ export default function GenerateBillModal({ caseId, open, onClose }: {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-8 print:hidden">
       <div className="bg-white rounded-lg shadow-xl w-[900px] max-w-[95vw] max-h-[92vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg sticky top-0">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg sticky top-0">
           <h2 className="text-base font-semibold">Bill</h2>
           <div className="flex items-center gap-3">
             <button onClick={print} disabled={!bill} title="Print" className="hover:opacity-80"><Printer size={16}/></button>
@@ -110,7 +110,7 @@ export default function GenerateBillModal({ caseId, open, onClose }: {
                   <tr><td colSpan={4}/><td className="px-3 py-1.5 text-right text-gray-600">Discount</td><td className="px-3 py-1.5 text-right">₹{bill.discount.toFixed(2)} ({bill.discount_pct.toFixed(2)}%)</td></tr>
                   <tr><td colSpan={4}/><td className="px-3 py-1.5 text-right text-gray-600">Tax</td><td className="px-3 py-1.5 text-right">₹{bill.tax.toFixed(2)} ({bill.tax_pct.toFixed(2)}%)</td></tr>
                   <tr className="border-t"><td colSpan={4}/><td className="px-3 py-2 text-right font-semibold text-gray-800">Total</td><td className="px-3 py-2 text-right font-bold text-base">₹{bill.total.toFixed(2)}</td></tr>
-                  <tr><td colSpan={4}/><td className="px-3 py-1.5 text-right text-emerald-700">Paid</td><td className="px-3 py-1.5 text-right text-emerald-700 font-semibold">₹{bill.paid.toFixed(2)}</td></tr>
+                  <tr><td colSpan={4}/><td className="px-3 py-1.5 text-right text-brand-700">Paid</td><td className="px-3 py-1.5 text-right text-brand-700 font-semibold">₹{bill.paid.toFixed(2)}</td></tr>
                   <tr><td colSpan={4}/><td className="px-3 py-1.5 text-right text-rose-700">Due</td><td className="px-3 py-1.5 text-right text-rose-700 font-semibold">₹{bill.due.toFixed(2)}</td></tr>
                   {Number(bill.credit_balance) > 0 && (
                     <tr><td colSpan={4}/>

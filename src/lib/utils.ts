@@ -15,7 +15,7 @@ export const initials = (name?: string) =>
 
 export const avatarBg = (i: number) => {
   const colors = [
-    'bg-emerald-100 text-emerald-700', 'bg-emerald-100 text-emerald-700',
+    'bg-brand-100 text-brand-700', 'bg-brand-100 text-brand-700',
     'bg-amber-100 text-amber-700', 'bg-pink-100 text-pink-700', 'bg-purple-100 text-purple-700',
   ]
   return colors[i % colors.length]

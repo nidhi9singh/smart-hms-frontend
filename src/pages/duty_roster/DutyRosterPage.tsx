@@ -118,7 +118,7 @@ export default function DutyRosterPage() {
           ].map(t => (
             <button key={t.id} onClick={() => { setTab(t.id as Tab); setSearch('') }}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -175,9 +175,9 @@ export default function DutyRosterPage() {
                     <td className="px-4 py-3 text-gray-500">{e.start_time || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{e.end_time || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{e.shift_hours || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{e.shift_name || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{e.department || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{e.floor || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{e.shift_name || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{e.department || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{e.floor || '—'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -211,7 +211,7 @@ export default function DutyRosterPage() {
               : shifts.length === 0 ? <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400">No shifts</td></tr>
               : shifts.map(s => (
                 <tr key={s.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-emerald-600 font-medium">{s.name}</td>
+                  <td className="px-4 py-3 text-brand-600 font-medium">{s.name}</td>
                   <td className="px-4 py-3 text-gray-500">{s.start_time}</td>
                   <td className="px-4 py-3 text-gray-500">{s.end_time}</td>
                   <td className="px-4 py-3 text-gray-500">{s.shift_hours || '—'}</td>
@@ -253,7 +253,7 @@ export default function DutyRosterPage() {
               : rosters.length === 0 ? <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-400">No rosters</td></tr>
               : rosters.map(r => (
                 <tr key={r.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-emerald-600 font-medium">{r.shift_name || '—'}</td>
+                  <td className="px-4 py-3 text-brand-600 font-medium">{r.shift_name || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{r.start_date}</td>
                   <td className="px-4 py-3 text-gray-500">{r.end_date}</td>
                   <td className="px-4 py-3 text-gray-500">{r.start_time || '—'}</td>
@@ -296,13 +296,13 @@ export default function DutyRosterPage() {
                 : assigned.length === 0 ? <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-400">No assigned rosters</td></tr>
                 : assigned.map((a, idx) => (
                   <tr key={`${a.staff_id}-${a.roster_id}-${idx}`} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 text-emerald-600 font-medium">
+                    <td className="px-4 py-3 text-brand-600 font-medium">
                       {a.staff_name || `#${a.staff_id}`}
                       {a.staff_code ? <span className="text-gray-400 text-xs ml-1">({a.staff_code})</span> : null}
                     </td>
                     <td className="px-4 py-3 text-gray-500">{a.floor || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{a.department || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{a.shift_name || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{a.department || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{a.shift_name || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{a.start_date} - {a.end_date}</td>
                     <td className="px-4 py-3 text-gray-500">{a.start_time || '—'} - {a.end_time || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{a.generated_by_name || '—'}</td>

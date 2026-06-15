@@ -152,7 +152,7 @@ function FieldForm({ editing, onDone }: { editing: any | null; onDone: () => voi
         <div>
           <div className="block text-xs font-medium text-gray-600 mb-1">Validation</div>
           <label className="flex items-center gap-1.5 text-sm text-gray-700">
-            <input type="checkbox" className="w-4 h-4 accent-emerald-600"
+            <input type="checkbox" className="w-4 h-4 accent-brand-600"
               checked={form.is_required}
               onChange={e => setForm({ ...form, is_required: e.target.checked })}/>
             Required
@@ -168,7 +168,7 @@ function FieldForm({ editing, onDone }: { editing: any | null; onDone: () => voi
               { k: 'on_patient_panel',label: 'On Patient Panel' },
             ].map(v => (
               <label key={v.k} className="flex items-center gap-1.5">
-                <input type="checkbox" className="w-4 h-4 accent-emerald-600"
+                <input type="checkbox" className="w-4 h-4 accent-brand-600"
                   checked={(form as any)[v.k]}
                   onChange={e => setForm({ ...form, [v.k]: e.target.checked })}/>
                 {v.label}
@@ -224,12 +224,12 @@ function FieldList({ onEdit }: { onEdit: (item: any) => void }) {
                       {open ? <ChevronDown size={14}/> : <ChevronRight size={14}/>}
                       {sec.label}
                       {count > 0 && (
-                        <span className="ml-1 text-xs font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+                        <span className="ml-1 text-xs font-medium text-brand-700 bg-brand-50 px-1.5 py-0.5 rounded">
                           {count}
                         </span>
                       )}
                     </span>
-                    <span className="text-emerald-600"><Plus size={16}/></span>
+                    <span className="text-brand-600"><Plus size={16}/></span>
                   </button>
                   {open && (
                     <div className="px-5 pb-4">
@@ -249,14 +249,14 @@ function FieldList({ onEdit }: { onEdit: (item: any) => void }) {
                             <tbody>
                               {sec.fields.map((f: any) => (
                                 <tr key={f.id} className="border-t hover:bg-gray-50">
-                                  <td className="px-3 py-2 text-emerald-700">{f.field_name}</td>
+                                  <td className="px-3 py-2 text-brand-700">{f.field_name}</td>
                                   <td className="px-3 py-2 text-gray-700">{f.field_type}</td>
                                   <td className="px-3 py-2 text-gray-700">col-md-{f.grid}</td>
                                   <td className="px-3 py-2 text-gray-700">{f.is_required ? 'Yes' : 'No'}</td>
                                   <td className="px-3 py-2 text-right whitespace-nowrap">
                                     <div className="flex items-center justify-end gap-1">
                                       <button onClick={() => onEdit(f)}
-                                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                                       <button onClick={() => { if (confirm('Delete?')) del.mutate(f.id) }}
                                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                                     </div>

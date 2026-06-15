@@ -95,7 +95,7 @@ export default function AddConsultationModal({ open, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 overflow-y-auto">
       <div className="bg-white rounded-lg shadow-xl w-[860px] max-w-[94vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <div className="flex items-center gap-2 flex-1 max-w-2xl">
             <select
               value={form.patient_id}
@@ -111,7 +111,7 @@ export default function AddConsultationModal({ open, onClose }: Props) {
             </select>
             <button type="button"
               onClick={() => nav('/patients')}
-              className="px-3 py-1.5 bg-white text-emerald-700 rounded text-sm flex items-center gap-1 hover:bg-emerald-50">
+              className="px-3 py-1.5 bg-white text-brand-700 rounded text-sm flex items-center gap-1 hover:bg-brand-50">
               <Plus size={14}/> New Patient
             </button>
           </div>

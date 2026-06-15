@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 import { opdApi, type OPDRecord, type OPDCharge, type OPDPayment } from '@/api/opd'
 function PageLoader() {
-  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#059669] rounded-full animate-spin" /></div>
+  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#47C0BD] rounded-full animate-spin" /></div>
 }
 import { cn, fmtDate } from '@/lib/utils'
 
@@ -107,7 +107,7 @@ export default function OPDDetailPage({ opdId, onBack }: Props) {
               className={cn(
                 'flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium border-b-2 transition-colors whitespace-nowrap',
                 subTab === t.id
-                  ? 'border-[#059669] text-[#059669]'
+                  ? 'border-[#47C0BD] text-[#47C0BD]'
                   : 'border-transparent text-gray-500 hover:text-gray-700',
               )}
             >
@@ -201,7 +201,7 @@ function OverviewTab({ opd, charges, payments, meds, labs, ops, consults }: {
             <div className="mt-4 pt-3 border-t border-gray-100">
               <p className="text-xs font-bold text-gray-700 uppercase mb-2">Consultant Doctor</p>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-bold">
                   {opd.consultant_name.charAt(0)}
                 </div>
                 <span className="text-sm text-gray-800">{opd.consultant_name} ({opd.consultant_code ?? opd.consultant_id})</span>

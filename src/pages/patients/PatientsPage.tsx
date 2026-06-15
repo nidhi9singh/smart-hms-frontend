@@ -71,10 +71,10 @@ export default function PatientsPage() {
   }
 
   const stats = [
-    { label: 'Total Patients', value: total,                                                      color: 'bg-emerald-50 text-emerald-700'   },
-    { label: 'Male',           value: patients.filter((p:any) => p.gender === 'Male').length,     color: 'bg-emerald-50 text-emerald-700'   },
+    { label: 'Total Patients', value: total,                                                      color: 'bg-brand-50 text-brand-700'   },
+    { label: 'Male',           value: patients.filter((p:any) => p.gender === 'Male').length,     color: 'bg-brand-50 text-brand-700'   },
     { label: 'Female',         value: patients.filter((p:any) => p.gender === 'Female').length,   color: 'bg-pink-50 text-pink-700'   },
-    { label: 'Active',         value: patients.filter((p:any) => p.is_active).length,             color: 'bg-emerald-50 text-emerald-700' },
+    { label: 'Active',         value: patients.filter((p:any) => p.is_active).length,             color: 'bg-brand-50 text-brand-700' },
   ]
 
   return (
@@ -175,7 +175,7 @@ export default function PatientsPage() {
                   {showDisabled ? 'No disabled patients' : 'No patients found'}
                 </td></tr>
               ) : patients.map((p: any, i: number) => (
-                <tr key={p.id} className={cn('hover:bg-gray-50/50 transition-colors', selected.includes(p.id) && 'bg-emerald-50/30')}>
+                <tr key={p.id} className={cn('hover:bg-gray-50/50 transition-colors', selected.includes(p.id) && 'bg-brand-50/30')}>
                   <td className="px-3 py-3">
                     <input type="checkbox" checked={selected.includes(p.id)} onChange={() => toggleSelect(p.id)}/>
                   </td>
@@ -190,7 +190,7 @@ export default function PatientsPage() {
                         }
                       }}
                       title="Copy Case ID"
-                      className="font-mono font-semibold text-emerald-700 hover:bg-emerald-50 px-2 py-0.5 rounded"
+                      className="font-mono font-semibold text-brand-700 hover:bg-brand-50 px-2 py-0.5 rounded"
                     >
                       {p.case_id ?? '—'}
                     </button>
@@ -199,7 +199,7 @@ export default function PatientsPage() {
                     <div className="flex items-center gap-2">
                       {p.photo_path
                         ? <img src={p.photo_path} alt="" className="w-7 h-7 rounded-full object-cover flex-shrink-0"/>
-                        : <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
+                        : <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-semibold flex-shrink-0">
                             {p.name?.split(' ').map((w:string) => w[0]).join('').toUpperCase().slice(0,2)}
                           </div>
                       }
@@ -223,7 +223,7 @@ export default function PatientsPage() {
                   </td>
                   <td className="px-3 py-2">
                     <div className="flex gap-1">
-                      <button className="icon-btn bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100"
+                      <button className="icon-btn bg-brand-50 border-brand-200 text-brand-700 hover:bg-brand-100"
                         title="Show" onClick={() => nav(`/patients/${p.id}`)}>
                         <Eye size={12}/>
                       </button>

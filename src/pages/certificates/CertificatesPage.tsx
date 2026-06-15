@@ -156,7 +156,7 @@ export default function CertificatesPage() {
                   <td className="px-3 py-2 text-gray-600">{p.gender}</td>
                   <td className="px-3 py-2 text-gray-600">{p.phone || '—'}</td>
                   <td className="px-3 py-2 text-right">
-                    {p.is_discharged ? <span className="text-xs px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded">Yes</span> : '—'}
+                    {p.is_discharged ? <span className="text-xs px-2 py-0.5 bg-brand-100 text-brand-700 rounded">Yes</span> : '—'}
                   </td>
                 </tr>
               ))}

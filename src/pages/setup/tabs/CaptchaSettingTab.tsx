@@ -34,7 +34,7 @@ export default function CaptchaSettingTab() {
                 <td className="px-3 py-2 text-right">
                   <button onClick={() => toggle.mutate(r)}
                     className={'inline-flex items-center w-10 h-5 rounded-full transition-colors ' +
-                      (r.enabled ? 'bg-emerald-600' : 'bg-gray-300')}>
+                      (r.enabled ? 'bg-brand-600' : 'bg-gray-300')}>
                     <span className={'w-4 h-4 bg-white rounded-full transition-transform ' +
                       (r.enabled ? 'translate-x-5' : 'translate-x-0.5')}/>
                   </button>

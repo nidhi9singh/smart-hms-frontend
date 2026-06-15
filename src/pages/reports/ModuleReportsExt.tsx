@@ -109,7 +109,7 @@ function PathologyPatientReport() {
               ? <tr><td colSpan={9} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.date}</td>
                   <td className="px-3 py-2">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.category_name || '—'}</td>
@@ -191,7 +191,7 @@ function PathologyBalanceReport() {
               ? <tr><td colSpan={14} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.bill_date}</td>
                   <td className="px-3 py-2">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.tpa_name || '—'}</td>
@@ -305,7 +305,7 @@ function RadiologyPatientReport() {
               ? <tr><td colSpan={10} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.date}</td>
                   <td className="px-3 py-2">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.category_name || '—'}</td>
@@ -386,7 +386,7 @@ function RadiologyBalanceReport() {
               ? <tr><td colSpan={12} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.bill_date}</td>
                   <td className="px-3 py-2">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.tpa_name || '—'}</td>
@@ -515,7 +515,7 @@ function BloodIssueReport() {
               ? <tr><td colSpan={16} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.issue_date}</td>
                   <td className="px-3 py-2">{r.received_to || '—'}</td>
                   <td className="px-3 py-2">{r.blood_group || '—'}</td>
@@ -623,7 +623,7 @@ function ComponentIssueReport() {
               ? <tr><td colSpan={15} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.issue_date}</td>
                   <td className="px-3 py-2">{r.received_to || '—'}</td>
                   <td className="px-3 py-2">{r.blood_group || '—'}</td>
@@ -708,7 +708,7 @@ function BloodDonorReport() {
             ? <tr><td colSpan={10} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.blood_group || '—'}</td>
+                <td className="px-3 py-2 text-brand-700">{r.blood_group || '—'}</td>
                 <td className="px-3 py-2">{r.bags}</td>
                 <td className="px-3 py-2">{r.donor_name || '—'}</td>
                 <td className="px-3 py-2">{r.age ?? '—'}</td>
@@ -749,7 +749,7 @@ function CardGrid({ title, reports, active, onChange }: {
             className={cn(
               'flex items-center gap-2 px-3 py-2 rounded text-sm text-left',
               active === r.key
-                ? 'bg-emerald-50 text-emerald-700 font-semibold'
+                ? 'bg-brand-50 text-brand-700 font-semibold'
                 : 'text-gray-700 hover:bg-gray-50'
             )}>
             <FileText size={14} className="text-gray-400 shrink-0"/>

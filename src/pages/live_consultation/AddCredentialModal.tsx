@@ -57,7 +57,7 @@ export default function AddCredentialModal({ open, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[560px] max-w-[95vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-[#059669] text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-[#47C0BD] text-white rounded-t-lg">
           <h2 className="text-base font-semibold">Add Credential</h2>
           <button onClick={onClose}><X size={18}/></button>
         </div>
@@ -80,11 +80,11 @@ export default function AddCredentialModal({ open, onClose }: Props) {
 
           <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
             <button type="button" onClick={reset}
-              className="px-5 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+              className="px-5 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
               Reset
             </button>
             <button type="submit" disabled={save.isPending}
-              className="flex items-center gap-1.5 px-5 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+              className="flex items-center gap-1.5 px-5 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
               {save.isPending && <Loader2 size={14} className="animate-spin"/>} Save
             </button>
           </div>

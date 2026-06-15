@@ -26,10 +26,10 @@ function formatSize(kb: number | null | undefined) {
 function fileIcon(type: string | null | undefined) {
   const t = (type || '').toLowerCase()
   if (t === 'youtube')    return <Youtube    size={28} className="text-red-500" />
-  if (['jpg','jpeg','png','gif','webp','bmp'].includes(t))      return <FileImage size={28} className="text-emerald-500" />
+  if (['jpg','jpeg','png','gif','webp','bmp'].includes(t))      return <FileImage size={28} className="text-brand-500" />
   if (['mp4','mov','avi','mkv','webm'].includes(t))             return <FileVideo size={28} className="text-purple-500" />
   if (t === 'pdf')                                              return <FileIcon  size={28} className="text-red-600" />
-  if (['doc','docx'].includes(t))                               return <FileText  size={28} className="text-emerald-600" />
+  if (['doc','docx'].includes(t))                               return <FileText  size={28} className="text-brand-600" />
   return <FileText size={28} className="text-gray-500" />
 }
 
@@ -130,8 +130,8 @@ export default function DownloadsPage({ defaultTab = 'contents' }: Props) {
 
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: 'Total Documents', value: stats.total_documents,                  color: 'bg-emerald-50 text-emerald-700' },
-          { label: 'Total Size',      value: formatSize(stats.total_size_kb),        color: 'bg-emerald-50 text-emerald-700' },
+          { label: 'Total Documents', value: stats.total_documents,                  color: 'bg-brand-50 text-brand-700' },
+          { label: 'Total Size',      value: formatSize(stats.total_size_kb),        color: 'bg-brand-50 text-brand-700' },
           { label: 'Shares',          value: shares.length || (sharesData?.total ?? 0), color: 'bg-amber-50 text-amber-700' },
           { label: 'Content Types',   value: types.length || (typesData?.total  ?? 0), color: 'bg-purple-50 text-purple-700' },
         ].map(s => (
@@ -151,7 +151,7 @@ export default function DownloadsPage({ defaultTab = 'contents' }: Props) {
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -204,7 +204,7 @@ export default function DownloadsPage({ defaultTab = 'contents' }: Props) {
                   <button
                     onClick={() => handleDownload(c)}
                     title="Download / Open"
-                    className="p-1 hover:bg-emerald-50 rounded text-emerald-600"
+                    className="p-1 hover:bg-brand-50 rounded text-brand-600"
                   >
                     <Download size={14}/>
                   </button>
@@ -246,7 +246,7 @@ export default function DownloadsPage({ defaultTab = 'contents' }: Props) {
                     </td>
                     <td className="px-3 py-2 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => handleDownload(c)} className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Download size={14}/></button>
+                        <button onClick={() => handleDownload(c)} className="p-1 hover:bg-brand-50 rounded text-brand-600"><Download size={14}/></button>
                         <button onClick={() => { if (confirm('Delete this content?')) delContent.mutate(c.id) }} className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                       </div>
                     </td>
@@ -287,7 +287,7 @@ export default function DownloadsPage({ defaultTab = 'contents' }: Props) {
                   <td className="px-3 py-2 text-gray-600 max-w-sm truncate">{s.description || 'No Description'}</td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <button title="View" className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Eye size={14}/></button>
+                      <button title="View" className="p-1 hover:bg-brand-50 rounded text-brand-600"><Eye size={14}/></button>
                       <button onClick={() => { if (confirm('Delete this share?')) delShare.mutate(s.id) }} className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
                   </td>
@@ -319,7 +319,7 @@ export default function DownloadsPage({ defaultTab = 'contents' }: Props) {
                   <td className="px-3 py-2 text-gray-600">{t.description || '—'}</td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => setTypeModal({ open: true, type: t })} className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      <button onClick={() => setTypeModal({ open: true, type: t })} className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete this content type?')) delType.mutate(t.id) }} className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
                   </td>

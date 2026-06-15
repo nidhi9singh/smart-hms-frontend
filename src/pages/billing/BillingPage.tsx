@@ -48,9 +48,9 @@ const MODULE_LABEL: Record<string, string> = {
 }
 
 const MODULE_COLOR: Record<string, string> = {
-  opd:             'bg-emerald-50 text-emerald-700',
+  opd:             'bg-brand-50 text-brand-700',
   ipd:             'bg-indigo-50 text-indigo-700',
-  pathology:       'bg-emerald-50 text-emerald-700',
+  pathology:       'bg-brand-50 text-brand-700',
   radiology:       'bg-cyan-50 text-cyan-700',
   pharmacy:        'bg-amber-50 text-amber-700',
   blood_issue:     'bg-rose-50 text-rose-700',
@@ -150,7 +150,7 @@ export default function BillingPage() {
                 <button
                   key={t.label}
                   onClick={() => navigate(t.to)}
-                  className="flex flex-col items-center justify-center gap-2 py-8 border border-gray-200 rounded-lg hover:border-emerald-400 hover:bg-emerald-50/30 transition"
+                  className="flex flex-col items-center justify-center gap-2 py-8 border border-gray-200 rounded-lg hover:border-brand-400 hover:bg-brand-50/30 transition"
                 >
                   <Icon size={28} className="text-gray-600" />
                   <span className="text-sm text-gray-700">{t.label}</span>

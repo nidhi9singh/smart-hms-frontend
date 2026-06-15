@@ -26,7 +26,7 @@ export default function PathologySetupPage() {
               <button key={t.id} onClick={() => setTab(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  tab === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  tab === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}>
                 {t.label}
               </button>
@@ -130,11 +130,11 @@ function SimpleTab({
               ? <tr><td colSpan={2} className="px-3 py-6 text-center text-gray-400">No records</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.name}</td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
                       <button onClick={() => setModal({ open: true, item: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete?')) del.mutate(r.id) }}
                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
@@ -265,14 +265,14 @@ function ParameterTab() {
                 ? <tr><td colSpan={5} className="px-3 py-6 text-center text-gray-400">No parameters</td></tr>
                 : filtered.map(r => (
                   <tr key={r.id} className="border-t hover:bg-gray-50">
-                    <td className="px-3 py-2 text-emerald-700">{r.name}</td>
-                    <td className="px-3 py-2 text-emerald-700">{r.reference_range}</td>
+                    <td className="px-3 py-2 text-brand-700">{r.name}</td>
+                    <td className="px-3 py-2 text-brand-700">{r.reference_range}</td>
                     <td className="px-3 py-2 text-gray-700">{r.unit || '—'}</td>
                     <td className="px-3 py-2 text-gray-600 max-w-2xl">{r.description || ''}</td>
                     <td className="px-3 py-2 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-1">
                         <button onClick={() => setModal({ open: true, item: r })}
-                          className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                          className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                         <button onClick={() => { if (confirm('Delete?')) del.mutate(r.id) }}
                           className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                       </div>
@@ -384,7 +384,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[520px] max-w-[92vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>

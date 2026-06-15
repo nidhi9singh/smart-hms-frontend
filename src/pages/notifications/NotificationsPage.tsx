@@ -4,8 +4,8 @@ import { Trash2, Mail, MessageSquare, Bell as BellIcon } from 'lucide-react'
 import { topnavApi } from '@/api/topnav'
 
 function typeIcon(t: string) {
-  if (t === 'email')  return <Mail          size={16} className="text-emerald-500"/>
-  if (t === 'sms')    return <MessageSquare size={16} className="text-emerald-500"/>
+  if (t === 'email')  return <Mail          size={16} className="text-brand-500"/>
+  if (t === 'sms')    return <MessageSquare size={16} className="text-brand-500"/>
   return <BellIcon size={16} className="text-amber-500"/>
 }
 
@@ -56,7 +56,7 @@ export default function NotificationsPage() {
                         {typeIcon(r.type)}
                       </div>
                     </td>
-                    <td className="px-3 py-3 text-emerald-600 truncate max-w-3xl">
+                    <td className="px-3 py-3 text-brand-600 truncate max-w-3xl">
                       {r.subject || '—'}
                     </td>
                     <td className="px-3 py-3 text-right text-gray-500 whitespace-nowrap">

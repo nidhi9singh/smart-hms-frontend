@@ -35,7 +35,7 @@ export default function LiveSessionModal({ open, onClose, kind, item }: Props) {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[640px] max-w-[94vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">{item.title}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>
@@ -61,7 +61,7 @@ export default function LiveSessionModal({ open, onClose, kind, item }: Props) {
             <button
               onClick={() => start.mutate()}
               disabled={start.isPending}
-              className="border border-emerald-500 text-emerald-600 hover:bg-emerald-50 px-3 py-1.5 rounded text-sm flex items-center gap-1.5"
+              className="border border-brand-500 text-brand-600 hover:bg-brand-50 px-3 py-1.5 rounded text-sm flex items-center gap-1.5"
             >
               <Video size={14}/>{isMeeting ? 'Join' : 'Start Now'}
             </button>

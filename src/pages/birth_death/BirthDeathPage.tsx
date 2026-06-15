@@ -64,7 +64,7 @@ export default function BirthDeathPage() {
             return (
               <button key={t.id} onClick={() => { setTab(t.id as Tab); setSearch('') }}
                 className={cn('flex items-center gap-1.5 px-4 py-2.5 text-sm border-b-2 -mb-px',
-                  tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                  tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
                 )}><Icon size={13}/>{t.label}</button>
             )
           })}
@@ -94,13 +94,13 @@ export default function BirthDeathPage() {
                 : births.length === 0 ? <tr><td colSpan={10} className="px-4 py-8 text-center text-gray-400">No birth records</td></tr>
                 : births.map(b => (
                   <tr key={b.id} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 text-emerald-600 font-medium text-xs">{b.reference_no}</td>
+                    <td className="px-4 py-3 text-brand-600 font-medium text-xs">{b.reference_no}</td>
                     <td className="px-4 py-3 text-xs">{b.case_id ?? '—'}</td>
                     <td className="px-4 py-3 text-xs text-gray-500">{b.generated_by_name || '—'}</td>
                     <td className="px-4 py-3 text-xs">{b.child_name || '—'}</td>
                     <td className="px-4 py-3 text-xs">{b.gender}</td>
                     <td className="px-4 py-3 text-xs text-gray-500">{b.birth_date ? new Date(b.birth_date).toLocaleString() : '—'}</td>
-                    <td className="px-4 py-3 text-xs text-emerald-600">{b.mother_name || '—'}</td>
+                    <td className="px-4 py-3 text-xs text-brand-600">{b.mother_name || '—'}</td>
                     <td className="px-4 py-3 text-xs">{b.father_name || '—'}</td>
                     <td className="px-4 py-3 text-xs text-gray-500">{b.report || '—'}</td>
                     <td className="px-4 py-3">
@@ -131,10 +131,10 @@ export default function BirthDeathPage() {
                 : deaths.length === 0 ? <tr><td colSpan={9} className="px-4 py-8 text-center text-gray-400">No death records</td></tr>
                 : deaths.map(d => (
                   <tr key={d.id} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 text-emerald-600 font-medium text-xs">{d.reference_no}</td>
+                    <td className="px-4 py-3 text-brand-600 font-medium text-xs">{d.reference_no}</td>
                     <td className="px-4 py-3 text-xs">{d.case_id ?? '—'}</td>
                     <td className="px-4 py-3 text-xs text-gray-500">{d.generated_by_name || '—'}</td>
-                    <td className="px-4 py-3 text-xs text-emerald-600">{d.patient_name || '—'}</td>
+                    <td className="px-4 py-3 text-xs text-brand-600">{d.patient_name || '—'}</td>
                     <td className="px-4 py-3 text-xs">{d.guardian_name || '—'}</td>
                     <td className="px-4 py-3 text-xs">{d.gender || '—'}</td>
                     <td className="px-4 py-3 text-xs text-gray-500">{d.death_date ? new Date(d.death_date).toLocaleString() : '—'}</td>

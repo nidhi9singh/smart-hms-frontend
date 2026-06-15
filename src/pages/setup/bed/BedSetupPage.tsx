@@ -33,7 +33,7 @@ export default function BedSetupPage() {
               <button key={t.id} onClick={() => setTab(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  tab === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  tab === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}>
                 {t.label}
               </button>
@@ -96,12 +96,12 @@ function BedStatusTab() {
                   const free = r.status === 'Available'
                   return (
                     <tr key={r.id}
-                      className={cn('border-t', free ? 'bg-emerald-50' : 'bg-rose-50')}>
-                      <td className={cn('px-3 py-2 font-medium', free ? 'text-emerald-800' : 'text-rose-800')}>{r.name}</td>
+                      className={cn('border-t', free ? 'bg-brand-50' : 'bg-rose-50')}>
+                      <td className={cn('px-3 py-2 font-medium', free ? 'text-brand-800' : 'text-rose-800')}>{r.name}</td>
                       <td className="px-3 py-2 text-gray-700">{r.bed_type || '—'}</td>
                       <td className="px-3 py-2 text-gray-700">{r.bed_group || '—'}</td>
                       <td className="px-3 py-2 text-gray-700">{r.floor || '—'}</td>
-                      <td className={cn('px-3 py-2 font-medium', free ? 'text-emerald-700' : 'text-rose-700')}>
+                      <td className={cn('px-3 py-2 font-medium', free ? 'text-brand-700' : 'text-rose-700')}>
                         {r.status}{r.patient_name ? ` (${r.patient_name})` : ''}
                       </td>
                     </tr>
@@ -173,18 +173,18 @@ function BedTab() {
               ? <tr><td colSpan={5} className="px-3 py-6 text-center text-gray-400">No beds</td></tr>
               : items.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bed_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bed_no}</td>
                   <td className="px-3 py-2 text-gray-700">{r.bed_type || '—'}</td>
                   <td className="px-3 py-2 text-gray-700">{r.bed_group}{r.floor ? ` - ${r.floor}` : ''}</td>
                   <td className="px-3 py-2 text-center">
-                    {!r.not_available ? <Check size={14} className="inline text-emerald-600"/> : <X size={14} className="inline text-gray-400"/>}
+                    {!r.not_available ? <Check size={14} className="inline text-brand-600"/> : <X size={14} className="inline text-gray-400"/>}
                   </td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
                       {canManageBeds && (
                         <>
                           <button onClick={() => setEdit({ open: true, bed: r })}
-                            className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                            className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                           <button onClick={() => { if (confirm('Delete this bed?')) del.mutate(r.id) }}
                             className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                         </>
@@ -337,11 +337,11 @@ function BedTypeTab() {
             ? <tr><td colSpan={2} className="px-3 py-6 text-center text-gray-400">No types</td></tr>
             : items.map(t => (
               <tr key={t.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{t.name}</td>
+                <td className="px-3 py-2 text-brand-700">{t.name}</td>
                 <td className="px-3 py-2 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <button onClick={() => setEdit({ open: true, entity: t })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                     <button onClick={() => { if (confirm('Delete?')) del.mutate(t.id) }}
                       className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                   </div>
@@ -406,13 +406,13 @@ function BedGroupTab() {
             ? <tr><td colSpan={4} className="px-3 py-6 text-center text-gray-400">No groups</td></tr>
             : items.map(g => (
               <tr key={g.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{g.name}</td>
+                <td className="px-3 py-2 text-brand-700">{g.name}</td>
                 <td className="px-3 py-2 text-gray-700">{g.floor || '—'}</td>
                 <td className="px-3 py-2 text-gray-600 max-w-2xl truncate" title={g.description}>{g.description || '—'}</td>
                 <td className="px-3 py-2 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <button onClick={() => setEdit({ open: true, entity: g })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                     <button onClick={() => { if (confirm('Delete?')) del.mutate(g.id) }}
                       className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                   </div>
@@ -546,12 +546,12 @@ function FloorTab() {
             ? <tr><td colSpan={3} className="px-3 py-6 text-center text-gray-400">No floors</td></tr>
             : items.map(f => (
               <tr key={f.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{f.name}</td>
+                <td className="px-3 py-2 text-brand-700">{f.name}</td>
                 <td className="px-3 py-2 text-gray-600 max-w-3xl truncate" title={f.description}>{f.description || '—'}</td>
                 <td className="px-3 py-2 text-right">
                   <div className="flex items-center justify-end gap-1">
                     <button onClick={() => setEdit({ open: true, entity: f })}
-                      className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                      className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                     <button onClick={() => { if (confirm('Delete?')) del.mutate(f.id) }}
                       className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                   </div>
@@ -584,7 +584,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[440px] max-w-[92vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>

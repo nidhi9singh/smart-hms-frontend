@@ -12,7 +12,7 @@ import OPDDetailPage from './OPDDetailPage'
 import { useDeleteOPD } from '@/hooks/useOPD'
 import { useAuthStore } from '@/store/authStore'
 function PageLoader() {
-  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#059669] rounded-full animate-spin" /></div>
+  return <div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-gray-300 border-t-[#47C0BD] rounded-full animate-spin" /></div>
 }
 
 function EmptyState({ icon, title, action }: { icon?: React.ReactNode; title: string; action?: React.ReactNode }) {
@@ -98,7 +98,7 @@ export default function OPDPage() {
               className={cn(
                 'px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
                 tab === t.id
-                  ? 'border-[#059669] text-[#059669]'
+                  ? 'border-[#47C0BD] text-[#47C0BD]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -109,7 +109,7 @@ export default function OPDPage() {
         {canManageOPD && (
           <button
             onClick={() => setModal(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded transition-colors"
           >
             <Plus className="w-4 h-4" /> Add Patient
           </button>
@@ -124,7 +124,7 @@ export default function OPDPage() {
             placeholder="Search..."
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
-            className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"
+            className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400"
           />
           <div className="flex items-center gap-2">
             <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1) }}
@@ -153,7 +153,7 @@ export default function OPDPage() {
             <EmptyState
               icon={<Stethoscope className="w-8 h-8 text-gray-400" />}
               title="No OPD records found"
-              action={canManageOPD ? <button onClick={() => setModal(true)} className="px-4 py-2 bg-[#059669] text-white text-sm rounded hover:bg-[#047857]">+ Add Patient</button> : undefined}
+              action={canManageOPD ? <button onClick={() => setModal(true)} className="px-4 py-2 bg-[#47C0BD] text-white text-sm rounded hover:bg-[#309C99]">+ Add Patient</button> : undefined}
             />
           ) : (
             <table className="w-full text-sm">
@@ -177,7 +177,7 @@ export default function OPDPage() {
                 {visits.map(v => (
                   <tr key={v.id} className="hover:bg-gray-50/50 group">
                     <td className="px-4 py-3">
-                      <button onClick={() => setDetailId(v.id)} className="text-[#059669] hover:underline font-medium">
+                      <button onClick={() => setDetailId(v.id)} className="text-[#47C0BD] hover:underline font-medium">
                         {v.opd_no}
                       </button>
                     </td>
@@ -193,7 +193,7 @@ export default function OPDPage() {
                     <td className="px-4 py-3 text-gray-500">{v.reference ?? ''}</td>
                     <td className="px-4 py-3 text-gray-500 max-w-[120px] truncate">{v.symptoms ?? ''}</td>
                     <td className="px-4 py-3">
-                      <span className={cn('text-xs', v.is_antenatal ? 'text-emerald-600 font-medium' : 'text-gray-400')}>
+                      <span className={cn('text-xs', v.is_antenatal ? 'text-brand-600 font-medium' : 'text-gray-400')}>
                         {v.is_antenatal ? 'Yes' : 'No'}
                       </span>
                     </td>
@@ -233,7 +233,7 @@ export default function OPDPage() {
             <div className="flex gap-1">
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
                 className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">‹</button>
-              <span className="px-3 py-1 border border-[#059669] bg-[#059669] text-white rounded text-xs">{page}</span>
+              <span className="px-3 py-1 border border-[#47C0BD] bg-[#47C0BD] text-white rounded text-xs">{page}</span>
               <button onClick={() => setPage(p => p + 1)} disabled={visits.length < perPage}
                 className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">›</button>
             </div>

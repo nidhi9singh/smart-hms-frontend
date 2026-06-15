@@ -50,7 +50,7 @@ export default function FinanceReports() {
               className={cn(
                 'flex items-center gap-2 px-3 py-2 rounded text-sm text-left',
                 active === r.key
-                  ? 'bg-emerald-50 text-emerald-700 font-semibold'
+                  ? 'bg-brand-50 text-brand-700 font-semibold'
                   : 'text-gray-700 hover:bg-gray-50'
               )}>
               <FileText size={14} className="text-gray-400 shrink-0"/>
@@ -188,7 +188,7 @@ function TxnTable({ items, total }: { items: any[]; total?: number }) {
           ? <tr><td colSpan={9} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
           : items.map(r => (
             <tr key={r.transaction_id} className="border-t hover:bg-gray-50">
-              <td className="px-3 py-2 text-emerald-700">{r.transaction_id}</td>
+              <td className="px-3 py-2 text-brand-700">{r.transaction_id}</td>
               <td className="px-3 py-2">{(r.date || '').slice(0, 10)}</td>
               <td className="px-3 py-2">{r.patient_name || '—'}</td>
               <td className="px-3 py-2">{r.reference || '—'}</td>
@@ -249,7 +249,7 @@ function IncomeReport() {
             ? <tr><td colSpan={5} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map(r => (
               <tr key={r.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                <td className="px-3 py-2 text-brand-700">{r.name}</td>
                 <td className="px-3 py-2">{r.invoice_number || '—'}</td>
                 <td className="px-3 py-2">{r.income_head || '—'}</td>
                 <td className="px-3 py-2">{(r.date || '').slice(0, 10)}</td>
@@ -320,7 +320,7 @@ function IncomeGroupReport() {
             : groups.flatMap(g => [
               ...g.items.map((r: any, i: number) => (
                 <tr key={`${g.head}-${r.income_id}`} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{i === 0 ? g.head : ''}</td>
+                  <td className="px-3 py-2 text-brand-700">{i === 0 ? g.head : ''}</td>
                   <td className="px-3 py-2">{r.income_id}</td>
                   <td className="px-3 py-2">{r.name}</td>
                   <td className="px-3 py-2">{(r.date || '').slice(0, 10)}</td>
@@ -378,7 +378,7 @@ function ExpenseReport() {
             ? <tr><td colSpan={5} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map(r => (
               <tr key={r.id} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                <td className="px-3 py-2 text-brand-700">{r.name}</td>
                 <td className="px-3 py-2">{r.invoice_number || '—'}</td>
                 <td className="px-3 py-2">{r.expense_head || '—'}</td>
                 <td className="px-3 py-2">{(r.date || '').slice(0, 10)}</td>
@@ -463,7 +463,7 @@ function ExpenseGroupReport() {
                 .flatMap(g => [
                   ...g.items.map((r: any, i: number) => (
                     <tr key={`${g.head}-${r.expense_id}`} className="border-t hover:bg-gray-50">
-                      <td className="px-3 py-2 text-emerald-700">{i === 0 ? g.head : ''}</td>
+                      <td className="px-3 py-2 text-brand-700">{i === 0 ? g.head : ''}</td>
                       <td className="px-3 py-2">{r.expense_id}</td>
                       <td className="px-3 py-2">{r.name}</td>
                       <td className="px-3 py-2">{(r.date || '').slice(0, 10)}</td>
@@ -525,7 +525,7 @@ function PatientBillReport() {
                 <td className="px-3 py-2">{r.module}</td>
                 <td className="px-3 py-2">{r.opd_no || '—'}</td>
                 <td className="px-3 py-2">{r.ipd_no || '—'}</td>
-                <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                 <td className="px-3 py-2">{r.payment_mode}</td>
                 <td className="px-3 py-2">{(r.payment_date || '').slice(0, 10)}</td>
                 <td className="px-3 py-2 text-right">{Number(r.payment_amount || 0).toFixed(2)}</td>
@@ -603,7 +603,7 @@ function ReferralReport() {
             ? <tr><td colSpan={7} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
             : items.map((r, i) => (
               <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="px-3 py-2 text-emerald-700">{r.payee || '—'}</td>
+                <td className="px-3 py-2 text-brand-700">{r.payee || '—'}</td>
                 <td className="px-3 py-2">{r.patient_name || '—'}</td>
                 <td className="px-3 py-2">{(r.date || '').slice(0, 10)}</td>
                 <td className="px-3 py-2">{r.bill_no || '—'}</td>
@@ -663,7 +663,7 @@ function ProcessingTransactions() {
               ? <tr><td colSpan={15} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : items.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.patient_name || '—'}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.date}</td>
                   <td className="px-3 py-2">{r.case_reference_no || ''}</td>
                   <td className="px-3 py-2">{r.opd_no || ''}</td>
@@ -750,7 +750,7 @@ function BalanceAmountReport() {
               ? <tr><td colSpan={11} className="px-3 py-6 text-center text-rose-500">No data available in table</td></tr>
               : filtered.map((r, i) => (
                 <tr key={i} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.bill_no}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.bill_no}</td>
                   <td className="px-3 py-2">{r.case_id || '—'}</td>
                   <td className="px-3 py-2">{r.patient_name || '—'}</td>
                   <td className="px-3 py-2">{r.generated_by || '—'}</td>

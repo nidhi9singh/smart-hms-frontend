@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 const TYPE_BADGE: Record<string, string> = {
   Holiday : 'bg-rose-50 text-rose-700',
-  Activity: 'bg-emerald-50 text-emerald-700',
+  Activity: 'bg-brand-50 text-brand-700',
   Vacation: 'bg-amber-50 text-amber-700',
 }
 
@@ -107,10 +107,10 @@ export default function AnnualCalendarPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-gray-700">{e.description || '—'}</td>
-                  <td className="px-4 py-3 text-emerald-600 whitespace-nowrap">{e.created_by_name || '—'}</td>
+                  <td className="px-4 py-3 text-brand-600 whitespace-nowrap">{e.created_by_name || '—'}</td>
                   <td className="px-4 py-3">
                     {e.front_site
-                      ? <span className="text-emerald-600 text-xs font-medium">Yes</span>
+                      ? <span className="text-brand-600 text-xs font-medium">Yes</span>
                       : <span className="text-gray-400 text-xs">No</span>}
                   </td>
                   <td className="px-4 py-3">

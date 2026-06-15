@@ -30,7 +30,7 @@ export default function PharmacySetupPage() {
               <button key={t.id} onClick={() => setTab(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  tab === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  tab === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}>
                 {t.label}
               </button>
@@ -116,12 +116,12 @@ function NameOnlyTab({
               ? <tr><td colSpan={3} className="px-3 py-6 text-center text-gray-400">No records</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  {showId && <td className="px-3 py-2 text-emerald-700">{r.id}</td>}
-                  <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                  {showId && <td className="px-3 py-2 text-brand-700">{r.id}</td>}
+                  <td className="px-3 py-2 text-brand-700">{r.name}</td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
                       <button onClick={() => setModal({ open: true, item: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete this record?')) del.mutate(r.id) }}
                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
@@ -218,7 +218,7 @@ function NameOnlyModal({
         ))}
         {showBatch && (
           <button type="button" onClick={addRow}
-            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-sm flex items-center gap-1.5">
+            className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded text-sm flex items-center gap-1.5">
             <Plus size={14}/> Add
           </button>
         )}
@@ -298,7 +298,7 @@ function SupplierTab() {
                     <td className="px-3 py-2 text-right">
                       <div className="flex items-center justify-end gap-1">
                         <button onClick={() => setModal({ open: true, item: r })}
-                          className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                          className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                         <button onClick={() => { if (confirm('Delete this supplier?')) del.mutate(r.id) }}
                           className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                       </div>
@@ -454,13 +454,13 @@ function DosageTab() {
               ? <tr><td colSpan={4} className="px-3 py-6 text-center text-gray-400">No dosages</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.category || '—'}</td>
-                  <td className="px-3 py-2 text-emerald-700">{r.dosage}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.category || '—'}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.dosage}</td>
                   <td className="px-3 py-2 text-gray-700">{r.unit || '—'}</td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
                       <button onClick={() => setModal({ open: true, item: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete this dosage?')) del.mutate(r.id) }}
                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
@@ -592,7 +592,7 @@ function DosageModal({ open, onClose, item }: { open: boolean; onClose: () => vo
         ))}
         {!editing && (
           <button type="button" onClick={addRow}
-            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-sm flex items-center gap-1.5">
+            className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded text-sm flex items-center gap-1.5">
             <Plus size={14}/> Add
           </button>
         )}
@@ -610,7 +610,7 @@ function Modal({ title, onClose, children, wide }: { title: string; onClose: () 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className={cn('bg-white rounded-lg shadow-xl max-w-[94vw]', wide ? 'w-[720px]' : 'w-[520px]')}>
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>

@@ -93,7 +93,7 @@ export default function IdCardTemplateModal({ open, onClose, variant, template }
     hospital_name: '',
     address: '',
     id_card_title: '',
-    header_color: '#0d9488',
+    header_color: '#47C0BD',
     fields: {} as Record<string, boolean>,
   })
 
@@ -107,7 +107,7 @@ export default function IdCardTemplateModal({ open, onClose, variant, template }
         hospital_name   : tc.hospital_name ?? '',
         address         : tc.address ?? '',
         id_card_title   : tc.id_card_title ?? '',
-        header_color    : tc.header_color ?? '#0d9488',
+        header_color    : tc.header_color ?? '#47C0BD',
         fields          : tc.fields ?? {},
       })
     }

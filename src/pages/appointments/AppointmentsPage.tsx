@@ -32,9 +32,9 @@ const TABS: { id: Tab; label: string }[] = [
 
 function statusBadge(status: string) {
   switch (status?.toLowerCase()) {
-    case 'approved':  return 'bg-emerald-500 text-white'
-    case 'confirmed': return 'bg-emerald-500 text-white'
-    case 'completed': return 'bg-emerald-500 text-white'
+    case 'approved':  return 'bg-brand-500 text-white'
+    case 'confirmed': return 'bg-brand-500 text-white'
+    case 'completed': return 'bg-brand-500 text-white'
     case 'cancelled': return 'bg-red-500 text-white'
     default:          return 'bg-orange-400 text-white'
   }
@@ -131,7 +131,7 @@ export default function AppointmentsPage() {
               className={cn(
                 'px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
                 tab === t.id && view === 'list'
-                  ? 'border-[#059669] text-[#059669]'
+                  ? 'border-[#47C0BD] text-[#47C0BD]'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
               )}
             >
@@ -142,7 +142,7 @@ export default function AppointmentsPage() {
         <div className="flex gap-2">
           <button
             onClick={() => setModal(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded transition-colors"
           >
             <Plus className="w-4 h-4" /> Add Appointment
           </button>
@@ -181,7 +181,7 @@ export default function AppointmentsPage() {
               <input type="date" className="w-full h-10 px-3 border border-gray-300 rounded text-sm" value={dwDate} onChange={e => setDwDate(e.target.value)} />
             </div>
             <div className="flex items-end">
-              <button className="px-5 py-2 bg-[#059669] text-white text-sm font-medium rounded hover:bg-[#047857]">Search</button>
+              <button className="px-5 py-2 bg-[#47C0BD] text-white text-sm font-medium rounded hover:bg-[#309C99]">Search</button>
             </div>
           </div>
         </div>
@@ -218,8 +218,8 @@ export default function AppointmentsPage() {
               </select>
             </div>
             <div className="flex items-end gap-2">
-              <button className="px-4 py-2 bg-[#059669] text-white text-sm font-medium rounded hover:bg-[#047857]">Reorder Queue</button>
-              <button className="px-4 py-2 bg-[#059669] text-white text-sm font-medium rounded hover:bg-[#047857]">Search</button>
+              <button className="px-4 py-2 bg-[#47C0BD] text-white text-sm font-medium rounded hover:bg-[#309C99]">Reorder Queue</button>
+              <button className="px-4 py-2 bg-[#47C0BD] text-white text-sm font-medium rounded hover:bg-[#309C99]">Search</button>
             </div>
           </div>
         </div>
@@ -234,19 +234,19 @@ export default function AppointmentsPage() {
               <label className="block text-[10px] uppercase tracking-wide font-semibold text-gray-500 mb-1">Date</label>
               <input type="date" value={filterDate}
                 onChange={e => { setFilterDate(e.target.value); setPage(1) }}
-                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400"/>
             </div>
             <div>
               <label className="block text-[10px] uppercase tracking-wide font-semibold text-gray-500 mb-1">Time</label>
               <input type="time" value={filterTime}
                 onChange={e => { setFilterTime(e.target.value); setPage(1) }}
-                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400"/>
             </div>
             <div>
               <label className="block text-[10px] uppercase tracking-wide font-semibold text-gray-500 mb-1">Slot</label>
               <select value={filterSlot}
                 onChange={e => { setFilterSlot(e.target.value); setPage(1) }}
-                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 bg-white">
+                className="px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400 bg-white">
                 <option value="">All Slots</option>
                 {slotOptions.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
@@ -263,7 +263,7 @@ export default function AppointmentsPage() {
           <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
             <input type="text" placeholder="Search..." value={search}
               onChange={e => { setSearch(e.target.value); setPage(1) }}
-              className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400" />
+              className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400" />
             <div className="flex items-center gap-2">
               <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1) }}
                 className="border border-gray-300 rounded px-2 py-1 text-xs text-gray-600">
@@ -283,11 +283,11 @@ export default function AppointmentsPage() {
           <div className="overflow-x-auto">
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="w-8 h-8 border-2 border-gray-300 border-t-[#059669] rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-gray-300 border-t-[#47C0BD] rounded-full animate-spin" />
               </div>
             ) : appointments.length === 0 ? (
               <EmptyState icon={<Stethoscope className="w-8 h-8 text-gray-400" />} title="No appointments found"
-                action={<button onClick={() => setModal(true)} className="px-4 py-2 bg-[#059669] text-white text-sm rounded">+ Add Appointment</button>} />
+                action={<button onClick={() => setModal(true)} className="px-4 py-2 bg-[#47C0BD] text-white text-sm rounded">+ Add Appointment</button>} />
             ) : (
               <table className="w-full text-sm">
                 <thead>
@@ -307,7 +307,7 @@ export default function AppointmentsPage() {
                     <tr key={a.id} className="hover:bg-gray-50/50">
                       <td className="px-3 py-3">
                         <Link to={`/patients/${a.patient_id}`}
-                          className="text-[#059669] hover:underline cursor-pointer font-medium">
+                          className="text-[#47C0BD] hover:underline cursor-pointer font-medium">
                           {a.patient_name ?? `Patient #${a.patient_id}`} ({a.patient_id})
                         </Link>
                       </td>
@@ -334,7 +334,7 @@ export default function AppointmentsPage() {
                       <td className="px-3 py-3">
                         <div className="flex items-center gap-1">
                           <button title="Show" onClick={() => setShowAppt(a)}
-                            className="icon-btn bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100">
+                            className="icon-btn bg-brand-50 border-brand-200 text-brand-700 hover:bg-brand-100">
                             <Eye size={12}/>
                           </button>
                           <button title="Reschedule" onClick={() => setRescheduleAppt(a)} className="icon-btn">
@@ -356,7 +356,7 @@ export default function AppointmentsPage() {
               <div className="flex gap-1">
                 <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
                   className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">‹</button>
-                <span className="px-3 py-1 border border-[#059669] bg-[#059669] text-white rounded text-xs">{page}</span>
+                <span className="px-3 py-1 border border-[#47C0BD] bg-[#47C0BD] text-white rounded text-xs">{page}</span>
                 <button onClick={() => setPage(p => p + 1)} disabled={appointments.length < perPage}
                   className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-40">›</button>
               </div>

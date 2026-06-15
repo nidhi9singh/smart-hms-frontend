@@ -96,7 +96,7 @@ export default function AddDeathRecordModal({ open, record, onClose, onSuccess }
 
         <div className="grid grid-cols-2 gap-3">
           <FormField label="Attachment">
-            <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer text-sm text-gray-500 hover:border-emerald-400">
+            <label className="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer text-sm text-gray-500 hover:border-brand-400">
               <Upload size={14}/>
               <span className="truncate">{attachment.name || 'Drop a file here or click'}</span>
               <input type="file" hidden

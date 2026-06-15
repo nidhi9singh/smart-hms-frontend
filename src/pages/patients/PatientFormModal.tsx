@@ -142,7 +142,7 @@ export default function PatientFormModal({ open, patient, onClose, onSuccess }: 
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1.5">Patient Photo</label>
             <div onClick={() => fileRef.current?.click()}
-              className="input flex items-center gap-1.5 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 h-9 px-2 overflow-hidden">
+              className="input flex items-center gap-1.5 cursor-pointer hover:border-brand-400 hover:bg-brand-50 h-9 px-2 overflow-hidden">
               {photoPreview
                 ? <img src={photoPreview} alt="" className="h-7 w-7 rounded object-cover flex-shrink-0"/>
                 : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400 flex-shrink-0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>

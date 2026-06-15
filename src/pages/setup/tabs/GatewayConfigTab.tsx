@@ -47,7 +47,7 @@ export default function GatewayConfigTab({ title, scopePrefix, gateways, descrip
         {gateways.map(g => (
           <button key={g.id} onClick={() => setActiveId(g.id)}
             className={cn('px-3 py-1.5 text-sm border-b-2 -mb-px',
-              activeId === g.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+              activeId === g.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
             )}
           >{g.name}</button>
         ))}

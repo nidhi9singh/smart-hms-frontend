@@ -127,7 +127,7 @@ function IdCardRender({
 
   return (
     <div className="border border-gray-300 inline-block" style={{ width: 380 }}>
-      <div className="px-3 py-2 text-white flex items-center gap-2" style={{ background: cfg.header_color || '#0d9488' }}>
+      <div className="px-3 py-2 text-white flex items-center gap-2" style={{ background: cfg.header_color || '#47C0BD' }}>
         {logo && <img src={logo} alt="logo" className="w-8 h-8 object-contain bg-white rounded-sm p-0.5"/>}
         <div className="flex-1">
           <p className="text-sm font-bold leading-tight">{cfg.hospital_name}</p>

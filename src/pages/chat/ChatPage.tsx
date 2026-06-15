@@ -67,7 +67,7 @@ export default function ChatPage() {
           <aside className="border-r flex flex-col">
             <div className="flex items-center justify-between px-4 py-3 border-b">
               <h2 className="text-sm font-semibold text-gray-800">Chat System</h2>
-              <button className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center hover:bg-emerald-600"
+              <button className="w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center hover:bg-brand-600"
                 title="New chat">
                 <Plus size={14}/>
               </button>
@@ -87,7 +87,7 @@ export default function ChatPage() {
                   <button key={c.id}
                     onClick={() => setActiveId(c.id)}
                     className={cn('w-full flex items-center gap-3 px-3 py-3 border-b text-left hover:bg-gray-50',
-                      activeId === c.id && 'bg-emerald-50')}
+                      activeId === c.id && 'bg-brand-50')}
                   >
                     <div className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold text-gray-700 flex-shrink-0">
                       {initials(c.display_name)}
@@ -98,7 +98,7 @@ export default function ChatPage() {
                           {c.display_name} <span className="text-xs text-gray-500">({c.role})</span>
                         </p>
                         {c.unread > 0 && (
-                          <span className="ml-2 min-w-[18px] h-[18px] rounded-full bg-emerald-500 text-white text-[10px] font-semibold flex items-center justify-center px-1">
+                          <span className="ml-2 min-w-[18px] h-[18px] rounded-full bg-brand-500 text-white text-[10px] font-semibold flex items-center justify-center px-1">
                             {c.unread}
                           </span>
                         )}
@@ -139,10 +139,10 @@ export default function ChatPage() {
                       <div key={m.id} className={cn('flex', m.mine ? 'justify-end' : 'justify-start')}>
                         <div className={cn(
                           'max-w-md px-3 py-2 rounded-lg text-sm shadow-sm',
-                          m.mine ? 'bg-emerald-500 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none border'
+                          m.mine ? 'bg-brand-500 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none border'
                         )}>
                           <p className="whitespace-pre-wrap">{m.body}</p>
-                          <p className={cn('text-[10px] mt-1', m.mine ? 'text-emerald-50' : 'text-gray-400')}>
+                          <p className={cn('text-[10px] mt-1', m.mine ? 'text-brand-50' : 'text-gray-400')}>
                             {m.created_at ? new Date(m.created_at).toLocaleString() : ''}
                           </p>
                         </div>
@@ -157,7 +157,7 @@ export default function ChatPage() {
                     className="input flex-1 rounded-full"
                   />
                   <button type="submit" disabled={!draft.trim() || send.isPending}
-                    className="w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center disabled:opacity-40">
+                    className="w-10 h-10 rounded-full bg-brand-500 hover:bg-brand-600 text-white flex items-center justify-center disabled:opacity-40">
                     <Send size={15}/>
                   </button>
                 </form>

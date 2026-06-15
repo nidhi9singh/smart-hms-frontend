@@ -43,7 +43,7 @@ export default function SwitchBranchModal({ open, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[600px] max-w-[92vw]">
-        <div className="flex items-center justify-between px-5 py-3 border-b bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 border-b bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">Switch Branch</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>
@@ -55,13 +55,13 @@ export default function SwitchBranchModal({ open, onClose }: Props) {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded cursor-pointer border transition-colors',
                   selected === b.id
-                    ? 'bg-emerald-50 border-emerald-300'
+                    ? 'bg-brand-50 border-brand-300'
                     : 'bg-gray-50 border-gray-100 hover:bg-gray-100'
                 )}>
                 <input type="radio" name="branch"
                   checked={selected === b.id}
                   onChange={() => setSelected(b.id)}
-                  className="w-4 h-4 accent-emerald-500 flex-shrink-0"
+                  className="w-4 h-4 accent-brand-500 flex-shrink-0"
                 />
                 <span className="text-sm text-gray-800">
                   {b.name}

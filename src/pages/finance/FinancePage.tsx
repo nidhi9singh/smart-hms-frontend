@@ -53,7 +53,7 @@ export default function FinancePage({ defaultTab = 'income' }: Props) {
             return (
               <button key={t.id} onClick={() => { setTab(t.id as Tab); setSearch('') }}
                 className={cn('flex items-center gap-1.5 px-4 py-2.5 text-sm border-b-2 -mb-px',
-                  tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                  tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
                 )}><Icon size={13}/>{t.label}</button>
             )
           })}
@@ -95,7 +95,7 @@ export default function FinancePage({ defaultTab = 'income' }: Props) {
                 : incomes.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No income records</td></tr>
                 : incomes.map(i => (
                   <tr key={i.id} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 text-emerald-600 font-medium">
+                    <td className="px-4 py-3 text-brand-600 font-medium">
                       {i.name}
                       <div className="inline-flex gap-1 ml-2">
                         <button className="icon-btn" onClick={() => setIncomeModal({ open: true, income: i })}><Edit2 size={11}/></button>
@@ -105,8 +105,8 @@ export default function FinancePage({ defaultTab = 'income' }: Props) {
                     <td className="px-4 py-3">{i.invoice_number || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{fmtDate(i.date)}</td>
                     <td className="px-4 py-3 text-gray-700 max-w-md">{i.description || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{i.income_head_name || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{i.generated_by_name || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{i.income_head_name || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{i.generated_by_name || '—'}</td>
                     <td className="px-4 py-3 text-right font-medium">{Number(i.amount || 0).toFixed(2)}</td>
                   </tr>
                 ))}
@@ -130,7 +130,7 @@ export default function FinancePage({ defaultTab = 'income' }: Props) {
                 : expenses.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No expense records</td></tr>
                 : expenses.map(e => (
                   <tr key={e.id} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 text-emerald-600 font-medium">
+                    <td className="px-4 py-3 text-brand-600 font-medium">
                       {e.name}
                       <div className="inline-flex gap-1 ml-2">
                         <button className="icon-btn" onClick={() => setExpenseModal({ open: true, expense: e })}><Edit2 size={11}/></button>
@@ -140,8 +140,8 @@ export default function FinancePage({ defaultTab = 'income' }: Props) {
                     <td className="px-4 py-3">{e.invoice_number || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{fmtDate(e.date)}</td>
                     <td className="px-4 py-3 text-gray-700 max-w-md">{e.description || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{e.expense_head_name || '—'}</td>
-                    <td className="px-4 py-3 text-emerald-600">{e.generated_by_name || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{e.expense_head_name || '—'}</td>
+                    <td className="px-4 py-3 text-brand-600">{e.generated_by_name || '—'}</td>
                     <td className="px-4 py-3 text-right font-medium">{Number(e.amount || 0).toFixed(2)}</td>
                   </tr>
                 ))}

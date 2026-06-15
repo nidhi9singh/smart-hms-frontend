@@ -35,7 +35,7 @@ export default function ReferralSetupPage() {
               <button key={t.id} onClick={() => setTab(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  tab === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  tab === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}>
                 {t.label}
               </button>
@@ -103,9 +103,9 @@ function CommissionTab() {
               ? <tr><td colSpan={3} className="px-3 py-6 text-center text-gray-400">No records</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-3 text-emerald-700 align-top">{r.category || '—'}</td>
+                  <td className="px-3 py-3 text-brand-700 align-top">{r.category || '—'}</td>
                   <td className="px-3 py-3 align-top">
-                    <ul className="text-emerald-700 space-y-0.5 leading-tight">
+                    <ul className="text-brand-700 space-y-0.5 leading-tight">
                       {(r.modules ?? MODULES.map(m => ({
                         label: m.label, value: r[`commission_${m.key}`] ?? 0,
                       }))).map((m: any) => (
@@ -116,7 +116,7 @@ function CommissionTab() {
                   <td className="px-3 py-3 text-right align-top">
                     <div className="flex items-center justify-end gap-1">
                       <button onClick={() => setModal({ open: true, item: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete?')) del.mutate(r.id) }}
                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
@@ -256,7 +256,7 @@ function CommissionModal({ open, onClose, item }: { open: boolean; onClose: () =
                   <input type="number" step="0.01" min="0" max="100"
                     value={form[fieldKey]}
                     onChange={e => setForm({ ...form, [fieldKey]: e.target.value })}
-                    className="border-0 border-b border-gray-200 px-1 py-1 text-sm w-full focus:outline-none focus:border-emerald-500"/>
+                    className="border-0 border-b border-gray-200 px-1 py-1 text-sm w-full focus:outline-none focus:border-brand-500"/>
                 </div>
               )
             })}
@@ -324,11 +324,11 @@ function CategoryTab() {
               ? <tr><td colSpan={2} className="px-3 py-6 text-center text-gray-400">No records</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.name}</td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex items-center justify-end gap-1">
                       <button onClick={() => setModal({ open: true, item: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm('Delete?')) del.mutate(r.id) }}
                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
@@ -408,7 +408,7 @@ function CategoryModal({ open, onClose, item }: { open: boolean; onClose: () => 
         ))}
         {showBatch && (
           <button type="button" onClick={addRow}
-            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-sm flex items-center gap-1.5">
+            className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded text-sm flex items-center gap-1.5">
             <Plus size={14}/> Add
           </button>
         )}
@@ -428,7 +428,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[600px] max-w-[92vw] max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg sticky top-0">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg sticky top-0">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-white"><X size={18}/></button>
         </div>

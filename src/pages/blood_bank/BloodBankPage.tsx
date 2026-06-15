@@ -108,7 +108,7 @@ export default function BloodBankPage() {
             ].map(t => (
               <button key={t.id} onClick={() => setTab(t.id as Tab)}
                 className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                  tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                  tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
                 )}>{t.label}</button>
             ))}
           </div>
@@ -122,19 +122,19 @@ export default function BloodBankPage() {
             {BLOOD_GROUPS.map(g => (
               <button key={g} onClick={() => setBg(g)}
                 className={cn('w-full text-left px-3 py-2 text-sm rounded-sm',
-                  bg === g ? 'bg-emerald-500 text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100')}
+                  bg === g ? 'bg-brand-500 text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100')}
               >{g}</button>
             ))}
           </aside>
 
           <div className="card overflow-hidden p-0">
-            <div className="flex items-center justify-between px-3 py-2 bg-emerald-50">
+            <div className="flex items-center justify-between px-3 py-2 bg-brand-50">
               <div>
                 <span className="text-sm font-semibold text-gray-800">Blood</span>
                 <span className="ml-3 text-xs text-gray-500">{stock.filter(s => !s.is_issued).length} Bags</span>
               </div>
               {canManageBloodBank && (
-                <button onClick={() => setStockModal(true)} className="px-2 py-1 rounded bg-emerald-500 text-white text-xs hover:bg-emerald-600">
+                <button onClick={() => setStockModal(true)} className="px-2 py-1 rounded bg-brand-500 text-white text-xs hover:bg-brand-600">
                   <Plus size={12}/>
                 </button>
               )}
@@ -159,7 +159,7 @@ export default function BloodBankPage() {
                     <td className="px-3 py-2">
                       {canManageBloodBank && (
                         <button disabled={s.is_issued} onClick={() => setIssueModal(true)}
-                                className="px-3 py-1 bg-emerald-500 text-white rounded text-xs hover:bg-emerald-600 disabled:opacity-40">
+                                className="px-3 py-1 bg-brand-500 text-white rounded text-xs hover:bg-brand-600 disabled:opacity-40">
                           {s.is_issued ? 'Issued' : 'Issue'}
                         </button>
                       )}
@@ -171,13 +171,13 @@ export default function BloodBankPage() {
           </div>
 
           <div className="card overflow-hidden p-0">
-            <div className="flex items-center justify-between px-3 py-2 bg-emerald-50">
+            <div className="flex items-center justify-between px-3 py-2 bg-brand-50">
               <div>
                 <span className="text-sm font-semibold text-gray-800">Components</span>
                 <span className="ml-3 text-xs text-gray-500">{comps.filter(c => !c.is_issued).length} Bags</span>
               </div>
               {canManageBloodBank && (
-                <button onClick={() => setCompModal(true)} className="px-2 py-1 rounded bg-emerald-500 text-white text-xs hover:bg-emerald-600">
+                <button onClick={() => setCompModal(true)} className="px-2 py-1 rounded bg-brand-500 text-white text-xs hover:bg-brand-600">
                   <Plus size={12}/>
                 </button>
               )}
@@ -202,7 +202,7 @@ export default function BloodBankPage() {
                     <td className="px-3 py-2">
                       {canManageBloodBank && (
                         <button disabled={c.is_issued} onClick={() => setCIssueModal(true)}
-                                className="px-3 py-1 bg-emerald-500 text-white rounded text-xs hover:bg-emerald-600 disabled:opacity-40">
+                                className="px-3 py-1 bg-brand-500 text-white rounded text-xs hover:bg-brand-600 disabled:opacity-40">
                           {c.is_issued ? 'Issued' : 'Issue'}
                         </button>
                       )}
@@ -243,7 +243,7 @@ export default function BloodBankPage() {
               : donors.length === 0 ? <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No donors</td></tr>
               : donors.map(d => (
                 <tr key={d.id} className="hover:bg-gray-50/50">
-                  <td className="px-4 py-3 text-emerald-600 font-medium">{d.name}</td>
+                  <td className="px-4 py-3 text-brand-600 font-medium">{d.name}</td>
                   <td className="px-4 py-3 text-gray-500">{d.date_of_birth || '—'}</td>
                   <td className="px-4 py-3"><span className="badge badge-blue">{d.blood_group}</span></td>
                   <td className="px-4 py-3 text-gray-500">{d.gender || '—'}</td>
@@ -284,7 +284,7 @@ export default function BloodBankPage() {
                 : issues.length === 0 ? <tr><td colSpan={16} className="px-4 py-8 text-center text-gray-400">No issues</td></tr>
                 : issues.map(i => (
                   <tr key={i.id} className="hover:bg-gray-50/50">
-                    <td className="px-3 py-3 text-emerald-600 text-xs font-medium">{i.issue_no}</td>
+                    <td className="px-3 py-3 text-brand-600 text-xs font-medium">{i.issue_no}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{i.case_id || '—'}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{i.issue_date ? new Date(i.issue_date).toLocaleString() : '—'}</td>
                     <td className="px-3 py-3 text-xs">{i.patient_name || (i.patient_id ? `#${i.patient_id}` : '—')}</td>
@@ -298,11 +298,11 @@ export default function BloodBankPage() {
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(i.discount || 0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(i.tax_amount || 0).toFixed(2)}({Number(i.tax_percent || 0).toFixed(0)}%)</td>
                     <td className="px-3 py-3 text-xs font-medium">₹{Number(i.net_amount || 0).toFixed(2)}</td>
-                    <td className="px-3 py-3 text-xs text-emerald-600">₹{Number(i.paid || 0).toFixed(2)}</td>
+                    <td className="px-3 py-3 text-xs text-brand-600">₹{Number(i.paid || 0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-xs">
                       {Number(i.balance || 0) > 0
                         ? <span className="text-red-500 font-medium">₹{Number(i.balance).toFixed(2)}</span>
-                        : <span className="text-emerald-500">₹0.00</span>}
+                        : <span className="text-brand-500">₹0.00</span>}
                     </td>
                   </tr>
                 ))}
@@ -341,7 +341,7 @@ export default function BloodBankPage() {
                 : cIssues.length === 0 ? <tr><td colSpan={16} className="px-4 py-8 text-center text-gray-400">No issues</td></tr>
                 : cIssues.map(i => (
                   <tr key={i.id} className="hover:bg-gray-50/50">
-                    <td className="px-3 py-3 text-emerald-600 text-xs font-medium">{i.issue_no}</td>
+                    <td className="px-3 py-3 text-brand-600 text-xs font-medium">{i.issue_no}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{i.case_id || '—'}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{i.issue_date ? new Date(i.issue_date).toLocaleString() : '—'}</td>
                     <td className="px-3 py-3 text-xs">{i.issued_by_name || '—'}</td>
@@ -355,11 +355,11 @@ export default function BloodBankPage() {
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(i.discount || 0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(i.tax_amount || 0).toFixed(2)}({Number(i.tax_percent || 0).toFixed(0)}%)</td>
                     <td className="px-3 py-3 text-xs font-medium">₹{Number(i.net_amount || 0).toFixed(2)}</td>
-                    <td className="px-3 py-3 text-xs text-emerald-600">₹{Number(i.paid || 0).toFixed(2)}</td>
+                    <td className="px-3 py-3 text-xs text-brand-600">₹{Number(i.paid || 0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-xs">
                       {Number(i.balance || 0) > 0
                         ? <span className="text-red-500 font-medium">₹{Number(i.balance).toFixed(2)}</span>
-                        : <span className="text-emerald-500">₹0.00</span>}
+                        : <span className="text-brand-500">₹0.00</span>}
                     </td>
                   </tr>
                 ))}
@@ -399,7 +399,7 @@ export default function BloodBankPage() {
                 <tr key={c.id} className="hover:bg-gray-50/50">
                   <td className="px-4 py-3 font-medium">{c.component_type}</td>
                   <td className="px-4 py-3"><span className="badge badge-blue">{c.blood_group}</span></td>
-                  <td className="px-4 py-3 text-emerald-600">{c.bag_no} ({c.volume_ml} {c.volume_unit})</td>
+                  <td className="px-4 py-3 text-brand-600">{c.bag_no} ({c.volume_ml} {c.volume_unit})</td>
                   <td className="px-4 py-3 text-rose-600">{c.lot_no || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{c.institution || '—'}</td>
                 </tr>

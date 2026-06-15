@@ -179,7 +179,7 @@ export default function SettingsPage() {
               <button key={t.id} onClick={() => setActive(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  active === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  active === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}
               >
                 {t.label}

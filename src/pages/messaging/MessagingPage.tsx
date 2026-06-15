@@ -105,7 +105,7 @@ function NoticeBoard({ onSent }: { onSent: () => void }) {
         : notices.map(n => (
           <div key={n.id} className="flex items-start justify-between px-4 py-3 hover:bg-gray-50/50">
             <div className="flex-1 min-w-0">
-              <div className="text-emerald-700 font-medium">{n.title}</div>
+              <div className="text-brand-700 font-medium">{n.title}</div>
               {n.message && (
                 <div className="text-xs text-gray-500 mt-1 line-clamp-2"
                      dangerouslySetInnerHTML={{ __html: n.message }} />
@@ -280,11 +280,11 @@ function SendMessagePanel({ kind, mode, setMode }: { kind: 'sms' | 'email'; mode
         </h2>
         <div className="flex gap-2 text-sm">
           <button onClick={() => setMode('group')}
-            className={cn('px-3 py-1 border-b-2', mode === 'group' ? 'border-emerald-500 text-emerald-700 font-medium' : 'border-transparent text-gray-400')}>
+            className={cn('px-3 py-1 border-b-2', mode === 'group' ? 'border-brand-500 text-brand-700 font-medium' : 'border-transparent text-gray-400')}>
             Group
           </button>
           <button onClick={() => setMode('individual')}
-            className={cn('px-3 py-1 border-b-2', mode === 'individual' ? 'border-emerald-500 text-emerald-700 font-medium' : 'border-transparent text-gray-400')}>
+            className={cn('px-3 py-1 border-b-2', mode === 'individual' ? 'border-brand-500 text-brand-700 font-medium' : 'border-transparent text-gray-400')}>
             Individual
           </button>
         </div>
@@ -481,9 +481,9 @@ function CredentialPanel() {
                 <td className="px-4 py-3 text-gray-400">{i + 1}</td>
                 <td className="px-4 py-3">{p.patient_id}</td>
                 <td className="px-4 py-3 font-medium">{p.name}</td>
-                <td className="px-4 py-3 text-emerald-600">{p.email || ''}</td>
+                <td className="px-4 py-3 text-brand-600">{p.email || ''}</td>
                 <td className="px-4 py-3 text-gray-500">{p.phone || ''}</td>
-                <td className="px-4 py-3 text-emerald-600 font-mono">{p.username}</td>
+                <td className="px-4 py-3 text-brand-600 font-mono">{p.username}</td>
                 <td className="px-4 py-3 text-gray-500 text-right font-mono">{p.password}</td>
               </tr>
             ))}

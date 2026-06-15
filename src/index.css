@@ -14,7 +14,7 @@
 @layer components {
   /* Buttons */
   .btn { @apply inline-flex items-center justify-center gap-1.5 rounded-lg font-medium text-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-60 disabled:cursor-not-allowed; }
-  .btn-primary { @apply btn px-4 py-2 bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500 active:scale-95; }
+  .btn-primary { @apply btn px-4 py-2 bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-500 active:scale-95; }
   .btn-outline { @apply btn px-4 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 focus:ring-gray-300 active:scale-95; }
   .btn-danger  { @apply btn px-4 py-2 bg-red-600  text-white hover:bg-red-700  focus:ring-red-500  active:scale-95; }
   .btn-ghost   { @apply btn px-3 py-1.5 text-gray-600 hover:bg-gray-100 focus:ring-gray-300; }
@@ -23,7 +23,7 @@
   .btn-icon    { @apply btn w-8 h-8 p-0 rounded-lg; }
 
   /* Forms */
-  .input { @apply block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 transition focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-gray-50 disabled:text-gray-500; }
+  .input { @apply block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 transition focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:bg-gray-50 disabled:text-gray-500; }
   .input-error { @apply border-red-300 focus:border-red-500 focus:ring-red-500; }
 
   /* Cards */
@@ -32,9 +32,9 @@
 
   /* Badges */
   .badge { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap; }
-  .badge-green  { @apply bg-emerald-50  text-emerald-700  ring-1 ring-emerald-600/20; }
-  .badge-blue   { @apply bg-emerald-50     text-emerald-700     ring-1 ring-emerald-600/20; }
-  .badge-teal   { @apply bg-emerald-50  text-emerald-700  ring-1 ring-emerald-600/20; }
+  .badge-green  { @apply bg-brand-50  text-brand-700  ring-1 ring-brand-600/20; }
+  .badge-blue   { @apply bg-brand-50     text-brand-700     ring-1 ring-brand-600/20; }
+  .badge-teal   { @apply bg-brand-50  text-brand-700  ring-1 ring-brand-600/20; }
   .badge-amber  { @apply bg-amber-50    text-amber-700    ring-1 ring-amber-600/20; }
   .badge-red    { @apply bg-red-50      text-red-700      ring-1 ring-red-600/20; }
   .badge-pink   { @apply bg-pink-50     text-pink-700     ring-1 ring-pink-600/20; }
@@ -56,8 +56,8 @@
 
   /* Sidebar */
   .sidebar-link { @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors cursor-pointer; }
-  .sidebar-link.active { @apply bg-emerald-50 text-emerald-700 font-medium; }
-  .sidebar-link.active svg { @apply text-emerald-600; }
+  .sidebar-link.active { @apply bg-brand-50 text-brand-700 font-medium; }
+  .sidebar-link.active svg { @apply text-brand-600; }
 
   /* Page layout */
   .page-header { @apply flex items-center justify-between mb-6; }

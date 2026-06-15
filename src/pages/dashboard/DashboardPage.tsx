@@ -12,21 +12,24 @@ import RescheduleModal from '@/pages/appointments/RescheduleModal'
 import { cn } from '@/lib/utils'
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-const PIE_COLORS = ['#0d9488','#f59e0b','#3b82f6','#8b5cf6','#06b6d4','#ec4899','#10b981','#6366f1']
+const PIE_COLORS = ['#8BDFDD','#F48F68','#FFE394','#FFF6DE','#47C0BD','#8b5cf6','#06b6d4','#ec4899']
 
 const KPI_CARDS = [
-  { key:'opd_income',      label:'OPD Income',       icon:Activity,  color:'text-emerald-600',   bg:'bg-emerald-50' },
-  { key:'ipd_income',      label:'IPD Income',       icon:Bed,       color:'text-emerald-600',   bg:'bg-emerald-50' },
+  { key:'opd_income',      label:'OPD Income',       icon:Activity,  color:'text-brand-600',   bg:'bg-brand-50' },
+  { key:'ipd_income',      label:'IPD Income',       icon:Bed,       color:'text-brand-600',   bg:'bg-brand-50' },
   { key:'pharmacy_income', label:'Pharmacy Income',  icon:Pill,      color:'text-amber-600',  bg:'bg-amber-50' },
   { key:'pathology_income',label:'Pathology Income', icon:FlaskConical,color:'text-purple-600',bg:'bg-purple-50' },
   { key:'radiology_income',label:'Radiology Income', icon:RadioTower,color:'text-indigo-600', bg:'bg-indigo-50' },
   { key:'blood_bank_income',label:'Blood Bank Income',icon:Droplets, color:'text-red-600',    bg:'bg-red-50' },
   { key:'ambulance_income',label:'Ambulance Income', icon:Ambulance, color:'text-orange-600', bg:'bg-orange-50' },
-  { key:'general_income',  label:'General Income',   icon:TrendingUp,color:'text-emerald-600',  bg:'bg-emerald-50' },
+  { key:'general_income',  label:'General Income',   icon:TrendingUp,color:'text-brand-600',  bg:'bg-brand-50' },
   { key:'expenses',        label:'Expenses',         icon:DollarSign,color:'text-rose-600',   bg:'bg-rose-50' },
 ]
 
 export default function DashboardPage() {
+  const role = (useAuthStore(s => s.user?.role) ?? '').toLowerCase()
+  const showCalendar = !['nurse', 'pharmacist', 'pathologist', 'radiologist', 'accountant'].includes(role)
+
   const { data: summaryData } = useQuery({
     queryKey: ['dashboard-summary'],
     queryFn:  () => api.get('/dashboard/income-summary').then(r => r.data?.data ?? {}),
@@ -58,7 +61,7 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-3 sm:p-6 space-y-4 sm:space-y-6">
       <div>
         <h1 className="page-title">Dashboard</h1>
         <p className="page-sub">Cognate — Overview</p>
@@ -92,8 +95,8 @@ export default function DashboardPage() {
             <AreaChart data={yearly}>
               <defs>
                 <linearGradient id="gIncome" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0d9488" stopOpacity={0.15}/>
-                  <stop offset="95%" stopColor="#0d9488" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#47C0BD" stopOpacity={0.15}/>
+                  <stop offset="95%" stopColor="#47C0BD" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="gExpenses" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.15}/>
@@ -104,7 +107,7 @@ export default function DashboardPage() {
               <XAxis dataKey="month" tick={{ fontSize: 11 }} axisLine={false} tickLine={false}/>
               <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`}/>
               <Tooltip formatter={(v: any) => fmtCurrency(v)}/>
-              <Area type="monotone" dataKey="income" stroke="#0d9488" strokeWidth={2} fill="url(#gIncome)" name="Income"/>
+              <Area type="monotone" dataKey="income" stroke="#47C0BD" strokeWidth={2} fill="url(#gIncome)" name="Income"/>
               <Area type="monotone" dataKey="expenses" stroke="#f43f5e" strokeWidth={2} fill="url(#gExpenses)" name="Expenses"/>
             </AreaChart>
           </ResponsiveContainer>
@@ -127,7 +130,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Calendar */}
-      <CalendarWidget/>
+      {showCalendar && <CalendarWidget/>}
 
       {/* Notice Board + Staff Count */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -135,7 +138,7 @@ export default function DashboardPage() {
 
         <div className="card">
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Staff by Role</h3>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {(Array.isArray(staff) ? staff : Object.entries(staff).map(([role, count]) => ({ role, count }))).map((s: any, i: number) => (
               <div key={i} className="flex flex-col items-center gap-2 p-3 rounded-xl bg-gray-50">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
@@ -178,7 +181,7 @@ function NoticeBoard() {
   return (
     <div className="card lg:col-span-2 p-0 overflow-hidden flex flex-col">
       <header className="flex items-center gap-2 px-5 py-3 border-b border-gray-100 bg-gray-50/50">
-        <Megaphone size={16} className="text-emerald-600"/>
+        <Megaphone size={16} className="text-brand-600"/>
         <h3 className="text-sm font-semibold text-gray-900">Notice Board</h3>
         <span className="ml-auto text-xs text-gray-400">{rows.length} notice{rows.length === 1 ? '' : 's'}</span>
       </header>
@@ -190,8 +193,8 @@ function NoticeBoard() {
           <div className="p-6 text-center text-xs text-gray-400">No notices for you right now</div>
         ) : rows.map((n: any) => (
           <details key={n.id} className="group">
-            <summary className="px-5 py-3 cursor-pointer hover:bg-emerald-50/40 list-none flex items-center gap-3">
-              <span className="flex-1 text-sm text-[#059669] font-medium truncate">{n.title}</span>
+            <summary className="px-5 py-3 cursor-pointer hover:bg-brand-50/40 list-none flex items-center gap-3">
+              <span className="flex-1 text-sm text-[#47C0BD] font-medium truncate">{n.title}</span>
               <span className="text-[11px] text-gray-400 whitespace-nowrap">
                 {n.notice_date ? new Date(n.notice_date).toLocaleDateString() : ''}
               </span>
@@ -274,24 +277,24 @@ function CalendarWidget() {
 
   return (
     <div className="card p-0 overflow-hidden">
-      <header className="flex items-center gap-3 px-5 py-3 border-b border-gray-100 bg-gray-50/50">
-        <CalendarIcon size={16} className="text-emerald-600"/>
+      <header className="flex flex-wrap items-center gap-2 sm:gap-3 px-3 sm:px-5 py-3 border-b border-gray-100 bg-gray-50/50">
+        <CalendarIcon size={16} className="text-brand-600 flex-shrink-0"/>
         <h3 className="text-sm font-semibold text-gray-900">Calendar</h3>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-1 flex-shrink-0">
           <button onClick={() => shiftAnchor(-1)} className="icon-btn" title="Previous"><ChevronLeft size={14}/></button>
           <button onClick={() => shiftAnchor( 1)} className="icon-btn" title="Next"><ChevronRight size={14}/></button>
           <button onClick={() => setAnchor(new Date())}
             className="ml-1 px-3 py-1 text-xs rounded bg-gray-100 hover:bg-gray-200 text-gray-700">Today</button>
         </div>
 
-        <span className="px-3 text-sm font-medium text-gray-700">{label}</span>
+        <span className="order-3 sm:order-none w-full sm:w-auto px-1 sm:px-3 text-sm font-medium text-gray-700">{label}</span>
 
-        <div className="flex border border-gray-200 rounded overflow-hidden">
+        <div className="flex border border-gray-200 rounded overflow-hidden flex-shrink-0">
           {(['month','week','day'] as CalView[]).map(v => (
             <button key={v} onClick={() => setView(v)}
               className={cn('px-3 py-1 text-xs capitalize',
-                view === v ? 'bg-emerald-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50')}>
+                view === v ? 'bg-brand-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50')}>
               {v}
             </button>
           ))}
@@ -351,7 +354,7 @@ function WeekDayView({ days, appointments, onPick }: { days: Date[]; appointment
                     {items.map((a: any) => (
                       <button key={a.id}
                         onClick={() => onPick(a)}
-                        className="block w-full text-left text-[10px] leading-tight px-1 py-0.5 mb-0.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white truncate cursor-pointer"
+                        className="block w-full text-left text-[10px] leading-tight px-1 py-0.5 mb-0.5 rounded bg-brand-600 hover:bg-brand-700 text-white truncate cursor-pointer"
                         title={`Click to reschedule · ${a.patient_name ?? `Patient #${a.patient_id}`} · ${a._d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}`}>
                         {a._d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} {a.patient_name ?? ''}
                       </button>
@@ -392,7 +395,7 @@ function MonthView({ days, anchor, appointments, onPick }: { days: Date[]; ancho
               {items.slice(0, 3).map((a: any) => (
                 <button key={a.id}
                   onClick={() => onPick(a)}
-                  className="block w-full text-left text-[10px] leading-tight px-1 py-0.5 mb-0.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white truncate cursor-pointer"
+                  className="block w-full text-left text-[10px] leading-tight px-1 py-0.5 mb-0.5 rounded bg-brand-600 hover:bg-brand-700 text-white truncate cursor-pointer"
                   title={`Click to reschedule · ${a.patient_name ?? `Patient #${a.patient_id}`}`}>
                   {a._d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} {a.patient_name ?? ''}
                 </button>

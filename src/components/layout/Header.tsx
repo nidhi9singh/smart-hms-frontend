@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
   Search, Bell, ArrowLeftRight, BedDouble, MessageCircle,
-  Calendar, CheckSquare, Languages, User,
+  Calendar, CheckSquare, Languages, User, Menu,
 } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 import { setupApi } from '@/api/setup'
@@ -84,7 +84,7 @@ function LanguageDropdown() {
                 onClick={() => setOpen(false)}
                 className={cn(
                   'w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-2',
-                  l.is_default && 'bg-emerald-50 text-emerald-700 font-medium'
+                  l.is_default && 'bg-brand-50 text-brand-700 font-medium'
                 )}>
                 <span className="bg-gray-100 rounded-sm"><FlagChip code={l.country_code} size="sm"/></span>
                 <span className="flex-1">{l.name}</span>
@@ -99,7 +99,7 @@ function LanguageDropdown() {
 }
 
 
-export default function Header() {
+export default function Header({ onMenuClick }: { onMenuClick?: () => void } = {}) {
   const user = useAuthStore(s => s.user)
   const navigate = useNavigate()
   const { settings } = useHospitalSettings()
@@ -129,8 +129,19 @@ export default function Header() {
   }
 
   return (
-    <header className="h-14 bg-gradient-to-r from-emerald-600 to-emerald-500 flex items-center gap-3 px-4 flex-shrink-0 text-white">
-      <form onSubmit={handleSearch} className="w-72 max-w-md">
+    <header className="h-14 bg-gradient-to-r from-brand-600 to-brand-500 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 flex-shrink-0 text-white">
+      {/* Hamburger — only visible below lg where the sidebar is a drawer */}
+      <button
+        type="button"
+        onClick={onMenuClick}
+        title="Open menu"
+        className="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-md hover:bg-white/20 text-white flex-shrink-0"
+      >
+        <Menu size={20}/>
+      </button>
+
+      {/* Search — hidden on very small phones; full size from sm: up */}
+      <form onSubmit={handleSearch} className="hidden sm:block w-48 md:w-64 lg:w-72 max-w-md">
         <div className="relative">
           <input
             name="q"
@@ -138,42 +149,50 @@ export default function Header() {
             placeholder="Search By Patient Name"
           />
           <button title="Search" type="submit"
-            className="absolute right-1 top-1 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center hover:bg-emerald-700">
+            className="absolute right-1 top-1 w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center hover:bg-brand-700">
             <Search size={13}/>
           </button>
         </div>
       </form>
 
-      <h1 className="text-lg font-semibold text-white truncate flex-1">
+      <h1 className="text-base sm:text-lg font-semibold text-white truncate flex-1 min-w-0">
         {settings.hospital_name || ''}
       </h1>
 
-      <div className="flex items-center gap-1 ml-auto">
-        <LanguageDropdown/>
-        <IconButton onClick={() => setBranchOpen(true)} title="Switch Branch">
-          <ArrowLeftRight size={17}/>
-        </IconButton>
+      <div className="flex items-center gap-1 ml-auto flex-shrink-0">
+        <span className="hidden sm:inline-flex"><LanguageDropdown/></span>
+        <span className="hidden lg:inline-flex">
+          <IconButton onClick={() => setBranchOpen(true)} title="Switch Branch">
+            <ArrowLeftRight size={17}/>
+          </IconButton>
+        </span>
         <IconButton to="/notifications" title="Notifications" badge={notifCount > 99 ? 99 : notifCount}>
           <Bell size={17}/>
         </IconButton>
-        <IconButton onClick={() => setBedOpen(true)} title="Bed Status">
-          <BedDouble size={17}/>
-        </IconButton>
+        <span className="hidden md:inline-flex">
+          <IconButton onClick={() => setBedOpen(true)} title="Bed Status">
+            <BedDouble size={17}/>
+          </IconButton>
+        </span>
         <IconButton to="/chat" title="Chat" badge={chatUnread > 99 ? 99 : chatUnread}>
           <MessageCircle size={17}/>
         </IconButton>
-        <IconButton to="/calendar" title="Calendar">
-          <Calendar size={17}/>
-        </IconButton>
-        <IconButton to="/calendar" title="Task">
-          <CheckSquare size={17}/>
-        </IconButton>
+        <span className="hidden lg:inline-flex">
+          <IconButton to="/calendar" title="Calendar">
+            <Calendar size={17}/>
+          </IconButton>
+        </span>
+        <span className="hidden lg:inline-flex">
+          <IconButton to="/calendar" title="Task">
+            <CheckSquare size={17}/>
+          </IconButton>
+        </span>
 
-        <div className="ml-2 pl-2 border-l border-white/30 flex items-center gap-2">
+        <div className="ml-1 sm:ml-2 sm:pl-2 sm:border-l sm:border-white/30 flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
             <User size={14} className="text-white"/>
           </div>
-          <div className="hidden sm:block leading-tight">
+          <div className="hidden md:block leading-tight">
             <div className="text-xs font-medium">{user?.name ?? 'User'}</div>
             <div className="text-[10px] capitalize opacity-80">{user?.role}</div>
           </div>

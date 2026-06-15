@@ -79,7 +79,7 @@ export default function StaffFormModal({ open, staff, onClose, onSuccess }: Prop
         <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
           <div
             onClick={() => fileRef.current?.click()}
-            className="w-16 h-16 rounded-xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 transition overflow-hidden flex-shrink-0"
+            className="w-16 h-16 rounded-xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-brand-400 hover:bg-brand-50 transition overflow-hidden flex-shrink-0"
           >
             {photoPreview
               ? <img src={photoPreview} alt="preview" className="w-full h-full object-cover"/>
@@ -90,7 +90,7 @@ export default function StaffFormModal({ open, staff, onClose, onSuccess }: Prop
           <div>
             <p className="text-sm font-medium text-gray-700">Staff Photo</p>
             <p className="text-xs text-gray-400 mt-0.5">Click to upload JPG, JPEG or PNG</p>
-            {photoFile && <p className="text-xs text-emerald-600 mt-0.5">✓ {photoFile.name}</p>}
+            {photoFile && <p className="text-xs text-brand-600 mt-0.5">✓ {photoFile.name}</p>}
           </div>
         </div>
 

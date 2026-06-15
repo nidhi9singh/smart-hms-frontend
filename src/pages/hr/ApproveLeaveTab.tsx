@@ -40,7 +40,7 @@ function statusBadgeClass(status: string) {
   switch (status?.toLowerCase()) {
     case 'approved':
     case 'approve':
-      return 'bg-emerald-500 text-white'
+      return 'bg-brand-500 text-white'
     case 'disapprove':
     case 'disapproved':
     case 'rejected':
@@ -234,7 +234,7 @@ export default function ApproveLeaveTab() {
           placeholder="Search..."
           value={search}
           onChange={e => { setSearch(e.target.value); setPage(1) }}
-          className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"
+          className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400"
         />
         <div className="flex items-center gap-2">
           <select
@@ -308,7 +308,7 @@ export default function ApproveLeaveTab() {
                       {l.status === 'Pending' && (
                         <>
                           <button onClick={() => quickApprove(l.id)} title="Approve"
-                            className="p-1.5 text-emerald-500 hover:bg-emerald-50 rounded border border-gray-200">
+                            className="p-1.5 text-brand-500 hover:bg-brand-50 rounded border border-gray-200">
                             <CheckCircle className="w-4 h-4" />
                           </button>
                           <button onClick={() => quickDisapprove(l.id)} title="Disapprove"
@@ -350,7 +350,7 @@ export default function ApproveLeaveTab() {
         onClose={() => setModalOpen(false)}
         title="Add Details"
         size="lg"
-        headerClassName="bg-[#059669] text-white"
+        headerClassName="bg-[#47C0BD] text-white"
         footer={
           <div className="flex justify-end">
             <button onClick={handleSubmit} disabled={isBusy}
@@ -432,7 +432,7 @@ export default function ApproveLeaveTab() {
               {STATUS_OPTIONS.map(s => (
                 <label key={s} className="flex items-center gap-2 cursor-pointer">
                   <input type="radio" name="leave_status" value={s} checked={form.status === s}
-                    onChange={() => setField('status', s)} className="w-4 h-4 text-emerald-500 border-gray-300 focus:ring-emerald-400" />
+                    onChange={() => setField('status', s)} className="w-4 h-4 text-brand-500 border-gray-300 focus:ring-brand-400" />
                   <span className="text-sm text-gray-700">{s}</span>
                 </label>
               ))}

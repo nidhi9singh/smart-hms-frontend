@@ -19,7 +19,7 @@ export default function ViewPaymentsModal({ caseId, open, onClose }: {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-12">
       <div className="bg-white rounded-lg shadow-xl w-[860px] max-w-[95vw] max-h-[85vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg sticky top-0">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg sticky top-0">
           <h2 className="text-base font-semibold">Payments</h2>
           <button onClick={onClose}><X size={18}/></button>
         </div>

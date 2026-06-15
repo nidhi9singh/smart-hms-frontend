@@ -25,7 +25,7 @@ export default function PrintHeaderFooterPage() {
 
       <section className="card p-5 space-y-4">
         <header className="flex items-center gap-2">
-          <ImageIcon size={16} className="text-emerald-600"/>
+          <ImageIcon size={16} className="text-brand-600"/>
           <h2 className="text-sm font-semibold text-gray-800">Header</h2>
         </header>
 
@@ -34,7 +34,7 @@ export default function PrintHeaderFooterPage() {
             <label className="block text-xs font-medium text-gray-600 mb-1">Header Image</label>
             <input type="file" accept="image/*"
               onChange={e => setHeaderImg(e.target.files?.[0] ?? null)}
-              className="block w-full text-xs text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"/>
+              className="block w-full text-xs text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"/>
             {headerImg && <p className="mt-1 text-[11px] text-gray-500">{headerImg.name}</p>}
           </div>
           <div>
@@ -49,7 +49,7 @@ export default function PrintHeaderFooterPage() {
 
       <section className="card p-5 space-y-4">
         <header className="flex items-center gap-2">
-          <Printer size={16} className="text-emerald-600"/>
+          <Printer size={16} className="text-brand-600"/>
           <h2 className="text-sm font-semibold text-gray-800">Footer</h2>
         </header>
 
@@ -58,7 +58,7 @@ export default function PrintHeaderFooterPage() {
             <label className="block text-xs font-medium text-gray-600 mb-1">Footer Image</label>
             <input type="file" accept="image/*"
               onChange={e => setFooterImg(e.target.files?.[0] ?? null)}
-              className="block w-full text-xs text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"/>
+              className="block w-full text-xs text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"/>
             {footerImg && <p className="mt-1 text-[11px] text-gray-500">{footerImg.name}</p>}
           </div>
           <div>

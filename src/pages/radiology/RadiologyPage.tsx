@@ -64,8 +64,8 @@ export default function RadiologyPage() {
 
       <div className={cn('grid gap-3', canManageRadiology ? 'grid-cols-4' : 'grid-cols-2')}>
         {[
-          { label: 'Total Bills',     value: bills.length,                  color: 'bg-emerald-50 text-emerald-700', financial: false },
-          { label: 'Total Revenue',   value: `₹${totalRevenue.toFixed(2)}`, color: 'bg-emerald-50 text-emerald-700', financial: true  },
+          { label: 'Total Bills',     value: bills.length,                  color: 'bg-brand-50 text-brand-700', financial: false },
+          { label: 'Total Revenue',   value: `₹${totalRevenue.toFixed(2)}`, color: 'bg-brand-50 text-brand-700', financial: true  },
           { label: 'Pending Balance', value: `₹${totalBalance.toFixed(2)}`, color: 'bg-red-50 text-red-700',         financial: true  },
           { label: 'Tests',           value: tests.length,                  color: 'bg-amber-50 text-amber-700',     financial: false },
         ].filter(s => canManageRadiology || !s.financial).map(s => (
@@ -81,7 +81,7 @@ export default function RadiologyPage() {
           {[{ id: 'bills', label: 'Radiology Bill' }, { id: 'tests', label: 'Radiology Test' }].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as Tab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab === t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab === t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>{t.label}</button>
           ))}
         </div>
@@ -109,7 +109,7 @@ export default function RadiologyPage() {
                 : bills.length === 0 ? <tr><td colSpan={15} className="px-4 py-8 text-center text-gray-400">No bills found</td></tr>
                 : bills.map(b => (
                   <tr key={b.id} className="hover:bg-gray-50/50">
-                    <td className="px-3 py-3"><span className="text-emerald-600 font-medium text-xs">{b.bill_no}</span></td>
+                    <td className="px-3 py-3"><span className="text-brand-600 font-medium text-xs">{b.bill_no}</span></td>
                     <td className="px-3 py-3 text-xs text-gray-500">{b.case_id || '—'}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">{b.created_at ? new Date(b.created_at).toLocaleString() : '—'}</td>
                     <td className="px-3 py-3">{b.patient_name || (b.patient_id ? `#${b.patient_id}` : '—')}</td>
@@ -121,11 +121,11 @@ export default function RadiologyPage() {
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(b.discount || 0).toFixed(2)}</td>
                     <td className="px-3 py-3 text-xs text-gray-500">₹{Number(b.tax_amount || 0).toFixed(2)} ({Number(b.tax_percent || 0).toFixed(0)}%)</td>
                     <td className="px-3 py-3 font-medium">₹{Number(b.net_amount || 0).toFixed(2)}</td>
-                    <td className="px-3 py-3 text-emerald-600">₹{Number(b.paid || 0).toFixed(2)}</td>
+                    <td className="px-3 py-3 text-brand-600">₹{Number(b.paid || 0).toFixed(2)}</td>
                     <td className="px-3 py-3">
                       {Number(b.balance || 0) > 0
                         ? <span className="text-red-500 font-medium">₹{Number(b.balance).toFixed(2)}</span>
-                        : <span className="text-emerald-500">₹0.00</span>}
+                        : <span className="text-brand-500">₹0.00</span>}
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex gap-1">

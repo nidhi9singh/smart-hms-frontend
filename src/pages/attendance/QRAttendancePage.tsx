@@ -161,11 +161,11 @@ export default function QRAttendancePage() {
                 key={`${r.at}-${i}`}
                 className={
                   'flex items-center gap-2 px-4 py-2.5 rounded-lg shadow-lg text-sm bg-white border ' +
-                  (r.status === 'success' ? 'border-emerald-200' : 'border-red-200')
+                  (r.status === 'success' ? 'border-brand-200' : 'border-red-200')
                 }
               >
                 {r.status === 'success'
-                  ? <CheckCircle2 size={16} className="text-emerald-500"/>
+                  ? <CheckCircle2 size={16} className="text-brand-500"/>
                   : <XCircle size={16} className="text-red-400"/>}
                 <span className="font-mono text-xs">{r.staff_code}</span>
                 <span className="text-xs text-gray-400">at {r.at}</span>

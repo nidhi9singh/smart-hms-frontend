@@ -65,7 +65,7 @@ export default function ZoomSetupPage() {
         </div>
 
         {!hasToken && (
-          <div className="mx-5 mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm rounded flex items-center gap-2">
+          <div className="mx-5 mt-4 p-3 bg-brand-50 text-brand-800 text-sm rounded flex items-center gap-2">
             <Info size={16}/>
             Access Token not generated, Please authenticate your Account.
           </div>
@@ -108,11 +108,11 @@ export default function ZoomSetupPage() {
 
           {/* Right: Zoom branding panel */}
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-3 lg:pl-6 lg:border-l">
-            <div className="text-4xl font-bold text-emerald-600 tracking-tight">zoom</div>
+            <div className="text-4xl font-bold text-brand-600 tracking-tight">zoom</div>
             <p className="text-sm text-gray-700">
               To set zoom api{' '}
               <a href="https://marketplace.zoom.us/develop/create" target="_blank" rel="noreferrer"
-                 className="text-emerald-700 font-medium hover:underline">Click here</a>
+                 className="text-brand-700 font-medium hover:underline">Click here</a>
             </p>
             <div className="text-sm text-gray-700">
               <div className="font-medium">Set Zoom Redirect URL:</div>
@@ -152,12 +152,12 @@ function RadioPair({ name, value, onChange }: { name: string; value: string; onC
     <div className="flex items-center gap-6 text-sm text-gray-700">
       <label className="flex items-center gap-1.5 cursor-pointer">
         <input type="radio" name={name} checked={value === 'false'} onChange={() => onChange('false')}
-          className="accent-emerald-600"/>
+          className="accent-brand-600"/>
         Disabled
       </label>
       <label className="flex items-center gap-1.5 cursor-pointer">
         <input type="radio" name={name} checked={value === 'true'} onChange={() => onChange('true')}
-          className="accent-emerald-600"/>
+          className="accent-brand-600"/>
         Enabled
       </label>
     </div>

@@ -36,7 +36,7 @@ export default function ModulesTab() {
               onClick={() => setView(t)}
               className={cn(
                 'px-4 py-1.5 text-sm border-b-2',
-                view === t ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500'
+                view === t ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500'
               )}
             >{t}</button>
           ))}
@@ -59,7 +59,7 @@ export default function ModulesTab() {
                 <td className="px-3 py-2 text-right">
                   <button onClick={() => toggle.mutate(r)}
                     className={'inline-flex items-center w-10 h-5 rounded-full transition-colors ' +
-                      (r.enabled ? 'bg-emerald-600' : 'bg-gray-300')}>
+                      (r.enabled ? 'bg-brand-600' : 'bg-gray-300')}>
                     <span className={'w-4 h-4 bg-white rounded-full transition-transform ' +
                       (r.enabled ? 'translate-x-5' : 'translate-x-0.5')}/>
                   </button>

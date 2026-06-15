@@ -71,7 +71,7 @@ export default function StaffDetailPage() {
     <div className="p-6 space-y-4">
       {/* Title bar */}
       <div className="flex items-center justify-between">
-        <button onClick={() => nav(-1)} className="flex items-center gap-2 text-sm text-gray-600 hover:text-emerald-700">
+        <button onClick={() => nav(-1)} className="flex items-center gap-2 text-sm text-gray-600 hover:text-brand-700">
           <ArrowLeft size={14}/> Back to Staff Directory
         </button>
       </div>
@@ -81,7 +81,7 @@ export default function StaffDetailPage() {
         <div className="flex items-start gap-5">
           {s.photo_path
             ? <img src={s.photo_path} alt={fullName} className="w-20 h-20 rounded-full object-cover border"/>
-            : <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-semibold">
+            : <div className="w-20 h-20 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-2xl font-semibold">
                 {fullName.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
               </div>}
 
@@ -126,7 +126,7 @@ export default function StaffDetailPage() {
                 className={cn(
                   'px-5 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap -mb-px',
                   active
-                    ? 'border-[#059669] text-[#059669]'
+                    ? 'border-[#47C0BD] text-[#47C0BD]'
                     : 'border-transparent text-gray-600 hover:text-gray-800'
                 )}>
                 {t.label}
@@ -278,7 +278,7 @@ function Row({ label, v, link }: { label: string; v?: any; link?: boolean }) {
       <td className="px-4 py-2 text-gray-800">
         {!v ? <span className="text-gray-300">—</span>
           : link
-            ? <a href={String(v)} target="_blank" rel="noreferrer" className="text-[#059669] hover:underline">{v}</a>
+            ? <a href={String(v)} target="_blank" rel="noreferrer" className="text-[#47C0BD] hover:underline">{v}</a>
             : v}
       </td>
     </tr>

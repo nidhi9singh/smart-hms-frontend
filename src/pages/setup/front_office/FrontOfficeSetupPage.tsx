@@ -26,7 +26,7 @@ export default function FrontOfficeSetupPage() {
               <button key={t.id} onClick={() => setTab(t.id)}
                 className={cn(
                   'w-full text-left px-4 py-2.5 border-b',
-                  tab === t.id ? 'bg-emerald-50 text-emerald-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
+                  tab === t.id ? 'bg-brand-50 text-brand-700 font-medium' : 'text-gray-700 hover:bg-gray-50'
                 )}>
                 {t.label}
               </button>
@@ -95,12 +95,12 @@ function LookupTab({ meta }: { meta: (typeof TABS)[number] }) {
               ? <tr><td colSpan={3} className="px-3 py-6 text-center text-gray-400">No records</td></tr>
               : filtered.map(r => (
                 <tr key={r.id} className="border-t hover:bg-gray-50 align-top">
-                  <td className="px-3 py-2 text-emerald-700">{r.name}</td>
+                  <td className="px-3 py-2 text-brand-700">{r.name}</td>
                   <td className="px-3 py-2 text-gray-600">{r.description || ''}</td>
                   <td className="px-3 py-2 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end gap-1">
                       <button onClick={() => setModal({ open: true, item: r })}
-                        className="p-1 hover:bg-emerald-50 rounded text-emerald-600"><Edit2 size={14}/></button>
+                        className="p-1 hover:bg-brand-50 rounded text-brand-600"><Edit2 size={14}/></button>
                       <button onClick={() => { if (confirm(`Delete this ${meta.singular.toLowerCase()}?`)) del.mutate(r.id) }}
                         className="p-1 hover:bg-red-50 rounded text-red-600"><Trash2 size={14}/></button>
                     </div>
@@ -181,7 +181,7 @@ function AddLookupModal({
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[680px] max-w-[94vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-brand-600 text-white rounded-t-lg">
           <h2 className="text-base font-semibold">
             {editing ? `Edit ${meta.singular}` : `Add ${meta.singular}`}
           </h2>
@@ -219,7 +219,7 @@ function AddLookupModal({
 
           {!editing && (
             <button type="button" onClick={addRow}
-              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-sm flex items-center gap-1.5">
+              className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded text-sm flex items-center gap-1.5">
               <Plus size={14}/> Add
             </button>
           )}

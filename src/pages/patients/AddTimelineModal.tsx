@@ -49,7 +49,7 @@ export default function AddTimelineModal({ open, onClose, patientId }: {
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-16">
       <div className="bg-white rounded-lg shadow-xl w-[600px] max-w-[95vw]">
-        <div className="flex items-center justify-between px-5 py-3 bg-[#059669] text-white rounded-t-lg">
+        <div className="flex items-center justify-between px-5 py-3 bg-[#47C0BD] text-white rounded-t-lg">
           <h2 className="text-base font-semibold">Add Timeline</h2>
           <button onClick={onClose}><X size={18}/></button>
         </div>
@@ -85,13 +85,13 @@ export default function AddTimelineModal({ open, onClose, patientId }: {
           <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
             <input type="checkbox" checked={form.visible}
               onChange={e => setForm({ ...form, visible: e.target.checked })}
-              className="w-4 h-4 rounded border-gray-300 text-[#059669]"/>
+              className="w-4 h-4 rounded border-gray-300 text-[#47C0BD]"/>
             Visible to this person
           </label>
 
           <div className="flex justify-end pt-2 border-t border-gray-100">
             <button type="submit" disabled={save.isPending}
-              className="flex items-center gap-1.5 px-5 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded">
+              className="flex items-center gap-1.5 px-5 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded">
               {save.isPending ? <Loader2 size={14} className="animate-spin"/> : <Save size={14}/>} Save
             </button>
           </div>

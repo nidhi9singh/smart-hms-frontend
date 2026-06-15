@@ -21,7 +21,7 @@ export default function BedStatusModal({ open, onClose }: Props) {
       <div className="max-w-[1400px] mx-auto">
         <div className="flex items-center justify-end mb-3">
           <button onClick={onClose}
-            className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center hover:bg-emerald-700">
+            className="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center hover:bg-brand-700">
             <X size={16}/>
           </button>
         </div>
@@ -48,9 +48,9 @@ export default function BedStatusModal({ open, onClose }: Props) {
                     <div key={b.id} className="text-center">
                       <BedDouble
                         size={36}
-                        className={b.occupied ? 'mx-auto text-pink-400' : 'mx-auto text-emerald-500'}
+                        className={b.occupied ? 'mx-auto text-pink-400' : 'mx-auto text-brand-500'}
                       />
-                      <p className={'text-xs font-medium mt-1 truncate ' + (b.occupied ? 'text-pink-500' : 'text-emerald-600')}
+                      <p className={'text-xs font-medium mt-1 truncate ' + (b.occupied ? 'text-pink-500' : 'text-brand-600')}
                         title={b.patient_name || b.bed_no}>
                         {b.patient_name || b.bed_no}
                       </p>

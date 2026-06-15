@@ -14,12 +14,12 @@ export default function SystemUpdateTab() {
   return (
     <div className="space-y-4">
       <h2 className="text-base font-semibold text-gray-800 border-b pb-2">System Update</h2>
-      <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 text-center">
-        <p className="text-emerald-700 font-semibold">Your Cognate Version</p>
-        <p className="text-3xl font-bold text-emerald-700 mt-2">{v}</p>
+      <div className="bg-brand-50 border border-brand-200 rounded-lg p-6 text-center">
+        <p className="text-brand-700 font-semibold">Your Cognate Version</p>
+        <p className="text-3xl font-bold text-brand-700 mt-2">{v}</p>
       </div>
       {latest && (
-        <p className="text-sm text-emerald-700 flex items-center justify-center gap-1">
+        <p className="text-sm text-brand-700 flex items-center justify-center gap-1">
           <Info size={14}/> You are using latest version of Cognate.
         </p>
       )}

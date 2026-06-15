@@ -57,8 +57,8 @@ export default function IPDPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: 'Active Admissions', value: total, color: 'bg-emerald-50 text-emerald-700'   },
-          { label: 'VIP Ward',          value: 3,     color: 'bg-emerald-50 text-emerald-700'   },
+          { label: 'Active Admissions', value: total, color: 'bg-brand-50 text-brand-700'   },
+          { label: 'VIP Ward',          value: 3,     color: 'bg-brand-50 text-brand-700'   },
           { label: 'General Ward',      value: 1,     color: 'bg-amber-50 text-amber-700' },
           { label: 'Discharged Today',  value: 1,     color: 'bg-red-50 text-red-700'     },
         ].map(s => (
@@ -75,7 +75,7 @@ export default function IPDPage() {
           {[{ id: 'active', label: 'Active Patients' }, { id: 'discharged', label: 'Discharged Patients' }].map(t => (
             <button key={t.id} onClick={() => setTab(t.id as IpdTab)}
               className={cn('px-4 py-2.5 text-sm border-b-2 -mb-px',
-                tab===t.id ? 'border-emerald-600 text-emerald-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
+                tab===t.id ? 'border-brand-600 text-brand-700 font-medium' : 'border-transparent text-gray-500 hover:text-gray-700'
               )}>
               {t.label}
             </button>
@@ -113,11 +113,11 @@ export default function IPDPage() {
               : admissions.map((a: any) => (
                 <tr key={a.id} className="hover:bg-gray-50/50">
                   {tab === 'active' ? <>
-                    <td className="px-4 py-3"><Link to={`/ipd/${a.id}`} className="text-emerald-600 font-medium hover:underline cursor-pointer">{a.ipd_no}</Link></td>
+                    <td className="px-4 py-3"><Link to={`/ipd/${a.id}`} className="text-brand-600 font-medium hover:underline cursor-pointer">{a.ipd_no}</Link></td>
                     <td className="px-4 py-3 text-gray-500">{a.case_id || '—'}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-medium">
+                        <div className="w-6 h-6 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-medium">
                           {a.patient_name?.[0]}
                         </div>
                         <span className="font-medium max-w-[120px] truncate">{a.patient_name}</span>
@@ -135,7 +135,7 @@ export default function IPDPage() {
                     <td className="px-4 py-3">
                       <div className="text-xs text-gray-500 mb-1">₹{Number(a.used_credit||0).toFixed(0)} / ₹{Number(a.credit_limit||0)/1000}k</div>
                       <div className="h-1 bg-gray-100 rounded-full w-20 overflow-hidden">
-                        <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${Math.min(100, (a.used_credit/a.credit_limit)*100)||0}%` }} />
+                        <div className="h-full bg-brand-500 rounded-full" style={{ width: `${Math.min(100, (a.used_credit/a.credit_limit)*100)||0}%` }} />
                       </div>
                     </td>
                     <td className="px-4 py-3">
@@ -144,7 +144,7 @@ export default function IPDPage() {
                         {canManageIPD && (
                           <>
                             <button className="icon-btn"><Edit2 size={12}/></button>
-                            <button className="icon-btn text-emerald-600" title="Discharge"><LogOut size={12}/></button>
+                            <button className="icon-btn text-brand-600" title="Discharge"><LogOut size={12}/></button>
                             <button className="icon-btn text-red-400" onClick={() => delMut.mutate(a.id)}><Trash2 size={12}/></button>
                           </>
                         )}

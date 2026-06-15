@@ -118,7 +118,7 @@ export default function UploadContentModal({ open, onClose }: Props) {
                 onDrop={onDrop}
                 className={
                   'border border-dashed rounded-md px-3 py-4 cursor-pointer flex items-center justify-center gap-2 text-sm ' +
-                  (dragOver ? 'border-emerald-500 bg-emerald-50' : 'border-gray-300 hover:bg-gray-50')
+                  (dragOver ? 'border-brand-500 bg-brand-50' : 'border-gray-300 hover:bg-gray-50')
                 }
               >
                 <UploadCloud size={16} className="text-gray-500"/>

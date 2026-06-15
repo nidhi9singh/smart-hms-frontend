@@ -9,7 +9,7 @@ import {
   LogOut, ChevronDown, ChevronRight, Boxes, Wrench,
   Activity, ScanLine, HeartPulse, Printer
 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/authStore'
 import { canAccess } from '@/lib/access'
 import { useHospitalSettings } from '@/hooks/useHospitalSettings'
@@ -134,12 +134,17 @@ const CERTIFICATE_BY_ROLE: Record<string, string[]> = {
 }
 
 
-export default function Sidebar() {
+export default function Sidebar({
+  mobileOpen = false, onClose,
+}: { mobileOpen?: boolean; onClose?: () => void } = {}) {
   const navigate = useNavigate()
   const location = useLocation()
   const clearAuth = useAuthStore(s => s.clearAuth)
   const user = useAuthStore(s => s.user)
   const [collapsed, setCollapsed] = useState(false)
+
+  // Auto-close the mobile drawer whenever the user navigates somewhere.
+  useEffect(() => { if (mobileOpen) onClose?.() }, [location.pathname])
 
   const { settings, logoUrl, smallLogoUrl } = useHospitalSettings()
   const sidebarLogo = collapsed
@@ -156,16 +161,34 @@ export default function Sidebar() {
     setOpenGroups(s => ({ ...s, [label]: !s[label] }))
 
   return (
+    <>
+      {/* Mobile backdrop — only visible when the drawer is open on <lg widths */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+          onClick={onClose}
+          aria-hidden
+        />
+      )}
     <aside className={cn(
-      'flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-200 flex-shrink-0',
-      collapsed ? 'w-14' : 'w-56'
+      'flex flex-col h-screen bg-white border-r border-gray-200 transition-transform duration-200 flex-shrink-0',
+      // <lg: fixed slide-over drawer (collapsed/expanded toggle hidden, always 224px)
+      'fixed top-0 left-0 z-40 w-56',
+      mobileOpen ? 'translate-x-0' : '-translate-x-full',
+      // lg+: normal in-flow sidebar; respects the collapsed toggle
+      'lg:relative lg:translate-x-0 lg:transition-all',
+      collapsed ? 'lg:w-14' : 'lg:w-56'
     )}>
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-3 py-4 border-b border-gray-100">
         <img src={sidebarLogo} alt={settings.hospital_name || 'Hospital'}
-          className={cn('object-contain flex-shrink-0', collapsed ? 'h-8 w-8' : 'h-10 w-auto max-w-[140px]')}/>
-        <button onClick={() => setCollapsed(c => !c)} className="ml-auto p-1 rounded hover:bg-gray-100 flex-shrink-0">
+          className={cn('object-contain flex-shrink-0', collapsed ? 'h-8 w-8 hidden lg:block' : 'h-10 w-auto max-w-[140px]')}/>
+        <button onClick={() => setCollapsed(c => !c)} className="ml-auto p-1 rounded hover:bg-gray-100 flex-shrink-0 hidden lg:flex">
           {collapsed ? <ChevronRight size={12}/> : <ChevronDown size={12}/>}
+        </button>
+        {/* Mobile-only close button */}
+        <button onClick={onClose} className="ml-auto p-1 rounded hover:bg-gray-100 flex-shrink-0 lg:hidden" title="Close menu">
+          <ChevronRight size={14} className="rotate-180"/>
         </button>
       </div>
 
@@ -257,7 +280,7 @@ export default function Sidebar() {
       <div className="border-t border-gray-100 p-3">
         {!collapsed && (
           <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
+            <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
               {user?.name?.charAt(0)?.toUpperCase() ?? 'U'}
             </div>
             <div className="min-w-0">
@@ -273,5 +296,6 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+    </>
   )
 }

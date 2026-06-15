@@ -12,16 +12,16 @@ import FormField from '@/components/ui/FormField'
 // Inline input components (avoids missing export issues)
 function InputField(props: React.InputHTMLAttributes<HTMLInputElement> & { error?: boolean }) {
   const { error, className = '', ...rest } = props
-  return <input className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest} />
+  return <input className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400 ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest} />
 }
 
 function SelectField({ children, error, className = '', ...rest }: React.SelectHTMLAttributes<HTMLSelectElement> & { error?: boolean; children: React.ReactNode }) {
-  return <select className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 bg-white ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest}>{children}</select>
+  return <select className={`w-full h-10 px-3 border rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400 bg-white ${error ? 'border-red-400' : 'border-gray-300'} ${className}`} {...rest}>{children}</select>
 }
 
 function TextareaField(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const { className = '', ...rest } = props
-  return <textarea className={`w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 ${className}`} {...rest} />
+  return <textarea className={`w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-400 ${className}`} {...rest} />
 }
 
 interface Props {
@@ -210,12 +210,12 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
       onClose={onClose}
       title="Add Patient — OPD"
       size="xl"
-      headerClassName="bg-[#059669] text-white"
+      headerClassName="bg-[#47C0BD] text-white"
       footer={
         <div className="flex justify-end gap-2">
           <button onClick={onClose} className="px-4 py-2 border border-gray-300 text-gray-700 text-sm rounded hover:bg-gray-50">Cancel</button>
           <button onClick={handleSubmit} disabled={isBusy}
-            className="flex items-center gap-2 px-5 py-2 bg-[#059669] hover:bg-[#047857] text-white text-sm font-medium rounded transition-colors">
+            className="flex items-center gap-2 px-5 py-2 bg-[#47C0BD] hover:bg-[#309C99] text-white text-sm font-medium rounded transition-colors">
             {isBusy && <Loader2 className="w-4 h-4 animate-spin" />} Save
           </button>
         </div>
@@ -310,7 +310,7 @@ export default function AddOPDModal({ open, onClose, onSuccess }: Props) {
           {/* Apply TPA checkbox */}
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={form.apply_tpa} onChange={e => setField('apply_tpa', e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-emerald-500" />
+              className="w-4 h-4 rounded border-gray-300 text-brand-500" />
             <span className="text-sm text-gray-700 font-medium">Apply TPA</span>
           </label>
 

@@ -101,7 +101,7 @@ export default function LiveConsultationPage() {
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => setSession(c)}
-                            className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-500 hover:bg-emerald-600 text-white text-xs rounded"
+                            className="inline-flex items-center gap-1 px-2 py-1 bg-brand-500 hover:bg-brand-600 text-white text-xs rounded"
                           >
                             <Video size={12}/> Start
                           </button>
